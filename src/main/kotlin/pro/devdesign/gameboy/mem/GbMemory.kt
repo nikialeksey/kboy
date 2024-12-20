@@ -1,15 +1,19 @@
 package pro.devdesign.gameboy.mem
 
-class InMemoryMemory : Memory {
+import pro.devdesign.gameboy.serial.Serial
+
+class GbMemory : Memory {
 
     private val data: Array<Int>
+    private val serial: Serial
 
-    constructor() : this(0xFFFF)
+    constructor(serial: Serial) : this(0xFFFF + 1, serial)
 
-    constructor(size: Int) : this(Array(size) { 0 })
+    constructor(size: Int, serial: Serial) : this(Array(size) { 0 }, serial)
 
-    constructor(data: Array<Int>) {
+    constructor(data: Array<Int>, serial: Serial) {
         this.data = data
+        this.serial = serial
     }
 
     override fun read8(address: Int): Int {
@@ -27,16 +31,27 @@ class InMemoryMemory : Memory {
          * FF80-FFFE   High RAM (HRAM)
          * FFFF        Interrupt Enable Register
          * */
+        if (address == 0xFF02) {
+            println("Read from control")
+        }
         return data[address]
     }
 
     override fun write8(address: Int, value: Int) {
+        if (address == 0xFFFF) {
+            println("Enable interrupt: 0x${value.toString(16).uppercase()}")
+        }
+        if (address == 0xFF0F) {
+            println("Request interrupt: 0x${value.toString(16).uppercase()}")
+        }
         if (address == 0xFF01) {
-            print(value.toChar())
+            println("Data: 0x${value.toString(16).uppercase()}")
+            serial.put(value)
         }
         if (address == 0xFF02) {
-            println("0x${value.toString(16).uppercase()}")
+            // println("Control: 0x${value.toString(16).uppercase()}")
         }
+
         data[address] = value
     }
 }

@@ -3,6 +3,7 @@ package pro.devdesign.gameboy.cpu.instructions
 import org.junit.jupiter.api.Test
 import pro.devdesign.gameboy.cartridge.GbCartridgeData
 import pro.devdesign.gameboy.cpu.opcodes.GbOpcodes
+import pro.devdesign.gameboy.cpu.registers.InMemoryRegisters
 
 internal class SimpleInstructionsTest {
     @Test
@@ -12,32 +13,15 @@ internal class SimpleInstructionsTest {
                 GbOpcodes(),
                 GbCartridgeData(
                     javaClass,
-                    "/cpu_instrs.gb"
+                    "/mooneye_serial_test.gb"
                 )
-            )
+            ),
+            InMemoryRegisters()
         )
-        var address = 0x430
-        for (i in 0 until 30) {
+        var address = 0x150
+        for (i in 0 until 16000) {
             val (nextAddress, _, _, _) = instructions.instruction(address)
-            address = nextAddress
-        }
-    }
-
-    @Test
-    fun helloWorldInstructions() {
-        val instructions = PrintableInstructions(
-            GbCartridgeInstructions(
-                GbOpcodes(),
-                GbCartridgeData(
-                    javaClass,
-                    "/hello_world.gb"
-                )
-            )
-        )
-        var address = 0x00
-        for (i in 0 until 50) {
-            val (nextAddress, _, _, _) = instructions.instruction(address)
-            address = nextAddress
+            address = nextAddress.asInt()
         }
     }
 }

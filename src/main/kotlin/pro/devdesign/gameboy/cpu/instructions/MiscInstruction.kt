@@ -1,24 +1,29 @@
 package pro.devdesign.gameboy.cpu.instructions
 
 import pro.devdesign.gameboy.cpu.instructions.operands.Operand
+import pro.devdesign.gameboy.cpu.interrupts.Interrupts
 import pro.devdesign.gameboy.cpu.opcodes.InstructionMeta
 import pro.devdesign.gameboy.cpu.registers.Registers
 import pro.devdesign.gameboy.mem.Memory
 
-class MiscInstruction : Instruction {
+class MiscInstruction(
+    private val registers: Registers,
+    private val memory: Memory,
+    private val interrupts: Interrupts
+) : Instruction {
     override fun execute(
         meta: InstructionMeta,
-        operands: List<Operand>,
-        memory: Memory,
-        registers: Registers
+        operands: List<Operand>
     ) {
         when (meta.opcode()) {
             // Misc / control instructions
             0x00 -> {
                 // no-op
+
             }
             0x10 -> {
                 // stop?
+
             }
             0x27 -> { // decimal adjust to BCD
                 var result = registers.a().get()
@@ -62,10 +67,12 @@ class MiscInstruction : Instruction {
                 // halt?
             }
             0xF3 -> {
-                // disable interrupts with delay
+                // disable interrupts
+                interrupts.disable()
             }
             0xFB -> {
-                // enable interrupts with delay
+                // enable interrupts
+                interrupts.enable()
             }
         }
     }

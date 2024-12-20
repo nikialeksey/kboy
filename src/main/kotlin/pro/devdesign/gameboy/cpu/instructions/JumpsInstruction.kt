@@ -5,13 +5,14 @@ import pro.devdesign.gameboy.cpu.opcodes.InstructionMeta
 import pro.devdesign.gameboy.cpu.registers.Registers
 import pro.devdesign.gameboy.mem.Memory
 
-class JumpsInstruction : Instruction {
+class JumpsInstruction(
+    private val registers: Registers,
+    private val memory: Memory
+) : Instruction {
 
     override fun execute(
         meta: InstructionMeta,
-        operands: List<Operand>,
-        memory: Memory,
-        registers: Registers
+        operands: List<Operand>
     ) {
         when (meta.opcode()) {
             // Jumps

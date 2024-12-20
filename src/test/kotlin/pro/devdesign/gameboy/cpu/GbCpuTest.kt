@@ -5,41 +5,33 @@ import pro.devdesign.gameboy.cartridge.GbCartridge
 import pro.devdesign.gameboy.cartridge.GbCartridgeData
 import pro.devdesign.gameboy.cpu.instructions.GbCartridgeInstructions
 import pro.devdesign.gameboy.cpu.instructions.PrintableInstructions
+import pro.devdesign.gameboy.cpu.interrupts.GbInterrupts
 import pro.devdesign.gameboy.cpu.opcodes.GbOpcodes
 import pro.devdesign.gameboy.cpu.registers.InMemoryRegisters
-import pro.devdesign.gameboy.mem.InMemoryMemory
+import pro.devdesign.gameboy.mem.GbMemory
+import pro.devdesign.gameboy.mem.PrintableMemory
+import pro.devdesign.gameboy.serial.BufferSerial
 
 internal class GbCpuTest {
     @Test
-    fun asd() {
-        val cpu = GbCpu(
-            registers = InMemoryRegisters(),
-            memory = InMemoryMemory(),
-            instructions = //PrintableInstructions(
-                GbCartridgeInstructions(
-                    GbOpcodes(),
-                    GbCartridgeData(javaClass, "/cpu_instrs.gb")
-                )
-            //)
-        )
-
-        cpu.executeNext()
-    }
-
-    @Test
-    fun helloWorld() {
-        val ram = InMemoryMemory()
-        val cartridge = GbCartridge(GbCartridgeData(javaClass, "/hello_world.gb"))
+    fun cpuInstrs() {
+        val serial = BufferSerial()
+        val ram = GbMemory(serial)
+        val cartridge = GbCartridge(GbCartridgeData(javaClass, "/06-ld r,r.gb"))
         cartridge.upload(ram)
+
         val registers = InMemoryRegisters()
+        val memory = PrintableMemory(ram)
+        val instructions = GbCartridgeInstructions(GbOpcodes(), ram)
         val cpu = GbCpu(
             registers = registers,
-            memory = ram,
-            instructions = PrintableInstructions(
-                GbCartridgeInstructions(GbOpcodes(), ram)
-            )
+            memory = ram, // memory,
+            interrupts = GbInterrupts(registers, memory),
+            instructions = instructions // PrintableInstructions(instructions, registers)
         )
 
-        cpu.executeNext(100)
+        cpu.executeNext(80000)
+
+        println(String(serial.asByteArray()))
     }
 }

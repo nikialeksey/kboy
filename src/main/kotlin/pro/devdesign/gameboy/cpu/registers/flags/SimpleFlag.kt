@@ -25,4 +25,12 @@ class SimpleFlag : Flag {
     override fun setEnabled(enabled: Boolean) {
         value = enabled
     }
+
+    override fun toString(): String {
+        return if (value) {
+            "1"
+        } else {
+            "0"
+        }
+    }
 }

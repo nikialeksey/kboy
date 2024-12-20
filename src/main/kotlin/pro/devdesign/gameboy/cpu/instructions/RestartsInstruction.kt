@@ -5,18 +5,19 @@ import pro.devdesign.gameboy.cpu.opcodes.InstructionMeta
 import pro.devdesign.gameboy.cpu.registers.Registers
 import pro.devdesign.gameboy.mem.Memory
 
-class RestartsInstruction : Instruction {
+class RestartsInstruction(
+    private val registers: Registers,
+    private val memory: Memory
+) : Instruction {
 
     override fun execute(
         meta: InstructionMeta,
-        operands: List<Operand>,
-        memory: Memory,
-        registers: Registers
+        operands: List<Operand>
     ) {
         when (meta.opcode()) {
             // Restarts
             0xC7, 0xCF, 0xD7, 0xDF, 0xE7, 0xEF, 0xF7, 0xFF -> {
-                val pc = registers.pc().get() + meta.bytes()
+                val pc = registers.pc().get()
                 memory.write8(registers.sp().get() - 1, pc.shr(8).and(0xFF))
                 memory.write8(registers.sp().get() - 2, pc.and(0xFF))
                 registers.sp().set(registers.sp().get() - 2)

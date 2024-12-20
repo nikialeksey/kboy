@@ -22,4 +22,8 @@ class MergedRegister : Register {
     override fun get(): Int {
         return left.get().shl(8) + right.get()
     }
+
+    override fun toString(): String {
+        return get().toString(16).uppercase().padStart(4, padChar = '0')
+    }
 }

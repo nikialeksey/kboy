@@ -1,5 +1,6 @@
 package pro.devdesign.gameboy.cpu.instructions
 
+import pro.devdesign.gameboy.cpu.instructions.address.SimpleAddress
 import pro.devdesign.gameboy.cpu.instructions.operands.Z80FlagOperand
 import pro.devdesign.gameboy.cpu.instructions.operands.Z80LiteralOperand
 import pro.devdesign.gameboy.cpu.instructions.operands.Z80RegisterOperand
@@ -38,13 +39,13 @@ class GbCartridgeInstructions : Instructions {
                 p += bytes
                 if (operandName == "r8") {
                     // convert to signed
-                    if (value.and(0b1000_0000) == 1) {
+                    if (value.and(0b1000_0000) != 0) {
                         value -= 0b1_0000_0000
                     }
                 }
                 Z80ValueOperand(value, operandMeta.bytes(), operandMeta.isImmediate())
             } else {
-                if (operandName in arrayOf("NZ", "Z", "NC", "C")) {
+                if (operandName in arrayOf("NZ", "Z", "NC") || (operandName == "C" && instructionMeta.mnemonic() in arrayOf("CALL", "RET", "JR", "JP"))) {
                     Z80FlagOperand(operandName, operandMeta.isImmediate())
                 } else if (operandName.any(Character::isDigit)) {
                     Z80LiteralOperand(operandName)
@@ -58,6 +59,6 @@ class GbCartridgeInstructions : Instructions {
             }
         }
 
-        return ReadInstruction(p, isExtInstruction, instructionMeta, operands)
+        return ReadInstruction(SimpleAddress(p), isExtInstruction, instructionMeta, operands)
     }
 }

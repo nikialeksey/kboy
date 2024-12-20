@@ -41,4 +41,8 @@ class SimpleFlagRegister : FlagRegister {
     override fun c(): Flag {
         return c
     }
+
+    override fun toString(): String {
+        return "Z: ${z()}, N: ${n()}, H: ${h()}, C: ${c()}"
+    }
 }

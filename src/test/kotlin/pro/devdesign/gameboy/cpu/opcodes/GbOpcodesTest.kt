@@ -19,6 +19,5 @@ class GbOpcodesTest {
     fun asd() {
         val opcodes = GbOpcodes()
         println(1.shl(7) == 0b1000_0000)
-        println(0x100 == 0b1_0000_0000)
     }
 }

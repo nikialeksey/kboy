@@ -21,4 +21,8 @@ class Register8 : Register {
     override fun get(): Int {
         return v
     }
+
+    override fun toString(): String {
+        return v.toString(16).uppercase().padStart(2, padChar = '0')
+    }
 }

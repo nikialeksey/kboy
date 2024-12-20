@@ -13,7 +13,7 @@ class Z80LiteralOperand : Operand {
     }
 
     override fun read8(memory: Memory, registers: Registers): Int {
-        throw IllegalAccessException("You can not read byte from literal operand!")
+        return name.substringBefore("H").toInt(16)
     }
 
     override fun write8(memory: Memory, registers: Registers, value: Int) {
