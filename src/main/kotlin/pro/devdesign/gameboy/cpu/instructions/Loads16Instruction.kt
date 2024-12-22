@@ -21,8 +21,16 @@ class Loads16Instruction(
                 operands[0].write16(memory, registers, result)
             }
             0xF8 -> {
-                val result = operands[1].read16(memory, registers) + operands[2].read8(memory, registers)
+                val a = operands[1].read16(memory, registers)
+                val b = operands[2].read8(memory, registers)
+                val result = a + b
                 operands[0].write16(memory, registers, result)
+
+                registers.flag().z().disable()
+                registers.flag().n().disable()
+                // TODO i'm not sure that I should use here 8-bit comparison
+                registers.flag().h().setEnabled((a.and(0x0F) + b.and(0x0F)) > 0x0F)
+                registers.flag().c().setEnabled((a.and(0xFF) + b.and(0xFF)) > 0xFF)
             }
             0xC1, 0xD1, 0xE1, 0xF1 -> {
                 val low = memory.read8(registers.sp().get())
