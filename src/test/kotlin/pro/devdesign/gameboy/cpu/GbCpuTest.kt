@@ -18,6 +18,9 @@ import pro.devdesign.gameboy.serial.BufferSerial
 internal class GbCpuTest {
     @ParameterizedTest
     @ValueSource(strings = [
+        "/cpu-instrs/03-op sp,hl.gb",
+        "/cpu-instrs/04-op r,imm.gb",
+        "/cpu-instrs/05-op rp.gb",
         "/cpu-instrs/06-ld r,r.gb",
         "/cpu-instrs/07-jr,jp,call,ret,rst.gb"
     ])
@@ -35,7 +38,7 @@ internal class GbCpuTest {
             interrupts = GbInterrupts(registers, ram),
             instructions = instructions
         )
-        cpu.executeNext(782770)
+        cpu.executeNext(2827700)
 
         val outputMessage = String(serial.asByteArray())
         Assertions.assertTrue(
