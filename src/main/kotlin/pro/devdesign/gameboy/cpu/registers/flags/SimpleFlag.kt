@@ -1,33 +1,39 @@
 package pro.devdesign.gameboy.cpu.registers.flags
 
+import pro.devdesign.gameboy.cpu.registers.Register
+
 class SimpleFlag : Flag {
 
-    private var value: Boolean
+    private val f: Register
+    private val i: Int
 
-    constructor() : this(false)
-
-    constructor(value: Boolean) {
-        this.value = value
+    constructor(f: Register, i: Int) {
+        this.f = f
+        this.i = i
     }
 
     override fun enable() {
-        value = true
+        f.set(f.get().or(1.shl(i)))
     }
 
     override fun disable() {
-        value = false
+        f.set(f.get().and(1.shl(i).inv()))
     }
 
     override fun isEnabled(): Boolean {
-        return value
+        return f.get().and(1.shl(i)) != 0
     }
 
     override fun setEnabled(enabled: Boolean) {
-        value = enabled
+        if (enabled) {
+            enable()
+        } else {
+            disable()
+        }
     }
 
     override fun toString(): String {
-        return if (value) {
+        return if (isEnabled()) {
             "1"
         } else {
             "0"

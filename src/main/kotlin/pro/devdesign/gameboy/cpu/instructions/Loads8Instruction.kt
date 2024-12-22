@@ -53,8 +53,11 @@ class Loads8Instruction : Instruction {
             0x22, 0x32, 0x2A, 0x3A -> {
                 val result = operands[1].read8(memory, registers)
                 operands[0].write8(memory, registers, result.and(0xFF))
-                operands[0].incOrDec(registers)
-                operands[1].incOrDec(registers)
+                if (meta.opcode() == 0x22 || meta.opcode() == 0x32) {
+                    operands[0].incOrDec(registers)
+                } else {
+                    operands[1].incOrDec(registers)
+                }
             }
         }
     }

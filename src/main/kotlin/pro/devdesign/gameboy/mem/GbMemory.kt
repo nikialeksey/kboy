@@ -34,6 +34,9 @@ class GbMemory : Memory {
         if (address == 0xFF02) {
             println("Read from control")
         }
+        if (address == 0xFF44) {
+            return 0x90
+        }
         return data[address]
     }
 
@@ -45,7 +48,7 @@ class GbMemory : Memory {
             println("Request interrupt: 0x${value.toString(16).uppercase()}")
         }
         if (address == 0xFF01) {
-            println("Data: 0x${value.toString(16).uppercase()}")
+            println("Data: 0x${value.toString(16).uppercase()} (dec: $value, char: ${value.toChar()})")
             serial.put(value)
         }
         if (address == 0xFF02) {

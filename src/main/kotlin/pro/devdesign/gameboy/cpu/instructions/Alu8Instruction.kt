@@ -87,7 +87,7 @@ class Alu8Instruction(
             // 8-bit and
             in 0xA0..0xA7, 0xE6 -> {
                 val a = registers.a().get()
-                val n = operands[0].read8(memory, registers)
+                val n = operands[1].read8(memory, registers)
                 val result = a.and(n)
                 operands[0].write8(memory, registers, result)
 
@@ -99,7 +99,7 @@ class Alu8Instruction(
             // 8-bit xor
             in 0xA8..0xAF, 0xEE -> {
                 val a = registers.a().get()
-                val n = operands[0].read8(memory, registers)
+                val n = operands[1].read8(memory, registers)
                 val result = a.xor(n)
                 operands[0].write8(memory, registers, result)
 
@@ -111,8 +111,9 @@ class Alu8Instruction(
             // 8-bit or
             in 0xB0..0xB7, 0xF6 -> {
                 val a = registers.a().get()
-                val n = operands[0].read8(memory, registers)
+                val n = operands[1].read8(memory, registers)
                 val result = a.or(n)
+                registers.a().set(result)
                 operands[0].write8(memory, registers, result)
 
                 registers.flag().z().setEnabled(result == 0)

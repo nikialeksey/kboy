@@ -34,6 +34,9 @@ class JumpsInstruction(
                     registers.pc().set(operands[1].read16(memory, registers))
                 }
             }
+            0xE9 -> {
+                registers.pc().set(operands[0].read16(memory, registers))
+            }
         }
     }
 }

@@ -1,5 +1,7 @@
 package pro.devdesign.gameboy.cpu.registers.flags
 
+import pro.devdesign.gameboy.cpu.registers.Register
+
 class SimpleFlagRegister : FlagRegister {
 
     private val z: Flag
@@ -7,11 +9,11 @@ class SimpleFlagRegister : FlagRegister {
     private val h: Flag
     private val c: Flag
 
-    constructor() : this(
-        SimpleFlag(),
-        SimpleFlag(),
-        SimpleFlag(),
-        SimpleFlag()
+    constructor(f: Register) : this(
+        z = SimpleFlag(f, 7),
+        n = SimpleFlag(f, 6),
+        h = SimpleFlag(f, 5),
+        c = SimpleFlag(f, 4)
     )
 
     constructor(

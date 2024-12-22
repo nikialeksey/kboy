@@ -22,17 +22,16 @@ class InMemoryRegisters : Registers {
     private val flag: FlagRegister
 
     constructor() : this(
-        a = Register8(),
-        f = Register8(),
-        b = Register8(),
-        c = Register8(),
-        d = Register8(),
-        e = Register8(),
-        h = Register8(),
-        l = Register8(),
-        sp = Register16(0xFFFF),
-        pc = Register16(0x100),
-        flag = SimpleFlagRegister()
+        a = Register8(0x01),
+        f = Register8(0xB0),
+        b = Register8(0x00),
+        c = Register8(0x13),
+        d = Register8(0x00),
+        e = Register8(0xD8),
+        h = Register8(0x01),
+        l = Register8(0x4D),
+        sp = Register16(0xFFFE),
+        pc = Register16(0x0100)
     )
 
     constructor(
@@ -46,7 +45,6 @@ class InMemoryRegisters : Registers {
         l: Register,
         sp: Register,
         pc: Register,
-        flag: FlagRegister
     ) : this(
         a = a,
         f = f,
@@ -62,7 +60,7 @@ class InMemoryRegisters : Registers {
         hl = MergedRegister(h, l),
         sp = sp,
         pc = pc,
-        flag = flag
+        flag = SimpleFlagRegister(f)
     )
 
     constructor(
