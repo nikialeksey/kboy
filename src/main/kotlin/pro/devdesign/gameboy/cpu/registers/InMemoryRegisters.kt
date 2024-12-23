@@ -23,7 +23,7 @@ class InMemoryRegisters : Registers {
 
     constructor() : this(
         a = Register8(0x01),
-        f = Register8(0xB0),
+        f = Register8Hi(Register8(0xB0)),
         b = Register8(0x00),
         c = Register8(0x13),
         d = Register8(0x00),

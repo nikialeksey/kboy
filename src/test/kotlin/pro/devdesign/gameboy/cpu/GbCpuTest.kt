@@ -6,6 +6,7 @@ import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
 import pro.devdesign.gameboy.cartridge.GbCartridge
 import pro.devdesign.gameboy.cartridge.GbCartridgeData
+import pro.devdesign.gameboy.cpu.instructions.DoctorPrintableInstructions
 import pro.devdesign.gameboy.cpu.instructions.GbCartridgeInstructions
 import pro.devdesign.gameboy.cpu.instructions.PrintableInstructions
 import pro.devdesign.gameboy.cpu.interrupts.GbInterrupts
@@ -18,6 +19,7 @@ import pro.devdesign.gameboy.serial.BufferSerial
 internal class GbCpuTest {
     @ParameterizedTest
     @ValueSource(strings = [
+        "/cpu-instrs/01-special.gb",
         "/cpu-instrs/03-op sp,hl.gb",
         "/cpu-instrs/04-op r,imm.gb",
         "/cpu-instrs/05-op rp.gb",

@@ -43,9 +43,12 @@ class MiscInstruction(
                     }
                 }
                 registers.flag().h().disable()
+                if (result > 0xFF || result < 0) {
+                    registers.flag().c().enable()
+                }
+                result = result.and(0xFF)
                 registers.flag().z().setEnabled(result == 0)
-                registers.flag().c().setEnabled(result > 0xFF)
-                registers.a().set(result.and(0xFF))
+                registers.a().set(result)
             }
             0x2F -> {
                 registers.flag().n().enable()
