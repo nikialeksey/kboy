@@ -8,7 +8,7 @@ class JsonInstructionMeta : InstructionMeta {
 
     private val opcode: Int
     private val isImmediate: Scalar<Boolean>
-    private val cycles: Scalar<List<Int>>
+    private val cycles: Scalar<Cycles>
     private val bytes: Scalar<Int>
     private val mnemonic: Scalar<String>
     private val operands: Scalar<List<OperandMeta>>
@@ -20,7 +20,15 @@ class JsonInstructionMeta : InstructionMeta {
             instructionJson["immediate"]?.jsonPrimitive?.content?.toBoolean() ?: false
         },
         Sticky {
-            instructionJson["cycles"]?.jsonArray?.map { it.jsonPrimitive.int } ?: emptyList()
+            val cycles = instructionJson["cycles"]?.jsonArray?.map { it.jsonPrimitive.int } ?: emptyList()
+
+            if (cycles.isEmpty()) {
+                GbCycles(1, 1)
+            } else if (cycles.size == 1) {
+                GbCycles(cycles[0], cycles[0])
+            } else {
+                GbCycles(cycles[0], cycles[1])
+            }
         },
         Sticky {
             instructionJson["bytes"]?.jsonPrimitive?.int ?: 0
@@ -48,7 +56,7 @@ class JsonInstructionMeta : InstructionMeta {
     constructor(
         opcode: Int,
         isImmediate: Scalar<Boolean>,
-        cycles: Scalar<List<Int>>,
+        cycles: Scalar<Cycles>,
         bytes: Scalar<Int>,
         mnemonic: Scalar<String>,
         operands: Scalar<List<OperandMeta>>,
@@ -71,7 +79,7 @@ class JsonInstructionMeta : InstructionMeta {
         return isImmediate.value()
     }
 
-    override fun cycles(): List<Int> {
+    override fun cycles(): Cycles {
         return cycles.value()
     }
 

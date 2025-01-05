@@ -3,11 +3,13 @@ package pro.devdesign.gameboy.cpu.instructions
 import pro.devdesign.gameboy.cpu.instructions.operands.Operand
 import pro.devdesign.gameboy.cpu.opcodes.InstructionMeta
 import pro.devdesign.gameboy.cpu.registers.Registers
+import pro.devdesign.gameboy.cpu.timer.Timer
 import pro.devdesign.gameboy.mem.Memory
 
 class ExtInstruction(
     private val registers: Registers,
-    private val memory: Memory
+    private val memory: Memory,
+    private val timer: Timer
 ) : Instruction {
     override fun execute(
         meta: InstructionMeta,
@@ -25,6 +27,8 @@ class ExtInstruction(
                 registers.flag().n().disable()
                 registers.flag().h().disable()
                 registers.flag().c().setEnabled(c == 1)
+
+                timer.tick(meta.cycles().action())
             }
             in 0x08..0x0F -> {
                 val n = operands[0].read8(memory, registers)
@@ -36,6 +40,8 @@ class ExtInstruction(
                 registers.flag().n().disable()
                 registers.flag().h().disable()
                 registers.flag().c().setEnabled(c == 1)
+
+                timer.tick(meta.cycles().action())
             }
             in 0x10..0x17 -> {
                 val n = operands[0].read8(memory, registers)
@@ -48,6 +54,8 @@ class ExtInstruction(
                 registers.flag().n().disable()
                 registers.flag().h().disable()
                 registers.flag().c().setEnabled(c == 1)
+
+                timer.tick(meta.cycles().action())
             }
             in 0x18..0x1F -> {
                 val n = operands[0].read8(memory, registers)
@@ -60,6 +68,8 @@ class ExtInstruction(
                 registers.flag().n().disable()
                 registers.flag().h().disable()
                 registers.flag().c().setEnabled(c == 1)
+
+                timer.tick(meta.cycles().action())
             }
             in 0x20..0x27 -> {
                 val n = operands[0].read8(memory, registers)
@@ -71,6 +81,8 @@ class ExtInstruction(
                 registers.flag().n().disable()
                 registers.flag().h().disable()
                 registers.flag().c().setEnabled(c == 1)
+
+                timer.tick(meta.cycles().action())
             }
             in 0x28..0x2F -> {
                 val n = operands[0].read8(memory, registers)
@@ -82,6 +94,8 @@ class ExtInstruction(
                 registers.flag().n().disable()
                 registers.flag().h().disable()
                 registers.flag().c().setEnabled(c == 1)
+
+                timer.tick(meta.cycles().action())
             }
             in 0x30..0x37 -> {
                 val n = operands[0].read8(memory, registers)
@@ -92,6 +106,8 @@ class ExtInstruction(
                 registers.flag().n().disable()
                 registers.flag().h().disable()
                 registers.flag().c().disable()
+
+                timer.tick(meta.cycles().action())
             }
             in 0x38..0x3F -> {
                 val n = operands[0].read8(memory, registers)
@@ -103,6 +119,8 @@ class ExtInstruction(
                 registers.flag().n().disable()
                 registers.flag().h().disable()
                 registers.flag().c().setEnabled(c == 1)
+
+                timer.tick(meta.cycles().action())
             }
             in 0x40..0x7F -> {
                 val n = operands[0].read8(memory, registers)
@@ -112,16 +130,22 @@ class ExtInstruction(
                 registers.flag().z().setEnabled(!result)
                 registers.flag().n().disable()
                 registers.flag().h().enable()
+
+                timer.tick(meta.cycles().action())
             }
             in 0x80..0xBF -> {
                 val n = operands[0].read8(memory, registers)
                 val a = operands[1].read8(memory, registers)
                 operands[1].write8(memory, registers, a.and(1.shl(n).inv()).and(0xFF))
+
+                timer.tick(meta.cycles().action())
             }
             in 0xC0..0xFF -> {
                 val n = operands[0].read8(memory, registers)
                 val a = operands[1].read8(memory, registers)
                 operands[1].write8(memory, registers, a.or(1.shl(n)).and(0xFF))
+
+                timer.tick(meta.cycles().action())
             }
         }
     }

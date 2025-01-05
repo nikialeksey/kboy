@@ -6,18 +6,22 @@ import pro.devdesign.gameboy.cpu.instructions.Instructions
 import pro.devdesign.gameboy.cpu.instructions.SimpleInstruction
 import pro.devdesign.gameboy.cpu.interrupts.Interrupts
 import pro.devdesign.gameboy.cpu.registers.Registers
+import pro.devdesign.gameboy.cpu.timer.Timer
 import pro.devdesign.gameboy.mem.Memory
 
 class GbCpu(
     private val registers: Registers,
     private val memory: Memory,
     private val interrupts: Interrupts,
+    private val timer: Timer,
     private val instructions: Instructions,
-    private val instruction: Instruction = SimpleInstruction(registers, memory, interrupts),
-    private val extInstruction: Instruction = ExtInstruction(registers, memory)
+    private val instruction: Instruction = SimpleInstruction(registers, memory, timer, interrupts),
+    private val extInstruction: Instruction = ExtInstruction(registers, memory, timer)
 ) : Cpu {
+
     override fun executeNext(count: Int) {
         for (i in 0 until count) {
+            runInterrupts()
             val oldPc = registers.pc().get()
             val instructionData = instructions.instruction(oldPc)
             registers.pc().set(instructionData.nextAddress.asInt())
@@ -27,6 +31,18 @@ class GbCpu(
             } else {
                 instruction.execute(instructionData.instructionMeta, instructionData.operands)
             }
+        }
+    }
+
+    private fun runInterrupts() {
+        interrupts.tryRun { address: Int ->
+            val pc = registers.pc().get()
+            memory.write8(registers.sp().get() - 1, pc.shr(8).and(0xFF))
+            memory.write8(registers.sp().get() - 2, pc.and(0xFF))
+            registers.sp().set(registers.sp().get() - 2)
+            registers.pc().set(address)
+
+            // TODO should I do timer.tick() here?
         }
     }
 }

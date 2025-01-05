@@ -3,6 +3,7 @@ package pro.devdesign.gameboy.cpu.instructions
 import pro.devdesign.gameboy.cpu.instructions.operands.Operand
 import pro.devdesign.gameboy.cpu.opcodes.InstructionMeta
 import pro.devdesign.gameboy.cpu.registers.Registers
+import pro.devdesign.gameboy.cpu.timer.Timer
 import pro.devdesign.gameboy.mem.Memory
 import pro.devdesign.gameboy.mem.OffsetMemory
 
@@ -11,24 +12,29 @@ class Loads8Instruction : Instruction {
     private val registers: Registers
     private val memory: Memory
     private val memoryFF: Memory
+    private val timer: Timer
 
     constructor(
         registers: Registers,
-        memory: Memory
+        memory: Memory,
+        timer: Timer
     ) : this(
         registers,
         memory,
-        OffsetMemory(memory, 0xFF00)
+        OffsetMemory(memory, 0xFF00),
+        timer
     )
 
     constructor(
         registers: Registers,
         memory: Memory,
-        memoryFF: Memory
+        memoryFF: Memory,
+        timer: Timer
     ) {
         this.registers = registers
         this.memory = memory
         this.memoryFF = memoryFF
+        this.timer = timer
     }
 
     override fun execute(
@@ -45,10 +51,14 @@ class Loads8Instruction : Instruction {
             0xEA, 0xFA -> {
                 val result = operands[1].read8(memory, registers)
                 operands[0].write8(memory, registers, result.and(0xFF))
+
+                timer.tick(meta.cycles().action())
             }
             0xE0, 0xF0, 0xE2, 0xF2 -> {
                 val result = operands[1].read8(memoryFF, registers)
                 operands[0].write8(memory, registers, result.and(0xFF))
+
+                timer.tick(meta.cycles().action())
             }
             0x22, 0x32, 0x2A, 0x3A -> {
                 val result = operands[1].read8(memory, registers)
@@ -58,6 +68,8 @@ class Loads8Instruction : Instruction {
                 } else {
                     operands[1].incOrDec(registers)
                 }
+
+                timer.tick(meta.cycles().action())
             }
         }
     }

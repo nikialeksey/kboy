@@ -1,6 +1,9 @@
 package pro.devdesign.gameboy.cpu.opcodes
 
 class EmptyInstructionMeta : InstructionMeta {
+
+    private val emptyCycles = GbCycles(0, 0)
+
     override fun opcode(): Int {
         return 0
     }
@@ -9,8 +12,8 @@ class EmptyInstructionMeta : InstructionMeta {
         return false
     }
 
-    override fun cycles(): List<Int> {
-        return emptyList()
+    override fun cycles(): Cycles {
+        return emptyCycles
     }
 
     override fun bytes(): Int {

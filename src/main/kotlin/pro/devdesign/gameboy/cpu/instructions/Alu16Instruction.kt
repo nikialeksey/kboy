@@ -3,11 +3,13 @@ package pro.devdesign.gameboy.cpu.instructions
 import pro.devdesign.gameboy.cpu.instructions.operands.Operand
 import pro.devdesign.gameboy.cpu.opcodes.InstructionMeta
 import pro.devdesign.gameboy.cpu.registers.Registers
+import pro.devdesign.gameboy.cpu.timer.Timer
 import pro.devdesign.gameboy.mem.Memory
 
 class Alu16Instruction(
     private val registers: Registers,
-    private val memory: Memory
+    private val memory: Memory,
+    private val timer: Timer
 ) : Instruction {
 
     override fun execute(
@@ -21,6 +23,8 @@ class Alu16Instruction(
                 val value = operands[0].read16(memory, registers)
                 val result = (value + 1).and(0xFFFF)
                 operands[0].write16(memory, registers, result)
+
+                timer.tick(meta.cycles().action())
             }
             // 16-bit dec
             0x0B, 0x1B, 0x2B, 0x3B -> {
@@ -38,6 +42,8 @@ class Alu16Instruction(
                 registers.flag().n().disable()
                 registers.flag().h().setEnabled((a.and(0x0FFF) + n.and(0x0FFF)) > 0x0FFF)
                 registers.flag().c().setEnabled((a + n) > 0xFFFF)
+
+                timer.tick(meta.cycles().action())
             }
             0xE8 -> {
                 val a = operands[0].read16(memory, registers)
@@ -49,6 +55,8 @@ class Alu16Instruction(
                 registers.flag().n().disable()
                 registers.flag().h().setEnabled((a.and(0x0F) + n.and(0x0F)) > 0x0F)
                 registers.flag().c().setEnabled((a.and(0xFF) + n.and(0xFF)) > 0xFF)
+
+                timer.tick(meta.cycles().action())
             }
         }
     }

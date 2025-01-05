@@ -1,18 +1,39 @@
 package pro.devdesign.gameboy.mem
 
+import pro.devdesign.gameboy.cpu.interrupts.Interrupts
+import pro.devdesign.gameboy.cpu.timer.Timer
 import pro.devdesign.gameboy.serial.Serial
 
 class GbMemory : Memory {
 
     private val data: Array<Int>
+    private val timer: Timer
+    private val interrupts: Interrupts
     private val serial: Serial
 
-    constructor(serial: Serial) : this(0xFFFF + 1, serial)
+    constructor(interrupts: Interrupts, timer: Timer, serial: Serial) : this(
+        0xFFFF + 1,
+        interrupts,
+        timer,
+        serial
+    )
 
-    constructor(size: Int, serial: Serial) : this(Array(size) { 0 }, serial)
+    constructor(size: Int, interrupts: Interrupts, timer: Timer, serial: Serial) : this(
+        Array(size) { 0 },
+        interrupts,
+        timer,
+        serial
+    )
 
-    constructor(data: Array<Int>, serial: Serial) {
+    constructor(
+        data: Array<Int>,
+        interrupts: Interrupts,
+        timer: Timer,
+        serial: Serial
+    ) {
         this.data = data
+        this.timer = timer
+        this.interrupts = interrupts
         this.serial = serial
     }
 
@@ -31,30 +52,42 @@ class GbMemory : Memory {
          * FF80-FFFE   High RAM (HRAM)
          * FFFF        Interrupt Enable Register
          * */
-        if (address == 0xFF02) {
-            println("Read from control")
+        return if (address == 0xFF04) {
+            timer.div()
+        } else if (address == 0xFF05) {
+            timer.tima()
+        } else if (address == 0xFF06) {
+            timer.tma()
+        } else if (address == 0xFF07) {
+            timer.tac()
+        } else if (address == 0xFF0F) {
+            interrupts.ifFlag()
+        } else if (address == 0xFF44) {
+            0x90
+        } else if (address == 0xFFFF) {
+            interrupts.ieFlag()
+        } else {
+            data[address]
         }
-        if (address == 0xFF44) {
-            return 0x90
-        }
-        return data[address]
     }
 
     override fun write8(address: Int, value: Int) {
-        if (address == 0xFFFF) {
-            println("Enable interrupt: 0x${value.toString(16).uppercase()}")
-        }
-        if (address == 0xFF0F) {
-            println("Request interrupt: 0x${value.toString(16).uppercase()}")
-        }
         if (address == 0xFF01) {
-            println("Data: 0x${value.toString(16).uppercase()} (dec: $value, char: ${value.toChar()})")
             serial.put(value)
+        } else if (address == 0xFF04) {
+            timer.resetDiv()
+        } else if (address == 0xFF05) {
+            timer.updateTima(value)
+        } else if (address == 0xFF06) {
+            timer.updateTma(value)
+        } else if (address == 0xFF07) {
+            timer.updateTac(value)
+        } else if (address == 0xFF0F) {
+            interrupts.updateIfFlag(value)
+        } else if (address == 0xFFFF) {
+            interrupts.updateIeFlag(value)
+        } else {
+            data[address] = value
         }
-        if (address == 0xFF02) {
-            // println("Control: 0x${value.toString(16).uppercase()}")
-        }
-
-        data[address] = value
     }
 }

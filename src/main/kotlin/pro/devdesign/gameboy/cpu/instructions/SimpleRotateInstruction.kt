@@ -3,11 +3,13 @@ package pro.devdesign.gameboy.cpu.instructions
 import pro.devdesign.gameboy.cpu.instructions.operands.Operand
 import pro.devdesign.gameboy.cpu.opcodes.InstructionMeta
 import pro.devdesign.gameboy.cpu.registers.Registers
+import pro.devdesign.gameboy.cpu.timer.Timer
 import pro.devdesign.gameboy.mem.Memory
 
 class SimpleRotateInstruction(
     private val registers: Registers,
-    private val memory: Memory
+    private val memory: Memory,
+    private val timer: Timer
 ) : Instruction {
 
     override fun execute(
@@ -25,6 +27,8 @@ class SimpleRotateInstruction(
                 registers.flag().n().disable()
                 registers.flag().h().disable()
                 registers.flag().c().setEnabled(c == 1)
+
+                timer.tick(meta.cycles().action())
             }
             0x17 -> {
                 val n = registers.a().get()
@@ -36,6 +40,8 @@ class SimpleRotateInstruction(
                 registers.flag().n().disable()
                 registers.flag().h().disable()
                 registers.flag().c().setEnabled(c == 1)
+
+                timer.tick(meta.cycles().action())
             }
             0x0F -> {
                 val n = registers.a().get()
@@ -46,6 +52,8 @@ class SimpleRotateInstruction(
                 registers.flag().n().disable()
                 registers.flag().h().disable()
                 registers.flag().c().setEnabled(c == 1)
+
+                timer.tick(meta.cycles().action())
             }
             0x1F -> {
                 val n = registers.a().get()
@@ -57,6 +65,8 @@ class SimpleRotateInstruction(
                 registers.flag().n().disable()
                 registers.flag().h().disable()
                 registers.flag().c().setEnabled(c == 1)
+
+                timer.tick(meta.cycles().action())
             }
         }
     }
