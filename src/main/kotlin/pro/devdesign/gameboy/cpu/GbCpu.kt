@@ -43,6 +43,7 @@ class GbCpu(
             registers.pc().set(address)
 
             // TODO should I do timer.tick() here?
+            timer.tick(4)
         }
     }
 }

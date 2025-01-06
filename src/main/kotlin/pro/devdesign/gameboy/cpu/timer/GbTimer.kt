@@ -2,6 +2,11 @@ package pro.devdesign.gameboy.cpu.timer
 
 import pro.devdesign.gameboy.cpu.interrupts.Interrupts
 
+/**
+ * https://gbdev.io/pandocs/Timer_and_Divider_Registers.html
+ * https://hacktix.github.io/GBEDG/timers/#-ff04---divider-register--div-
+ * https://gbdev.io/pandocs/Timer_Obscure_Behaviour.html#relation-between-timer-and-divider-register
+ */
 class GbTimer(
     private val interrupts: Interrupts,
     private var div: Int = 0x0018,
@@ -10,19 +15,18 @@ class GbTimer(
     private var tima: Int = 0x00,
 ) : Timer {
 
-    private var previousDiv: Int = 0x0018
     private var nextTma: Int = -1
     private var overflow: Boolean = false
     private var cyclesSinceOverflow: Int = 0
 
     override fun tick(clockCycles: Int) {
+        val previousDiv = div
         incrementDiv(clockCycles)
         incrementTima(previousDiv, div, clockCycles)
         if (nextTma != -1) {
             tma = nextTma
             nextTma = -1
         }
-        previousDiv = div
     }
 
     override fun div(): Int {

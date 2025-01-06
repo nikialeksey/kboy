@@ -1,22 +1,20 @@
 package pro.devdesign.gameboy.cpu.interrupts
 
-/**
- * https://gbdev.io/pandocs/Timer_and_Divider_Registers.html
- * https://hacktix.github.io/GBEDG/timers/#-ff04---divider-register--div-
- * https://gbdev.io/pandocs/Timer_Obscure_Behaviour.html#relation-between-timer-and-divider-register
- */
 class GbInterrupts(
-    private var ime: Int = 0,
+    private var ime: Boolean = false,
     private var ieFlag: Int = 0x00,
     private var ifFlag: Int = 0xE1
 ) : Interrupts {
 
+    private var imeEnableCountDown = 0
+
     override fun enable() {
-        ime = 2 // interrupt run delayed for one command execution
+        imeEnableCountDown = 2 // interrupt run delayed for one command execution
     }
 
     override fun disable() {
-        ime = 0
+        imeEnableCountDown = 0
+        ime = false
     }
 
     override fun ieFlag(): Int {
@@ -40,29 +38,38 @@ class GbInterrupts(
     }
 
     override fun tryRun(run: (address: Int) -> Unit) {
-        if (ime > 0) {
-            ime--
-            if (ime == 0) {
-                executeInterrupts(run)
+        if (imeEnableCountDown > 0) {
+            imeEnableCountDown--
+            if (imeEnableCountDown == 0) {
+                ime = true
             }
+        }
+
+        if (ime) {
+            tryExecuteInterrupt(run)
         }
     }
 
-    private fun executeInterrupts(run: (address: Int) -> Unit) {
+    private fun tryExecuteInterrupt(run: (address: Int) -> Unit) {
         if (isNeededToExec(0, ieFlag, ifFlag)) { // vBlank
             ifFlag = ifFlag.and(1.shl(0).inv())
+            ime = false
             run(0x0040)
         } else if (isNeededToExec(1, ieFlag, ifFlag)) { // LCD
             ifFlag = ifFlag.and(1.shl(1).inv())
+            ime = false
             run(0x0048)
         } else if (isNeededToExec(2, ieFlag, ifFlag)) { // Timer
             ifFlag = ifFlag.and(1.shl(2).inv())
+            ime = false
             run(0x0050)
         } else if (isNeededToExec(3, ieFlag, ifFlag)) { // Serial
             ifFlag = ifFlag.and(1.shl(3).inv())
+            ime = false
             run(0x0058)
         } else if (isNeededToExec(4, ieFlag, ifFlag)) { // Joypad
             ifFlag = ifFlag.and(1.shl(4).inv())
+            ime = false
             run(0x0060)
         }
     }

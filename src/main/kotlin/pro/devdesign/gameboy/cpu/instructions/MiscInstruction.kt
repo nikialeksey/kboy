@@ -22,10 +22,12 @@ class MiscInstruction(
             0x00 -> {
                 // no-op
 
+                timer.tick(meta.cycles().action())
             }
             0x10 -> {
                 // stop?
 
+                timer.tick(meta.cycles().action())
             }
             0x27 -> { // decimal adjust to BCD
                 var result = registers.a().get()

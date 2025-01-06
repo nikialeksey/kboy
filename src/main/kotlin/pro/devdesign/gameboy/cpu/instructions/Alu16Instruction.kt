@@ -31,6 +31,8 @@ class Alu16Instruction(
                 val value = operands[0].read16(memory, registers)
                 val result = (value - 1).and(0xFFFF)
                 operands[0].write16(memory, registers, result)
+
+                timer.tick(meta.cycles().action())
             }
             // 16-bit add
             0x09, 0x19, 0x29, 0x39 -> {
