@@ -137,13 +137,13 @@ class GbTimerTest {
 
     @Test
     fun incrementEvery16TicksAndOverflow() {
-        val interrupts = GbInterrupts()
+        val interrupts = GbInterrupts(ifFlag = 0xE0)
         val timer = GbTimer(
             interrupts,
             div = 0x00,
             tma = 0xFF,
             tac = 0b101, // tima will increment every 16 ticks
-            tima = 0xFF, //
+            tima = 0xFF,
         )
 
         repeat(3) {
@@ -155,6 +155,38 @@ class GbTimerTest {
         Assertions.assertEquals(0, timer.tima())
 
         // overflow should start
+        Assertions.assertEquals(0xE0, interrupts.ifFlag())
 
+        timer.tick(4)
+        Assertions.assertEquals(0xE4, interrupts.ifFlag())
+        Assertions.assertEquals(0xFF, timer.tima())
+    }
+
+    @Test
+    fun incrementEvery16TicksAndCompleteFullTimaCycleToOverflow() {
+        val interrupts = GbInterrupts(ifFlag = 0x00)
+        val timer = GbTimer(
+            interrupts,
+            div = 0x00,
+            tma = 0x00,
+            tac = 0x05, // tima will increment every 16 ticks
+            tima = 0x00,
+        )
+
+        repeat(500) {
+            timer.tick(4)
+        }
+
+        repeat(500) {
+            timer.tick(4)
+        }
+
+        Assertions.assertEquals(0x00, interrupts.ifFlag())
+
+        repeat(500) {
+            timer.tick(4)
+        }
+
+        Assertions.assertEquals(0x04, interrupts.ifFlag())
     }
 }

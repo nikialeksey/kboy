@@ -74,7 +74,7 @@ class GbTimer(
         if (enabled) {
             if (overflow) {
                 cyclesSinceOverflow += clockCycles
-                if (clockCycles >= 4) {
+                if (cyclesSinceOverflow >= 4) {
                     interrupts.requestTimer()
                     tima = tma
                     overflow = false
@@ -91,7 +91,7 @@ class GbTimer(
                 } else /*if (tacBits == 0b11)*/ {
                     7
                 }
-                val previousBitEnabled = previousDiv and (1.shl(bit)) != 0
+                val previousBitEnabled = (previousDiv..div).any { it and (1.shl(bit)) != 0 }
                 val newBitDisabled = div and (1.shl(bit)) == 0
                 if (previousBitEnabled && newBitDisabled) {
                     tima++
