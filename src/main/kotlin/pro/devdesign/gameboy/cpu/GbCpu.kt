@@ -19,20 +19,43 @@ class GbCpu(
     private val extInstruction: Instruction = ExtInstruction(registers, memory)
 ) : Cpu {
 
-    override fun executeNext(count: Int) {
-        for (i in 0 until count) {
-            runInterrupts()
+    private var haltMode = false
 
-            val oldPc = registers.pc().get()
-            val instructionData = instructions.instruction(oldPc)
-            registers.pc().set(instructionData.nextAddress.asInt())
+    override fun execute(cpuCycles: Int) {
+        for (i in 0 until cpuCycles) {
+            if (!haltMode) {
+                runInterrupts()
 
-            val clockCyclesSpent = if (instructionData.isExtInstruction) {
-                extInstruction.execute(instructionData.instructionMeta, instructionData.operands)
+                val oldPc = registers.pc().get()
+                val instructionData = instructions.instruction(oldPc)
+                registers.pc().set(instructionData.nextAddress.asInt())
+
+                val isExt = instructionData.isExtInstruction
+                val clockCyclesSpent = if (isExt) {
+                    extInstruction.execute(
+                        instructionData.instructionMeta,
+                        instructionData.operands
+                    )
+                } else {
+                    instruction.execute(
+                        instructionData.instructionMeta,
+                        instructionData.operands
+                    )
+                }
+                timer.tick(clockCyclesSpent)
+
+                val opcode = instructionData.instructionMeta.opcode()
+                if (!isExt && opcode == 0x76) {
+                    haltMode = true
+                }
             } else {
-                instruction.execute(instructionData.instructionMeta, instructionData.operands)
+                // halt mode enabled
+                timer.tick(4)
+
+                if (interrupts.ieFlag().and(interrupts.ifFlag()) != 0) {
+                    haltMode = false
+                }
             }
-            timer.tick(clockCyclesSpent)
         }
     }
 

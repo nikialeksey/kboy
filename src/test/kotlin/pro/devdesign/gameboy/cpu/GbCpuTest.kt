@@ -45,7 +45,7 @@ internal class GbCpuTest {
             instructions = instructions,
             timer = timer
         )
-        cpu.executeNext(2827700)
+        cpu.execute(8827700)
 
         val outputMessage = String(serial.asByteArray())
         Assertions.assertTrue(
