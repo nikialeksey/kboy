@@ -1,74 +1,46 @@
 package pro.devdesign.gameboy.cpu.opcodes
 
 import kotlinx.serialization.json.*
-import org.cactoos.Scalar
-import org.cactoos.scalar.Sticky
 
-class JsonInstructionMeta : InstructionMeta {
+class JsonInstructionMeta(
+    private val opcode: Int,
+    private val instructionJson: JsonObject
+) : InstructionMeta {
 
-    private val opcode: Int
-    private val isImmediate: Scalar<Boolean>
-    private val cycles: Scalar<Cycles>
-    private val bytes: Scalar<Int>
-    private val mnemonic: Scalar<String>
-    private val operands: Scalar<List<OperandMeta>>
-    private val flags: Scalar<Map<String, String>>
+    private val _isImmediate by lazy {
+        instructionJson["immediate"]?.jsonPrimitive?.content?.toBoolean() ?: false
+    }
+    private val _cycles by lazy {
+        val cycles = instructionJson["cycles"]?.jsonArray?.map { it.jsonPrimitive.int } ?: emptyList()
 
-    constructor(opcode: Int, instructionJson: JsonObject) : this(
-        opcode,
-        Sticky {
-            instructionJson["immediate"]?.jsonPrimitive?.content?.toBoolean() ?: false
-        },
-        Sticky {
-            val cycles = instructionJson["cycles"]?.jsonArray?.map { it.jsonPrimitive.int } ?: emptyList()
-
-            if (cycles.isEmpty()) {
-                GbCycles(1, 1)
-            } else if (cycles.size == 1) {
-                GbCycles(cycles[0], cycles[0])
-            } else {
-                GbCycles(cycles[0], cycles[1])
-            }
-        },
-        Sticky {
-            instructionJson["bytes"]?.jsonPrimitive?.int ?: 0
-        },
-        Sticky {
-            instructionJson["mnemonic"]?.jsonPrimitive?.content ?: "Unknown mnemonic"
-        },
-        Sticky {
-            instructionJson["operands"]
-                ?.jsonArray
-                ?.map {
-                    JsonOperandMeta(it.jsonObject)
-                }
-                ?: emptyList()
-        },
-        Sticky {
-            instructionJson["flags"]
-                ?.jsonObject
-                ?.toMap()
-                ?.mapValues { it.value.jsonPrimitive.content }
-                ?: emptyMap()
+        if (cycles.isEmpty()) {
+            GbCycles(1, 1)
+        } else if (cycles.size == 1) {
+            GbCycles(cycles[0], cycles[0])
+        } else {
+            GbCycles(cycles[0], cycles[1])
         }
-    )
-
-    constructor(
-        opcode: Int,
-        isImmediate: Scalar<Boolean>,
-        cycles: Scalar<Cycles>,
-        bytes: Scalar<Int>,
-        mnemonic: Scalar<String>,
-        operands: Scalar<List<OperandMeta>>,
-        flags: Scalar<Map<String, String>>
-    ) {
-        this.opcode = opcode
-        this.isImmediate = isImmediate
-        this.cycles = cycles
-        this.bytes = bytes
-        this.mnemonic = mnemonic
-        this.operands = operands
-        this.flags = flags
+    }
+    private val _bytes by lazy {
+        instructionJson["bytes"]?.jsonPrimitive?.int ?: 0
+    }
+    private val _mnemonic by lazy {
+        instructionJson["mnemonic"]?.jsonPrimitive?.content ?: "Unknown mnemonic"
+    }
+    private val _operands by lazy {
+        instructionJson["operands"]
+            ?.jsonArray
+            ?.map {
+                JsonOperandMeta(it.jsonObject)
+            }
+            ?: emptyList()
+    }
+    private val _flags by lazy {
+        instructionJson["flags"]
+            ?.jsonObject
+            ?.toMap()
+            ?.mapValues { it.value.jsonPrimitive.content }
+            ?: emptyMap()
     }
 
     override fun opcode(): Int {
@@ -76,27 +48,27 @@ class JsonInstructionMeta : InstructionMeta {
     }
 
     override fun isImmediate(): Boolean {
-        return isImmediate.value()
+        return _isImmediate
     }
 
     override fun cycles(): Cycles {
-        return cycles.value()
+        return _cycles
     }
 
     override fun bytes(): Int {
-        return bytes.value()
+        return _bytes
     }
 
     override fun mnemonic(): String {
-        return mnemonic.value()
+        return _mnemonic
     }
 
     override fun operands(): List<OperandMeta> {
-        return operands.value()
+        return _operands
     }
 
     override fun flags(): Map<String, String> {
-        return flags.value()
+        return _flags
     }
 
     override fun toString(): String {

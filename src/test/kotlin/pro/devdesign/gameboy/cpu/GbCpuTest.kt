@@ -13,7 +13,8 @@ import pro.devdesign.gameboy.cpu.timer.GbTimer
 import pro.devdesign.gameboy.mem.GbMemory
 import pro.devdesign.gameboy.serial.BufferSerial
 
-internal class GbCpuTest {
+class GbCpuTest {
+
     @ParameterizedTest
     @ValueSource(strings = [
         "/cpu-instrs/01-special.gb",
@@ -37,7 +38,7 @@ internal class GbCpuTest {
         cartridge.upload(ram)
 
         val registers = InMemoryRegisters()
-        val instructions = GbCartridgeInstructions(GbOpcodes(), ram)
+        val instructions = GbCartridgeInstructions(GB_OPCODES, ram)
         val cpu = GbCpu(
             registers = registers,
             memory = ram,
@@ -45,12 +46,24 @@ internal class GbCpuTest {
             instructions = instructions,
             timer = timer
         )
-        cpu.execute(8827700)
+        while (true) {
+            cpu.execute(100_000)
+            val outputMessage = String(serial.asByteArray())
+            if (outputMessage.contains("Passed") || outputMessage.contains("Failed")) {
+                break
+            }
+        }
 
         val outputMessage = String(serial.asByteArray())
         Assertions.assertTrue(
             outputMessage.contains("Passed"),
             "Actual output message: $outputMessage"
         )
+    }
+
+    companion object {
+
+        private val GB_OPCODES = GbOpcodes()
+
     }
 }

@@ -2,39 +2,31 @@ package pro.devdesign.gameboy.cartridge
 
 import com.badlogic.gdx.graphics.Pixmap
 import com.badlogic.gdx.graphics.Texture
-import org.cactoos.Scalar
-import org.cactoos.scalar.Sticky
 
-class GbLogo : Logo {
+class GbLogo(
+    private val data: IntArray
+) : Logo {
 
-    private val pixmap: Scalar<Pixmap>
-
-    constructor(data: IntArray) : this(
-        Sticky {
-            Pixmap(96, 16, Pixmap.Format.RGB888).apply {
-                setColor(1f, 1f, 1f, 1f)
-                drawPixel(0, 0)
-                1.shr(2)
-                for (row in 0 until 2) {
-                    for (column in 0 until 12) {
-                        val tileByte1 = data[row * 24 + column * 2]
-                        val tileByte2 = data[row * 24 + column * 2 + 1]
-                        drawNibble(this, tileByte1 shr 4, column * 4, row * 4)
-                        drawNibble(this, tileByte1, column * 4, row * 4 + 1)
-                        drawNibble(this, tileByte2 shr 4, column * 4, row * 4 + 2)
-                        drawNibble(this, tileByte2, column * 4, row * 4 + 3)
-                    }
+    private val pixmap: Pixmap by lazy {
+        Pixmap(96, 16, Pixmap.Format.RGB888).apply {
+            setColor(1f, 1f, 1f, 1f)
+            drawPixel(0, 0)
+            1.shr(2)
+            for (row in 0 until 2) {
+                for (column in 0 until 12) {
+                    val tileByte1 = data[row * 24 + column * 2]
+                    val tileByte2 = data[row * 24 + column * 2 + 1]
+                    drawNibble(this, tileByte1 shr 4, column * 4, row * 4)
+                    drawNibble(this, tileByte1, column * 4, row * 4 + 1)
+                    drawNibble(this, tileByte2 shr 4, column * 4, row * 4 + 2)
+                    drawNibble(this, tileByte2, column * 4, row * 4 + 3)
                 }
             }
         }
-    )
-
-    constructor(pixmap: Scalar<Pixmap>) {
-        this.pixmap = pixmap
     }
 
     override fun asTexture(): Texture {
-        return Texture(pixmap.value())
+        return Texture(pixmap)
     }
 
     private companion object {

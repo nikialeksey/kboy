@@ -1,11 +1,7 @@
 package pro.devdesign.gameboy.cpu.opcodes
 
 import kotlinx.serialization.json.Json
-import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.jsonObject
-import org.cactoos.Scalar
-import org.cactoos.scalar.Sticky
-import java.io.InputStream
 
 /**
  * https://gbdev.io/gb-opcodes/optables/
@@ -13,58 +9,41 @@ import java.io.InputStream
  */
 class GbOpcodes : Opcodes {
 
-    private val codeToInstruction: Scalar<Array<InstructionMeta>>
-    private val codeToPrefixedInstruction: Scalar<Array<InstructionMeta>>
-
-    constructor() : this(GbOpcodes::class.java.getResourceAsStream("/Opcodes.json")!!)
-
-    constructor(opcodesStream: InputStream) : this(
-        Sticky {
-            val opcodesString = opcodesStream.readAllBytes().decodeToString()
-            Json.parseToJsonElement(opcodesString)
-        }
-    )
-
-    constructor(opcodesJson: Scalar<JsonElement>) : this(
-        Sticky {
-            val instructions = Array<InstructionMeta>(256) { EmptyInstructionMeta() }
-            val unprefixedOpcodes = opcodesJson.value().jsonObject["unprefixed"]
-            unprefixedOpcodes!!.jsonObject
-                .mapKeys { (code, _) ->
-                    code.removePrefix("0x").toInt(16)
-                }
-                .forEach { code, instructionJson ->
-                    instructions[code] = JsonInstructionMeta(code, instructionJson.jsonObject)
-                }
-            instructions
-        },
-        Sticky {
-            val instructions = Array<InstructionMeta>(256) { EmptyInstructionMeta() }
-            val cbprefixedOpcodes = opcodesJson.value().jsonObject["cbprefixed"]
-            cbprefixedOpcodes!!.jsonObject
-                .mapKeys { (code, _) ->
-                    code.removePrefix("0x").toInt(16)
-                }
-                .forEach { code, instructionJson ->
-                    instructions[code] = JsonInstructionMeta(code, instructionJson.jsonObject)
-                }
-            instructions
-        }
-    )
-
-    constructor(
-        codeToInstruction: Scalar<Array<InstructionMeta>>,
-        codeToPrefixedInstruction: Scalar<Array<InstructionMeta>>
-    ) {
-        this.codeToInstruction = codeToInstruction
-        this.codeToPrefixedInstruction = codeToPrefixedInstruction
+    private val opcodesStream = GbOpcodes::class.java.getResourceAsStream("/Opcodes.json")!!
+    private val opcodesJson by lazy(mode = LazyThreadSafetyMode.NONE) {
+        val opcodesString = opcodesStream.readAllBytes().decodeToString()
+        Json.parseToJsonElement(opcodesString)
+    }
+    private val codeToInstruction: Array<InstructionMeta> by lazy(mode = LazyThreadSafetyMode.NONE) {
+        val instructions = Array<InstructionMeta>(256) { EmptyInstructionMeta() }
+        val unprefixedOpcodes = opcodesJson.jsonObject["unprefixed"]
+        unprefixedOpcodes!!.jsonObject
+            .mapKeys { (code, _) ->
+                code.removePrefix("0x").toInt(16)
+            }
+            .forEach { code, instructionJson ->
+                instructions[code] = JsonInstructionMeta(code, instructionJson.jsonObject)
+            }
+        instructions
+    }
+    private val codeToPrefixedInstruction: Array<InstructionMeta> by lazy(mode = LazyThreadSafetyMode.NONE) {
+        val instructions = Array<InstructionMeta>(256) { EmptyInstructionMeta() }
+        val cbprefixedOpcodes = opcodesJson.jsonObject["cbprefixed"]
+        cbprefixedOpcodes!!.jsonObject
+            .mapKeys { (code, _) ->
+                code.removePrefix("0x").toInt(16)
+            }
+            .forEach { code, instructionJson ->
+                instructions[code] = JsonInstructionMeta(code, instructionJson.jsonObject)
+            }
+        instructions
     }
 
     override fun instructionMeta(code: Int): InstructionMeta {
-        return codeToInstruction.value()[code]
+        return codeToInstruction[code]
     }
 
     override fun cbInstructionMeta(code: Int): InstructionMeta {
-        return codeToPrefixedInstruction.value()[code]
+        return codeToPrefixedInstruction[code]
     }
 }

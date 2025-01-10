@@ -23,7 +23,6 @@ dependencies {
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib"
     implementation "org.jetbrains.kotlinx:kotlinx-serialization-json:1.4.1"
-    implementation "org.cactoos:cactoos:0.55.0"
 
     implementation "com.diogonunes:JColor:5.5.1"
 
