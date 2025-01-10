@@ -15,22 +15,24 @@ class GbCpu(
     private val interrupts: Interrupts,
     private val timer: Timer,
     private val instructions: Instructions,
-    private val instruction: Instruction = SimpleInstruction(registers, memory, timer, interrupts),
-    private val extInstruction: Instruction = ExtInstruction(registers, memory, timer)
+    private val instruction: Instruction = SimpleInstruction(registers, memory, interrupts),
+    private val extInstruction: Instruction = ExtInstruction(registers, memory)
 ) : Cpu {
 
     override fun executeNext(count: Int) {
         for (i in 0 until count) {
             runInterrupts()
+
             val oldPc = registers.pc().get()
             val instructionData = instructions.instruction(oldPc)
             registers.pc().set(instructionData.nextAddress.asInt())
 
-            if (instructionData.isExtInstruction) {
+            val clockCyclesSpent = if (instructionData.isExtInstruction) {
                 extInstruction.execute(instructionData.instructionMeta, instructionData.operands)
             } else {
                 instruction.execute(instructionData.instructionMeta, instructionData.operands)
             }
+            timer.tick(clockCyclesSpent)
         }
     }
 

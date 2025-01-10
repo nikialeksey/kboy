@@ -9,14 +9,13 @@ import pro.devdesign.gameboy.mem.Memory
 class RestartsInstruction(
     private val registers: Registers,
     private val memory: Memory,
-    private val timer: Timer
 ) : Instruction {
 
     override fun execute(
         meta: InstructionMeta,
         operands: List<Operand>
-    ) {
-        when (meta.opcode()) {
+    ): Int {
+        return when (meta.opcode()) {
             // Restarts
             0xC7, 0xCF, 0xD7, 0xDF, 0xE7, 0xEF, 0xF7, 0xFF -> {
                 val pc = registers.pc().get()
@@ -25,7 +24,10 @@ class RestartsInstruction(
                 registers.sp().set(registers.sp().get() - 2)
                 registers.pc().set(operands[0].read16(memory, registers))
 
-                timer.tick(meta.cycles().action())
+                meta.cycles().action()
+            }
+            else -> {
+                0
             }
         }
     }
