@@ -6,6 +6,9 @@ xcuserdata
 !src/**/build/
 local.properties
 .idea
+!.idea/runConfigurations/Lint_Detekt.xml
+!.idea/runConfigurations/Run_Desktop.xml
+!.idea/runConfigurations/Run_JS.xml
 .DS_Store
 captures
 .externalNativeBuild
@@ -16,3 +19,4 @@ captures
 !*.xcodeproj/project.xcworkspace/
 !*.xcworkspace/contents.xcworkspacedata
 **/xcshareddata/WorkspaceSettings.xcsettings
+

@@ -68,7 +68,7 @@ class GbCpu(
             registers.pc().set(address)
 
             // TODO should I do timer.tick() here?
-            timer.tick(4)
+            timer.tick(12) // maybe 12, because write+write+execute
         }
     }
 }

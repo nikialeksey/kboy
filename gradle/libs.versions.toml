@@ -19,6 +19,8 @@ kotlin-io = "0.6.0"
 kotlin-serialization-json = "1.8.0"
 kotlinx-resources = "0.10.0"
 
+detekt = "1.23.7"
+
 [libraries]
 kotlin-io = { module = "org.jetbrains.kotlinx:kotlinx-io-core", version.ref = "kotlin-io" }
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
@@ -36,6 +38,7 @@ androidx-lifecycle-runtime-compose = { group = "org.jetbrains.androidx.lifecycle
 kotlinx-coroutines-swing = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-swing", version.ref = "kotlinx-coroutines" }
 kotlinx-coroutines-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "kotlinx-coroutines" }
 ansi-color = { module = "com.diogonunes:JColor", version.ref = "ansi-color"}
+detekt-formatting = { module = "io.gitlab.arturbosch.detekt:detekt-formatting", version.ref = "detekt" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
@@ -45,3 +48,4 @@ composeCompiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "k
 kotlinMultiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
 kotlinSerialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 kotlinxResources = { id = "com.goncalossilva.resources", version.ref = "kotlinx-resources" }
+detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }

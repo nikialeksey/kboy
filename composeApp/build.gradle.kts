@@ -10,6 +10,7 @@ plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
+    alias(libs.plugins.detekt)
 }
 
 kotlin {
@@ -26,7 +27,7 @@ kotlin {
         iosSimulatorArm64()
     ).forEach { iosTarget ->
         iosTarget.binaries.framework {
-            baseName = "ComposeApp"
+            baseName = "KBoy"
             isStatic = true
         }
     }
@@ -35,12 +36,12 @@ kotlin {
     
     @OptIn(ExperimentalWasmDsl::class)
     wasmJs {
-        moduleName = "composeApp"
+        moduleName = "KBoy"
         browser {
             val rootDirPath = project.rootDir.path
             val projectDirPath = project.projectDir.path
             commonWebpackConfig {
-                outputFileName = "composeApp.js"
+                outputFileName = "KBoy.js"
                 devServer = (devServer ?: KotlinWebpackConfig.DevServer()).apply {
                     static = (static ?: mutableListOf()).apply {
                         // Serve sources to debug inside browser
@@ -65,7 +66,7 @@ kotlin {
             implementation(libs.kotlin.serialization.json)
             implementation(compose.runtime)
             implementation(compose.foundation)
-            implementation(compose.material)
+            implementation(compose.material3)
             implementation(compose.ui)
             implementation(compose.components.resources)
             implementation(compose.components.uiToolingPreview)
@@ -114,6 +115,7 @@ android {
 }
 
 dependencies {
+    detektPlugins(libs.detekt.formatting)
     debugImplementation(compose.uiTooling)
 }
 

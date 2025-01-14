@@ -3,7 +3,6 @@ package com.alexeycode.kboy.cpu.instructions
 import com.alexeycode.kboy.cpu.instructions.operands.Operand
 import com.alexeycode.kboy.cpu.opcodes.InstructionMeta
 import com.alexeycode.kboy.cpu.registers.Registers
-import com.alexeycode.kboy.cpu.timer.Timer
 import com.alexeycode.kboy.mem.Memory
 
 class RestartsInstruction(
