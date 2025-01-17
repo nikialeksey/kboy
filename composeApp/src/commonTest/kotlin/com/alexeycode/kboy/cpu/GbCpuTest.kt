@@ -1,5 +1,6 @@
 package com.alexeycode.kboy.cpu
 
+import com.alexeycode.kboy.SimpleGb
 import com.alexeycode.kboy.cartridge.GbCartridge
 import com.alexeycode.kboy.cartridge.GbCartridgeData
 import com.alexeycode.kboy.cpu.instructions.GbCartridgeInstructions
@@ -8,6 +9,7 @@ import com.alexeycode.kboy.cpu.opcodes.GbOpcodes
 import com.alexeycode.kboy.cpu.registers.InMemoryRegisters
 import com.alexeycode.kboy.cpu.timer.GbTimer
 import com.alexeycode.kboy.mem.GbMemory
+import com.alexeycode.kboy.ppu.GbPpu
 import com.alexeycode.kboy.serial.BufferSerial
 import com.goncalossilva.resources.Resource
 import kboy.composeapp.generated.resources.Res
@@ -98,10 +100,14 @@ class GbCpuTest {
             memory = ram,
             interrupts = interrupts,
             instructions = instructions,
-            timer = timer
+        )
+        val gb = SimpleGb(
+            timer = timer,
+            cpu = cpu,
+            ppu = GbPpu()
         )
         while (true) {
-            cpu.execute(100_000)
+            gb.run(100_000)
             val outputMessage = serial.asByteArray().decodeToString()
             if (outputMessage.contains("Passed") || outputMessage.contains("Failed")) {
                 break

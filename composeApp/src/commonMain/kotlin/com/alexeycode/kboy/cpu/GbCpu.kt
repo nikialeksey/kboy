@@ -6,14 +6,12 @@ import com.alexeycode.kboy.cpu.instructions.Instructions
 import com.alexeycode.kboy.cpu.instructions.SimpleInstruction
 import com.alexeycode.kboy.cpu.interrupts.Interrupts
 import com.alexeycode.kboy.cpu.registers.Registers
-import com.alexeycode.kboy.cpu.timer.Timer
 import com.alexeycode.kboy.mem.Memory
 
 class GbCpu(
     private val registers: Registers,
     private val memory: Memory,
     private val interrupts: Interrupts,
-    private val timer: Timer,
     private val instructions: Instructions,
     private val instruction: Instruction = SimpleInstruction(registers, memory, interrupts),
     private val extInstruction: Instruction = ExtInstruction(registers, memory)
@@ -21,11 +19,11 @@ class GbCpu(
 
     private var haltMode = false
 
-    override fun execute(cpuCycles: Int) {
-        for (i in 0 until cpuCycles) {
-            if (!haltMode) {
-                runInterrupts()
+    override fun tick(): Int {
+        return if (!haltMode) {
+            val clockCyclesSpentOnInterrupts = runInterrupts()
 
+            if (clockCyclesSpentOnInterrupts == 0) {
                 val oldPc = registers.pc().get()
                 val instructionData = instructions.instruction(oldPc)
                 registers.pc().set(instructionData.nextAddress.asInt())
@@ -42,24 +40,27 @@ class GbCpu(
                         instructionData.operands
                     )
                 }
-                timer.tick(clockCyclesSpent)
 
                 val opcode = instructionData.instructionMeta.opcode()
                 if (!isExt && opcode == 0x76) {
                     haltMode = true
                 }
-            } else {
-                // halt mode enabled
-                timer.tick(4)
 
-                if (interrupts.ieFlag().and(interrupts.ifFlag()) != 0) {
-                    haltMode = false
-                }
+                clockCyclesSpent
+            } else {
+                clockCyclesSpentOnInterrupts
             }
+        } else {
+            if (interrupts.ieFlag().and(interrupts.ifFlag()) != 0) {
+                haltMode = false
+            }
+
+            4
         }
     }
 
-    private fun runInterrupts() {
+    private fun runInterrupts(): Int {
+        var clockCyclesSpent = 0
         interrupts.tryRun { address: Int ->
             val pc = registers.pc().get()
             memory.write8(registers.sp().get() - 1, pc.shr(8).and(0xFF))
@@ -68,7 +69,8 @@ class GbCpu(
             registers.pc().set(address)
 
             // TODO should I do timer.tick() here?
-            timer.tick(12) // maybe 12, because write+write+execute
+            clockCyclesSpent = 12 // maybe 12, because write+write+execute
         }
+        return clockCyclesSpent
     }
 }
