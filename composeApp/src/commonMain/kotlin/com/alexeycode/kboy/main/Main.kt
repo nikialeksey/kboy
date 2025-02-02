@@ -1,13 +1,14 @@
 package com.alexeycode.kboy.main
 
-import androidx.compose.foundation.Canvas
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material3.Button
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
-import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.compose.viewModel
-import org.jetbrains.compose.resources.ExperimentalResourceApi
+import com.alexeycode.kboy.gb.ppu.GbImageBitmap
+import com.alexeycode.kboy.gl.RenderImage
 
 data class MainState(
     val romUri: String = ""
@@ -19,12 +20,14 @@ fun Main(viewModel: MainViewModel = viewModel { MainViewModel() }) {
     val romUri = remember(state) { state.romUri }
 
     if (romUri.isNotEmpty()) {
-        viewModel
-        Canvas(modifier = Modifier.fillMaxSize()) {
-
-        }
+        val image by viewModel.image.collectAsState(GbImageBitmap())
+        RenderImage(image)
     } else {
-
+        Button(onClick = {
+            viewModel.updateRomUri("C:\\Users\\nikia\\IdeaProjects\\GameBoy\\composeApp\\src\\commonTest\\composeResources\\files\\tetris.gb")
+        }) {
+            Text("Start")
+        }
     }
 
 }

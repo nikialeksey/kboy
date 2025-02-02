@@ -2,6 +2,7 @@ package com.alexeycode.kboy.gb.mem
 
 import com.alexeycode.kboy.gb.cpu.interrupts.Interrupts
 import com.alexeycode.kboy.gb.cpu.timer.Timer
+import com.alexeycode.kboy.gb.ppu.LcdStatus
 import com.alexeycode.kboy.gb.serial.Serial
 
 class GbMemory : Memory {
@@ -10,31 +11,36 @@ class GbMemory : Memory {
     private val timer: Timer
     private val interrupts: Interrupts
     private val serial: Serial
+    private val lcdStatus: LcdStatus
 
-    constructor(interrupts: Interrupts, timer: Timer, serial: Serial) : this(
+    constructor(interrupts: Interrupts, timer: Timer, serial: Serial, lcdStatus: LcdStatus) : this(
         0xFFFF + 1,
         interrupts,
         timer,
-        serial
+        serial,
+        lcdStatus
     )
 
-    constructor(size: Int, interrupts: Interrupts, timer: Timer, serial: Serial) : this(
+    constructor(size: Int, interrupts: Interrupts, timer: Timer, serial: Serial, lcdStatus: LcdStatus) : this(
         Array(size) { 0 },
         interrupts,
         timer,
-        serial
+        serial,
+        lcdStatus
     )
 
     constructor(
         data: Array<Int>,
         interrupts: Interrupts,
         timer: Timer,
-        serial: Serial
+        serial: Serial,
+        lcdStatus: LcdStatus
     ) {
         this.data = data
         this.timer = timer
         this.interrupts = interrupts
         this.serial = serial
+        this.lcdStatus = lcdStatus
     }
 
     override fun read8(address: Int): Int {
@@ -62,8 +68,12 @@ class GbMemory : Memory {
             timer.tac()
         } else if (address == 0xFF0F) {
             interrupts.ifFlag()
+        } else if (address == 0xFF41) {
+            lcdStatus.stat()
         } else if (address == 0xFF44) {
-            0x90
+            lcdStatus.ly()
+        } else if (address == 0xFF45) {
+            lcdStatus.lyc()
         } else if (address == 0xFFFF) {
             interrupts.ieFlag()
         } else {
@@ -84,6 +94,12 @@ class GbMemory : Memory {
             timer.updateTac(value)
         } else if (address == 0xFF0F) {
             interrupts.updateIfFlag(value)
+        } else if (address == 0xFF41) {
+            lcdStatus.updateStat(value)
+        } else if (address == 0xFF44) {
+            // LY read only
+        } else if (address == 0xFF45) {
+            lcdStatus.updateLyc(value)
         } else if (address == 0xFFFF) {
             interrupts.updateIeFlag(value)
         } else {

@@ -11,6 +11,8 @@ kotlin = "2.1.0"
 kotlinx-coroutines = "1.9.0"
 kotlin-io = "0.6.0"
 kotlin-serialization-json = "1.8.0"
+lwjgl3-awt = "0.1.8"
+lwjgl = "3.3.3"
 
 detekt = "1.23.7"
 
@@ -26,6 +28,10 @@ kotlinx-coroutines-swing = { group = "org.jetbrains.kotlinx", name = "kotlinx-co
 kotlinx-coroutines-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "kotlinx-coroutines" }
 ansi-color = { module = "com.diogonunes:JColor", version.ref = "ansi-color"}
 detekt-formatting = { module = "io.gitlab.arturbosch.detekt:detekt-formatting", version.ref = "detekt" }
+lwjgl = { module = "org.lwjgl:lwjgl", version.ref = "lwjgl" }
+lwjgl-jawt = { module = "org.lwjgl:lwjgl-jawt", version.ref = "lwjgl" }
+lwjgl-opengl = { module = "org.lwjgl:lwjgl-opengl", version.ref = "lwjgl" }
+lwjgl3-awt = { module = "org.lwjglx:lwjgl3-awt", version.ref = "lwjgl3-awt" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }

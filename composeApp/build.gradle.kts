@@ -78,6 +78,16 @@ kotlin {
             implementation(compose.desktop.currentOs)
             implementation(libs.kotlinx.coroutines.swing)
             implementation(libs.ansi.color)
+
+            implementation(libs.lwjgl)
+            implementation(libs.lwjgl.opengl)
+            implementation(libs.lwjgl.jawt)
+            implementation(libs.lwjgl3.awt)
+
+            implementation("org.lwjgl:lwjgl:3.3.3:natives-windows")
+            implementation("org.lwjgl:lwjgl-opengl:3.3.3:natives-windows")
+            implementation("org.lwjgl:lwjgl:3.3.3:natives-linux")
+            implementation("org.lwjgl:lwjgl-opengl:3.3.3:natives-linux")
         }
 
         commonTest.dependencies {

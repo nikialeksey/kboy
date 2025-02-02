@@ -1,45 +1,41 @@
 package com.alexeycode.kboy.gb.ppu
 
-import androidx.compose.ui.graphics.ImageBitmap
-import androidx.compose.ui.graphics.ImageBitmapConfig
-import androidx.compose.ui.graphics.colorspace.ColorSpace
-import androidx.compose.ui.graphics.colorspace.ColorSpaces
+import kotlin.concurrent.Volatile
 
-class GbImageBitmap : ImageBitmap {
+class GbImageBitmap(
+    private val width: Int = 160,
+    private val height: Int = 144,
+) : ImageBitmap {
 
-    private val screenPixels = IntArray(160 * 144)
+    private val screenPixels = ByteArray(width * height * 4)
+    @Volatile
+    private var hash = 0
 
-    override val colorSpace: ColorSpace
-        get() = ColorSpaces.Srgb
-    override val config: ImageBitmapConfig
-        get() = ImageBitmapConfig.Argb8888
-    override val hasAlpha: Boolean
-        get() = false
-    override val height: Int
-        get() = 144
-    override val width: Int
-        get() = 160
+    fun setPixel(x: Int, y: Int, r: Byte, g: Byte, b: Byte, alpha: Byte) {
+        screenPixels[y * width * 4 + x * 4] = r
+        screenPixels[y * width * 4 + x * 4 + 1] = g
+        screenPixels[y * width * 4 + x * 4 + 2] = b
+        screenPixels[y * width * 4 + x * 4 + 3] = alpha
+        hash++
+    }
 
-    override fun prepareToDraw() = Unit
+    override fun width(): Int {
+        return width
+    }
 
-    override fun readPixels(
-        buffer: IntArray,
-        startX: Int,
-        startY: Int,
-        width: Int,
-        height: Int,
-        bufferOffset: Int,
-        stride: Int
-    ) {
-        var x = startX
-        var y = startY
-        while (y < height) {
-            while (x < width) {
-                buffer[bufferOffset + y * width + x] = screenPixels[y * stride + x]
-                x++
-            }
-            y++
-            x = 0
-        }
+    override fun height(): Int {
+        return height
+    }
+
+    override fun pixels(): ByteArray {
+        return screenPixels
+    }
+
+    override fun hashCode(): Int {
+        return hash
+    }
+
+    override fun equals(other: Any?): Boolean {
+        return false
     }
 }

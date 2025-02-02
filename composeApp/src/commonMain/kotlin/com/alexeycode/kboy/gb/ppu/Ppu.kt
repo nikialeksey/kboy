@@ -1,6 +1,5 @@
 package com.alexeycode.kboy.gb.ppu
 
-import androidx.compose.ui.graphics.ImageBitmap
 import kotlinx.coroutines.flow.SharedFlow
 
 interface Ppu {

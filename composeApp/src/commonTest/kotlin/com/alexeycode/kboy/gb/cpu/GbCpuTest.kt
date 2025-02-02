@@ -9,6 +9,7 @@ import com.alexeycode.kboy.gb.cpu.opcodes.GbOpcodes
 import com.alexeycode.kboy.gb.cpu.registers.InMemoryRegisters
 import com.alexeycode.kboy.gb.cpu.timer.GbTimer
 import com.alexeycode.kboy.gb.mem.GbMemory
+import com.alexeycode.kboy.gb.ppu.GbLcdStatus
 import com.alexeycode.kboy.gb.ppu.GbPpu
 import com.alexeycode.kboy.gb.serial.BufferSerial
 import kboy.composeapp.generated.resources.Res
@@ -79,7 +80,8 @@ class GbCpuTest {
         val interrupts = GbInterrupts()
         val timer = GbTimer(interrupts)
         val serial = BufferSerial()
-        val ram = GbMemory(interrupts, timer, serial)
+        val lcdStatus = GbLcdStatus()
+        val ram = GbMemory(interrupts, timer, serial, lcdStatus)
         val cartridge = GbCartridge(
             GbCartridgeData(
                 Res.readBytes("files/$gbFileName")
@@ -103,7 +105,7 @@ class GbCpuTest {
         val gb = SimpleGb(
             timer = timer,
             cpu = cpu,
-            ppu = GbPpu(memory = ram)
+            ppu = GbPpu(memory = ram, lcdStatus)
         )
         while (true) {
             gb.run(100_000)
