@@ -10,8 +10,8 @@ class GbLcdStatus : LcdStatus {
         return ly
     }
 
-    override fun incrementLy() {
-        ly++
+    override fun updateLy(currentLy: Int) {
+        ly = currentLy
     }
 
     override fun lyc(): Int {

@@ -2,7 +2,7 @@ package com.alexeycode.kboy.gb.ppu
 
 interface LcdStatus {
     fun ly(): Int
-    fun incrementLy()
+    fun updateLy(currentLy: Int)
 
     fun lyc(): Int
     fun updateLyc(value: Int)

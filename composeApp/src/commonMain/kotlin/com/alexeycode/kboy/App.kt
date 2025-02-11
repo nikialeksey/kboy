@@ -2,13 +2,14 @@ package com.alexeycode.kboy
 
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import com.alexeycode.kboy.io.Controller
 import com.alexeycode.kboy.main.Main
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
 @Preview
-fun App() {
+fun App(controller: Controller = Controller.Dummy()) {
     MaterialTheme {
-        Main()
+        Main(controller)
     }
 }

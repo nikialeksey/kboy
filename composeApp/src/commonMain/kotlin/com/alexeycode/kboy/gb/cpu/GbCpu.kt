@@ -29,16 +29,20 @@ class GbCpu(
                 registers.pc().set(instructionData.nextAddress.asInt())
 
                 val isExt = instructionData.isExtInstruction
-                val clockCyclesSpent = if (isExt) {
-                    extInstruction.execute(
-                        instructionData.instructionMeta,
-                        instructionData.operands
-                    )
-                } else {
-                    instruction.execute(
-                        instructionData.instructionMeta,
-                        instructionData.operands
-                    )
+                val clockCyclesSpent = try {
+                    if (isExt) {
+                        extInstruction.execute(
+                            instructionData.instructionMeta,
+                            instructionData.operands
+                        )
+                    } else {
+                        instruction.execute(
+                            instructionData.instructionMeta,
+                            instructionData.operands
+                        )
+                    }
+                } catch (e: IllegalArgumentException) {
+                    throw RuntimeException("CPU can not execute instruction at address 0x${oldPc.toString(16).uppercase()}", e)
                 }
 
                 val opcode = instructionData.instructionMeta.opcode()

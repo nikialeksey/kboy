@@ -9,13 +9,14 @@ import androidx.compose.runtime.remember
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.alexeycode.kboy.gb.ppu.GbImageBitmap
 import com.alexeycode.kboy.gl.RenderImage
+import com.alexeycode.kboy.io.Controller
 
 data class MainState(
     val romUri: String = ""
 )
 
 @Composable
-fun Main(viewModel: MainViewModel = viewModel { MainViewModel() }) {
+fun Main(controller: Controller, viewModel: MainViewModel = viewModel { MainViewModel() }) {
     val state by viewModel.state
     val romUri = remember(state) { state.romUri }
 
@@ -24,7 +25,10 @@ fun Main(viewModel: MainViewModel = viewModel { MainViewModel() }) {
         RenderImage(image)
     } else {
         Button(onClick = {
-            viewModel.updateRomUri("C:\\Users\\nikia\\IdeaProjects\\GameBoy\\composeApp\\src\\commonTest\\composeResources\\files\\tetris.gb")
+            viewModel.updateRomUri(
+                "C:\\Users\\nikia\\IdeaProjects\\GameBoy\\composeApp\\src\\commonTest\\composeResources\\files\\snake.gb",
+                controller
+            )
         }) {
             Text("Start")
         }

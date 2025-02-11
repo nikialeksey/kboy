@@ -81,10 +81,10 @@ actual fun RenderImage(image: ImageBitmap) {
                     glOrtho(0.0, width.toDouble(), 0.0, height.toDouble(), -1.0, 1.0)
 
                     glBegin(GL_QUADS)
-                    glTexCoord2f(0f,0f); glVertex2f(0f,0f)
-                    glTexCoord2f(0f,1f); glVertex2f(0f,height.toFloat())
-                    glTexCoord2f(1f,1f); glVertex2f(width.toFloat(), height.toFloat())
-                    glTexCoord2f(1f,0f); glVertex2f(width.toFloat(),0f)
+                    glTexCoord2f(0f, 1f); glVertex2f(0f, 0f)
+                    glTexCoord2f(0f, 0f); glVertex2f(0f, height.toFloat())
+                    glTexCoord2f(1f, 0f); glVertex2f(width.toFloat(), height.toFloat())
+                    glTexCoord2f(1f, 1f); glVertex2f(width.toFloat(), 0f)
                     glEnd()
 
                     glPopMatrix()

@@ -10,7 +10,10 @@ interface Interrupts {
     fun ifFlag(): Int
     fun updateIfFlag(flag: Int)
 
+    fun requestVBlank()
+    fun requestStat()
     fun requestTimer()
+    fun requestJoypad()
 
     fun tryRun(run: (address: Int) -> Unit)
 }

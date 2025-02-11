@@ -11,7 +11,8 @@ class GbCartridge(
     constructor(data: Rom) : this(data, GbCartridgeMeta(data))
 
     override fun upload(to: Memory) {
-        for (address in 0x0000..0x7FFF) {
+        val upperBound = meta.romSizeKb() * 1024
+        for (address in 0x0000 until upperBound) {
             to.write8(address, data.read8(address))
         }
     }

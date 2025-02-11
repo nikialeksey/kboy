@@ -8,9 +8,13 @@ import com.alexeycode.kboy.gb.cpu.interrupts.GbInterrupts
 import com.alexeycode.kboy.gb.cpu.opcodes.GbOpcodes
 import com.alexeycode.kboy.gb.cpu.registers.InMemoryRegisters
 import com.alexeycode.kboy.gb.cpu.timer.GbTimer
+import com.alexeycode.kboy.gb.joypad.GbJoypad
 import com.alexeycode.kboy.gb.mem.GbMemory
+import com.alexeycode.kboy.gb.ppu.GbBackground
+import com.alexeycode.kboy.gb.ppu.GbLcdControl
 import com.alexeycode.kboy.gb.ppu.GbLcdStatus
 import com.alexeycode.kboy.gb.ppu.GbPpu
+import com.alexeycode.kboy.gb.ppu.GbWindow
 import com.alexeycode.kboy.gb.serial.BufferSerial
 import kboy.composeapp.generated.resources.Res
 import kotlinx.coroutines.test.runTest
@@ -80,8 +84,13 @@ class GbCpuTest {
         val interrupts = GbInterrupts()
         val timer = GbTimer(interrupts)
         val serial = BufferSerial()
+        val joypad = GbJoypad(interrupts)
         val lcdStatus = GbLcdStatus()
-        val ram = GbMemory(interrupts, timer, serial, lcdStatus)
+        val lcdControl = GbLcdControl()
+        val background = GbBackground()
+        val window = GbWindow()
+
+        val ram = GbMemory(interrupts, timer, serial, joypad, lcdStatus, lcdControl, background, window)
         val cartridge = GbCartridge(
             GbCartridgeData(
                 Res.readBytes("files/$gbFileName")
@@ -105,7 +114,7 @@ class GbCpuTest {
         val gb = SimpleGb(
             timer = timer,
             cpu = cpu,
-            ppu = GbPpu(memory = ram, lcdStatus)
+            ppu = GbPpu(interrupts, ram, lcdStatus, lcdControl, background, window)
         )
         while (true) {
             gb.run(100_000)

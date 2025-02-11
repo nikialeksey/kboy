@@ -4,6 +4,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.alexeycode.kboy.gb.ppu.ImageBitmap
+import com.alexeycode.kboy.io.Controller
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 
@@ -18,9 +19,9 @@ class MainViewModel(
             return _image!!
         }
 
-    fun updateRomUri(romUri:  String) {
+    fun updateRomUri(romUri:  String, controller: Controller) {
         viewModelScope.launch {
-            _image = interactor.prepareGb(viewModelScope, romUri)
+            _image = interactor.prepareGb(viewModelScope, romUri, controller)
 
             state.value = state.value.copy(romUri = romUri)
         }

@@ -9,6 +9,7 @@ class GbInterrupts(
     private var imeEnableCountDown = 0
 
     override fun enable() {
+        println("!!!!!!!!!!!!!!! enable interrupts")
         imeEnableCountDown = 2 // interrupt run delayed for one command execution
     }
 
@@ -33,8 +34,20 @@ class GbInterrupts(
         ifFlag = flag.or(0xE0)
     }
 
+    override fun requestVBlank() {
+        ifFlag = ifFlag.or(1.shl(0))
+    }
+
+    override fun requestStat() {
+        ifFlag = ifFlag.or(1.shl(1))
+    }
+
     override fun requestTimer() {
         ifFlag = ifFlag.or(1.shl(2))
+    }
+
+    override fun requestJoypad() {
+        ifFlag = ifFlag.or(1.shl(4))
     }
 
     override fun tryRun(run: (address: Int) -> Unit) {
@@ -55,7 +68,7 @@ class GbInterrupts(
             ifFlag = ifFlag.and(1.shl(0).inv())
             ime = false
             run(0x0040)
-        } else if (isNeededToExec(1, ieFlag, ifFlag)) { // LCD
+        } else if (isNeededToExec(1, ieFlag, ifFlag)) { // STAT (LCD)
             ifFlag = ifFlag.and(1.shl(1).inv())
             ime = false
             run(0x0048)
