@@ -26,7 +26,6 @@ class GbJoypad(
             }
         }
 
-        println("!!!!!!!!!!! joypad: 0b${result.toString(2).padStart(8, '0')}")
         return result
     }
 

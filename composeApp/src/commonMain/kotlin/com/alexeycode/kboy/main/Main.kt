@@ -26,7 +26,7 @@ fun Main(controller: Controller, viewModel: MainViewModel = viewModel { MainView
     } else {
         Button(onClick = {
             viewModel.updateRomUri(
-                "C:\\Users\\nikia\\IdeaProjects\\GameBoy\\composeApp\\src\\commonTest\\composeResources\\files\\snake.gb",
+                "C:\\Users\\nikia\\IdeaProjects\\GameBoy\\composeApp\\src\\commonTest\\composeResources\\files\\tetris.gb",
                 controller
             )
         }) {

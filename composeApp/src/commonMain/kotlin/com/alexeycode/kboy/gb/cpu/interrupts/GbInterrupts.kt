@@ -9,7 +9,6 @@ class GbInterrupts(
     private var imeEnableCountDown = 0
 
     override fun enable() {
-        println("!!!!!!!!!!!!!!! enable interrupts")
         imeEnableCountDown = 2 // interrupt run delayed for one command execution
     }
 
