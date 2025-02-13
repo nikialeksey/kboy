@@ -156,12 +156,12 @@ class GbPpu(
             // (ly - y) - y position inside sprite
             //
             var yInSprite = if (attrs.and(1.shl(6)) == 0) {
-                lcdStatus.ly() - spriteY
+                lcdStatus.ly() + 16 - spriteY
             } else {
-                lcdControl.objHeight() - (lcdStatus.ly() - spriteY) - 1
+                lcdControl.objHeight() - (lcdStatus.ly() + 16 - spriteY) - 1
             }
 
-            val index = if (lcdControl.objHeight() == 16) {
+            val tileNumber = if (lcdControl.objHeight() == 16) {
                 if (yInSprite > 8) {
                     yInSprite -= 8
                     (spriteIndex[i].and(0xFE) + 1).and(0xFF)
@@ -171,7 +171,7 @@ class GbPpu(
             } else {
                 spriteIndex[i]
             }
-            val spriteDataAddress = 0x8000 + index * 16
+            val spriteDataAddress = 0x8000 + tileNumber * 16
             val lineAddress = spriteDataAddress + yInSprite * 2
             val a = memory.read8(lineAddress)
             val b = memory.read8(lineAddress + 1)
@@ -182,8 +182,8 @@ class GbPpu(
                 } else {
                     8 - x - 1
                 }
-                val screenX = spriteX + xInSprite
-                if (screenX < SCREEN_WIDTH) {
+                val screenX = spriteX - 8 + xInSprite
+                if (screenX >= 0 && screenX < SCREEN_WIDTH) {
                     val bit = (8 - xInSprite - 1)
                     val pixelLow = if (a.and(1.shl(bit)) != 0) 1 else 0
                     val pixelHigh = if (b.and(1.shl(bit)) != 0) 1 else 0
