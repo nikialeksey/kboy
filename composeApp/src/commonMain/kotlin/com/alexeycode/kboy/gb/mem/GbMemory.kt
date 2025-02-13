@@ -6,6 +6,7 @@ import com.alexeycode.kboy.gb.joypad.Joypad
 import com.alexeycode.kboy.gb.ppu.Background
 import com.alexeycode.kboy.gb.ppu.LcdControl
 import com.alexeycode.kboy.gb.ppu.LcdStatus
+import com.alexeycode.kboy.gb.ppu.Palette
 import com.alexeycode.kboy.gb.ppu.Window
 import com.alexeycode.kboy.gb.serial.Serial
 
@@ -13,31 +14,37 @@ class GbMemory : Memory {
 
     private val data: Array<Int>
     private val timer: Timer
+    private val dma: Dma
     private val interrupts: Interrupts
     private val serial: Serial
     private val joypad: Joypad
     private val lcdStatus: LcdStatus
     private val lcdControl: LcdControl
+    private val palette: Palette
     private val background: Background
     private val window: Window
 
     constructor(
         interrupts: Interrupts,
         timer: Timer,
+        dma: Dma,
         serial: Serial,
         joypad: Joypad,
         lcdStatus: LcdStatus,
         lcdControl: LcdControl,
+        palette: Palette,
         background: Background,
         window: Window
     ) : this(
         0xFFFF + 1,
         interrupts,
         timer,
+        dma,
         serial,
         joypad,
         lcdStatus,
         lcdControl,
+        palette,
         background,
         window
     )
@@ -46,20 +53,24 @@ class GbMemory : Memory {
         size: Int,
         interrupts: Interrupts,
         timer: Timer,
+        dma: Dma,
         serial: Serial,
         joypad: Joypad,
         lcdStatus: LcdStatus,
         lcdControl: LcdControl,
+        palette: Palette,
         background: Background,
         window: Window
     ) : this(
         Array(size) { 0 },
         interrupts,
         timer,
+        dma,
         serial,
         joypad,
         lcdStatus,
         lcdControl,
+        palette,
         background,
         window
     )
@@ -68,20 +79,24 @@ class GbMemory : Memory {
         data: Array<Int>,
         interrupts: Interrupts,
         timer: Timer,
+        dma: Dma,
         serial: Serial,
         joypad: Joypad,
         lcdStatus: LcdStatus,
         lcdControl: LcdControl,
+        palette: Palette,
         background: Background,
         window: Window
     ) {
         this.data = data
         this.timer = timer
+        this.dma = dma
         this.interrupts = interrupts
         this.serial = serial
         this.joypad = joypad
         this.lcdStatus = lcdStatus
         this.lcdControl = lcdControl
+        this.palette = palette
         this.background = background
         this.window = window
     }
@@ -111,6 +126,14 @@ class GbMemory : Memory {
             lcdStatus.ly()
         } else if (address == 0xFF45) {
             lcdStatus.lyc()
+        } else if (address == 0xFF46) {
+            dma.value()
+        } else if (address == 0xFF47) {
+            return palette.getBgp()
+        } else if (address == 0xFF48) {
+            return palette.getObp0()
+        } else if (address == 0xFF49) {
+            return palette.getObp1()
         } else if (address == 0xFF4A) {
             window.wy()
         } else if (address == 0xFF4B) {
@@ -149,6 +172,14 @@ class GbMemory : Memory {
             // LY read only
         } else if (address == 0xFF45) {
             lcdStatus.updateLyc(value)
+        } else if (address == 0xFF46) {
+            dma.updateValue(value)
+        } else if (address == 0xFF47) {
+            palette.updateBgp(value)
+        } else if (address == 0xFF48) {
+            palette.updateObp0(value)
+        } else if (address == 0xFF49) {
+            palette.updateObp1(value)
         } else if (address == 0xFF4A) {
             window.updateWy(value)
         } else if (address == 0xFF4B) {

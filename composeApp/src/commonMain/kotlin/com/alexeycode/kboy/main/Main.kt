@@ -7,7 +7,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.alexeycode.kboy.gb.ppu.GbImageBitmap
+import com.alexeycode.kboy.gb.ppu.GbScreen
 import com.alexeycode.kboy.gl.RenderImage
 import com.alexeycode.kboy.io.Controller
 
@@ -21,7 +21,7 @@ fun Main(controller: Controller, viewModel: MainViewModel = viewModel { MainView
     val romUri = remember(state) { state.romUri }
 
     if (romUri.isNotEmpty()) {
-        val image by viewModel.image.collectAsState(GbImageBitmap())
+        val image by viewModel.image.collectAsState(GbScreen())
         RenderImage(image)
     } else {
         Button(onClick = {

@@ -19,17 +19,18 @@ class GbPpu(
     private val memory: Memory,
     private val lcdStatus: LcdStatus,
     private val lcdControl: LcdControl,
+    private val palette: Palette,
     private val background: Background,
     private val window: Window
 ) : Ppu {
 
-    private val _screen = MutableSharedFlow<ImageBitmap>(
+    private val _screen = MutableSharedFlow<Screen>(
         replay = 0,
         extraBufferCapacity = 1,
         onBufferOverflow = BufferOverflow.DROP_OLDEST
     )
     private val screen = _screen.asSharedFlow()
-    private val gbScreen = GbImageBitmap()
+    private val gbScreen = GbScreen()
     private var cycles = 0 // 70224 clock cycles
     private var disabledStateEntered = false
 
@@ -38,7 +39,7 @@ class GbPpu(
     private val spriteY = IntArray(spritesSize)
     private val spriteIndex = IntArray(spritesSize)
     private val spriteAttrs = IntArray(spritesSize)
-    private var spritePointer = 0
+    private var spriteCount = 0
 
     private var oamScanStarted = false
     private var lineDrawn = false
@@ -85,6 +86,10 @@ class GbPpu(
                         requestStatInterrupt(3)
                         if (lcdControl.bgAndWindowEnable()) {
                             renderBackground()
+                        }
+
+                        if (lcdControl.objEnable()) {
+                            renderSprites()
                         }
 
                         lineDrawn = true
@@ -134,44 +139,68 @@ class GbPpu(
             val pixel = pixelHigh.shl(1) + pixelLow
             // 0 1 2 3 4 5 6 7 8 9 A B C D E F
             //     1     1     1     1
-            if (pixel == 0) {
-                gbScreen.setPixel(
-                    x,
-                    y,
-                    0xEE.toByte(),
-                    0xEE.toByte(),
-                    0xEE.toByte()
-                )
-            } else if (pixel == 1) {
-                gbScreen.setPixel(
-                    x,
-                    y,
-                    0xAA.toByte(),
-                    0xAA.toByte(),
-                    0xAA.toByte()
-                )
-            } else if (pixel == 2) {
-                gbScreen.setPixel(
-                    x,
-                    y,
-                    0x66.toByte(),
-                    0x66.toByte(),
-                    0x66.toByte()
-                )
-            } else if (pixel == 3) {
-                gbScreen.setPixel(
-                    x,
-                    y,
-                    0x22.toByte(),
-                    0x22.toByte(),
-                    0x22.toByte()
-                )
+            palette.drawBgpPixel(gbScreen, x, y, pixel)
+        }
+    }
+
+    private fun renderSprites() {
+        for (i in 0 until spriteCount) {
+            val spriteY = spriteY[i]
+            val spriteX = spriteX[i]
+            val attrs = spriteAttrs[i]
+
+            //
+            // y = (sprite position on screen + 16)
+            // ly - current y
+            //
+            // (ly - y) - y position inside sprite
+            //
+            var yInSprite = if (attrs.and(1.shl(6)) == 0) {
+                lcdStatus.ly() - spriteY
+            } else {
+                lcdControl.objHeight() - (lcdStatus.ly() - spriteY) - 1
+            }
+
+            val index = if (lcdControl.objHeight() == 16) {
+                if (yInSprite > 8) {
+                    yInSprite -= 8
+                    (spriteIndex[i].and(0xFE) + 1).and(0xFF)
+                } else {
+                    spriteIndex[i].and(0xFE)
+                }
+            } else {
+                spriteIndex[i]
+            }
+            val spriteDataAddress = 0x8000 + index * 16
+            val lineAddress = spriteDataAddress + yInSprite * 2
+            val a = memory.read8(lineAddress)
+            val b = memory.read8(lineAddress + 1)
+
+            for (x in 0 until 8) {
+                val xInSprite = if (attrs.and(1.shl(5)) == 0) {
+                    x
+                } else {
+                    8 - x - 1
+                }
+                val screenX = spriteX + xInSprite
+                if (screenX < SCREEN_WIDTH) {
+                    val bit = (8 - xInSprite - 1)
+                    val pixelLow = if (a.and(1.shl(bit)) != 0) 1 else 0
+                    val pixelHigh = if (b.and(1.shl(bit)) != 0) 1 else 0
+                    val pixel = pixelHigh.shl(1) + pixelLow
+
+                    if (attrs.and(1.shl(4)) == 0) {
+                        palette.drawObp0Pixel(gbScreen, screenX, lcdStatus.ly(), pixel)
+                    } else {
+                        palette.drawObp1Pixel(gbScreen, screenX, lcdStatus.ly(), pixel)
+                    }
+                }
             }
         }
     }
 
     private fun prepareSprites() {
-        spritePointer = 0
+        spriteCount = 0
         val oamAddress = 0xFE00
 
         for (i in 0 until 40) {
@@ -179,12 +208,13 @@ class GbPpu(
             val x = memory.read8(oamAddress + 4 * i + 1)
             val index = memory.read8(oamAddress + 4 * i + 2)
             val attrs = memory.read8(oamAddress + 4 * i + 3)
-            if ((lcdStatus.ly() + 16) in y until (y + lcdControl.objHeight())) {
-                spriteX[spritePointer] = x
-                spriteY[spritePointer] = y
-                spriteIndex[spritePointer] = index
-                spriteAttrs[spritePointer] = attrs
-                spritePointer++
+            val yRange = y until (y + lcdControl.objHeight())
+            if ((x != 0 && x < 168) && (lcdStatus.ly() + 16) in yRange) {
+                spriteX[spriteCount] = x
+                spriteY[spriteCount] = y
+                spriteIndex[spriteCount] = index
+                spriteAttrs[spriteCount] = attrs
+                spriteCount++
             }
         }
     }
@@ -201,7 +231,7 @@ class GbPpu(
         }
     }
 
-    override fun screen(): SharedFlow<ImageBitmap> {
+    override fun screen(): SharedFlow<Screen> {
         return screen
     }
 

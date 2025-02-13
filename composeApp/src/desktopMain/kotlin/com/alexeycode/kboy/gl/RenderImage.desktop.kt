@@ -9,7 +9,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.awt.SwingPanel
-import com.alexeycode.kboy.gb.ppu.ImageBitmap
+import com.alexeycode.kboy.gb.ppu.Screen
 import org.lwjgl.opengl.GL.createCapabilities
 import org.lwjgl.opengl.GL33.*
 import org.lwjgl.opengl.awt.AWTGLCanvas
@@ -20,7 +20,7 @@ import javax.swing.SwingUtilities
 
 
 @Composable
-actual fun RenderImage(image: ImageBitmap) {
+actual fun RenderImage(image: Screen) {
     var localImage by remember { mutableStateOf(image) }
 
     LaunchedEffect(image) {

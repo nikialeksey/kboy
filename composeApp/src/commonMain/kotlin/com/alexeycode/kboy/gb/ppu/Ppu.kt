@@ -6,5 +6,5 @@ interface Ppu {
 
     fun tick(clockCycles: Int)
 
-    fun screen(): SharedFlow<ImageBitmap>
+    fun screen(): SharedFlow<Screen>
 }

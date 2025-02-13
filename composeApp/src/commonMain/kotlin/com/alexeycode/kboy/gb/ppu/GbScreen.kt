@@ -2,27 +2,27 @@ package com.alexeycode.kboy.gb.ppu
 
 import kotlin.concurrent.Volatile
 
-class GbImageBitmap(
+class GbScreen(
     private val width: Int = SCREEN_WIDTH,
     private val height: Int = SCREEN_HEIGHT,
-) : ImageBitmap {
+) : Screen {
 
     private val screenPixels = ByteArray(width * height * 4)
     @Volatile
     private var hash = 0
 
-    fun setPixel(x: Int, y: Int, r: Byte, g: Byte, b: Byte, alpha: Byte = 0xFF.toByte()) {
+    override fun setPixel(x: Int, y: Int, r: Byte, g: Byte, b: Byte) {
         screenPixels[y * width * 4 + x * 4] = r
         screenPixels[y * width * 4 + x * 4 + 1] = g
         screenPixels[y * width * 4 + x * 4 + 2] = b
-        screenPixels[y * width * 4 + x * 4 + 3] = alpha
+        screenPixels[y * width * 4 + x * 4 + 3] = 0xFF.toByte()
         hash++
     }
 
-    fun fill(r: Byte, g: Byte, b: Byte, alpha: Byte = 0xFF.toByte()) {
+    override fun fill(r: Byte, g: Byte, b: Byte) {
         for (y in 0 until SCREEN_HEIGHT) {
             for (x in 0 until SCREEN_WIDTH) {
-                setPixel(x, y, r, g, b, alpha)
+                setPixel(x, y, r, g, b)
             }
         }
     }

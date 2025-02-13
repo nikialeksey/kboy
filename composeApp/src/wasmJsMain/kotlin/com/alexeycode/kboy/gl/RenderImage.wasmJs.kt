@@ -7,7 +7,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import com.alexeycode.kboy.gb.ppu.ImageBitmap
+import com.alexeycode.kboy.gb.ppu.Screen
 import kotlinx.browser.document
 import org.khronos.webgl.WebGLRenderingContext.Companion.RENDERER
 import org.khronos.webgl.WebGLRenderingContext.Companion.SHADING_LANGUAGE_VERSION
@@ -17,7 +17,7 @@ import org.khronos.webgl.WebGLRenderingContextBase
 import org.w3c.dom.HTMLCanvasElement
 
 @Composable
-actual fun RenderImage(image: ImageBitmap) {
+actual fun RenderImage(image: Screen) {
     var localImage by remember { mutableStateOf(image) }
 
     LaunchedEffect(image) {
