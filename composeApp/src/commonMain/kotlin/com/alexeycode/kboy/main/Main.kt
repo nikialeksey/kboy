@@ -1,6 +1,5 @@
 package com.alexeycode.kboy.main
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -27,6 +26,7 @@ import com.alexeycode.kboy.gb.ppu.SCREEN_WIDTH
 import com.alexeycode.kboy.gb.ppu.Screen
 import com.alexeycode.kboy.gl.RenderScreen
 import com.alexeycode.kboy.host.Host
+import com.alexeycode.kboy.host.Roms
 import com.alexeycode.kboy.io.Controller
 import com.alexeycode.kboy.io.FileSystem
 import com.alexeycode.kboy.io.TouchControllerListener
@@ -43,6 +43,7 @@ data class MainState(
 @Composable
 fun Main(
     host: Host,
+    roms: Roms,
     fileSystem: FileSystem,
     extController: Controller,
     viewModel: MainViewModel = viewModel {
@@ -50,6 +51,7 @@ fun Main(
             interactor = MainInteractor(
                 fileSystem
             ),
+            roms = roms,
             host = host,
             extController = extController
         )
@@ -58,11 +60,9 @@ fun Main(
     val state by viewModel.state
     val isTouchEnabled = remember(state) { state.touchControllerEnabled }
     val isGameRunning = remember(state) { state.isGameRunning }
-    val onRunClick = remember(state) {
+    val onSelectRomClicked = remember(state) {
         {
-            viewModel.updateRomUri(
-                "C:\\Users\\nikia\\IdeaProjects\\GameBoy\\composeApp\\src\\commonTest\\composeResources\\files\\tetris.gb"
-            )
+            viewModel.onSelectRomClicked()
         }
     }
     val screen = remember(state) { viewModel.screen }
@@ -72,14 +72,14 @@ fun Main(
         GbScreenWithController(
             isGameRunning = isGameRunning,
             screen = screen,
-            onRunClick = onRunClick,
+            onSelectRomClicked = onSelectRomClicked,
             touchControllerListener = touchListener
         )
     } else {
         GbScreen(
             isGameRunning = isGameRunning,
             screen = screen,
-            onRunClick = onRunClick
+            onSelectRomClicked = onSelectRomClicked
         )
     }
 }
@@ -90,7 +90,7 @@ fun GbScreenWithController(
     isGameRunning: Boolean,
     screen: Flow<Screen>,
     touchControllerListener: TouchControllerListener,
-    onRunClick: () -> Unit
+    onSelectRomClicked: () -> Unit
 ) {
     Row(
         modifier = Modifier.fillMaxSize()
@@ -129,7 +129,7 @@ fun GbScreenWithController(
                         .aspectRatio(SCREEN_WIDTH.toFloat()/SCREEN_HEIGHT.toFloat()),
                     isGameRunning = isGameRunning,
                     screen = screen,
-                    onRunClick = onRunClick
+                    onSelectRomClicked = onSelectRomClicked
                 )
             }
             Box {
@@ -163,15 +163,15 @@ private fun GbScreen(
     modifier: Modifier = Modifier,
     isGameRunning: Boolean,
     screen: Flow<Screen>,
-    onRunClick: () -> Unit
+    onSelectRomClicked: () -> Unit
 ) {
     Box(modifier = modifier) {
         if (isGameRunning) {
             val screenSnapshot by screen.collectAsState(GbScreen())
             RenderScreen(screenSnapshot)
         } else {
-            Button(onClick = { onRunClick() }) {
-                Text("Run")
+            Button(onClick = { onSelectRomClicked() }) {
+                Text("SelectRom")
             }
         }
     }

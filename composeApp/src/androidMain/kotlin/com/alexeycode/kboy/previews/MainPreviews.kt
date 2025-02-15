@@ -16,6 +16,6 @@ fun ScreenWithController() {
         isGameRunning = false,
         screen = emptyFlow(),
         touchControllerListener = TouchControllerListener.Dummy(),
-        onRunClick = {}
+        onSelectRomClicked = {}
     )
 }

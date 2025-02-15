@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.alexeycode.kboy.gb.ppu.Screen
 import com.alexeycode.kboy.host.Host
+import com.alexeycode.kboy.host.Roms
 import com.alexeycode.kboy.io.Controller
 import com.alexeycode.kboy.io.GroupController
 import com.alexeycode.kboy.io.TouchController
@@ -16,6 +17,7 @@ import kotlinx.coroutines.launch
 
 class MainViewModel(
     private val interactor: MainInteractor,
+    private val roms: Roms,
     private val host: Host,
     private val extController: Controller,
     private val touchController: TouchController = TouchController()
@@ -33,6 +35,11 @@ class MainViewModel(
         viewModelScope.launch {
             host.externalControllerAvailable().collect { extControllerAvailable ->
                 state.value = state.value.copy(touchControllerEnabled = !extControllerAvailable)
+            }
+        }
+        viewModelScope.launch {
+            roms.selectedRomUri().collect { romUri: String ->
+                updateRomUri(romUri)
             }
         }
     }
@@ -54,6 +61,10 @@ class MainViewModel(
 
             state.value = state.value.copy(isGameRunning = true)
         }
+    }
+
+    fun onSelectRomClicked() {
+        roms.selectRom()
     }
 
 }

@@ -1,32 +1,40 @@
 package com.alexeycode.kboy
 
 import android.content.pm.ActivityInfo
-import android.net.Uri
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.runtime.remember
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.lifecycle.lifecycleScope
 import com.alexeycode.kboy.host.AndroidHost
+import com.alexeycode.kboy.host.AndroidRoms
 import com.alexeycode.kboy.io.AndroidFileSystem
 import com.alexeycode.kboy.io.Controller
 import com.alexeycode.kboy.io.LoadRomContract
+import kotlinx.coroutines.launch
 
 class MainActivity : ComponentActivity() {
 
-    private val loadRom = registerForActivityResult(LoadRomContract()) { romUri: Uri? ->
+    private val host = AndroidHost()
+    private val roms = AndroidRoms()
+    private val loadRom = registerForActivityResult(LoadRomContract(), roms)
 
-    }
+    private val fileSystem = AndroidFileSystem(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         prepareActivityWindow()
+        lifecycleScope.launch {
+            roms.startRomSelection().collect {
+                loadRom.launch(Unit)
+            }
+        }
+
         setContent {
-            val host = remember { AndroidHost() }
-            val fileSystem = remember { AndroidFileSystem(this) }
             App(
                 host = host,
+                roms = roms,
                 fileSystem = fileSystem,
                 extController = Controller.Dummy()
             )
