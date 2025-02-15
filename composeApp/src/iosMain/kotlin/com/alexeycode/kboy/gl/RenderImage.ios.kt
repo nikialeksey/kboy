@@ -4,5 +4,5 @@ import androidx.compose.runtime.Composable
 import com.alexeycode.kboy.gb.ppu.Screen
 
 @Composable
-actual fun RenderImage(image: Screen) {
+actual fun RenderScreen(image: Screen) {
 }

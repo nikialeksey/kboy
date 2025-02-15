@@ -4,26 +4,55 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.alexeycode.kboy.gb.ppu.Screen
+import com.alexeycode.kboy.host.Host
 import com.alexeycode.kboy.io.Controller
+import com.alexeycode.kboy.io.GroupController
+import com.alexeycode.kboy.io.TouchController
+import com.alexeycode.kboy.io.TouchControllerListener
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.launch
 
 class MainViewModel(
-    private val interactor: MainInteractor = MainInteractor()
+    private val interactor: MainInteractor = MainInteractor(),
+    private val host: Host,
+    private val extController: Controller,
+    private val touchController: TouchController = TouchController()
 ) : ViewModel() {
 
-    private var _image: Flow<Screen>? = null
-    val state = mutableStateOf(MainState())
-    val image: Flow<Screen>
+    private var runJob: Job? = null
+    private var _screen: Flow<Screen>? = null
+    val screen: Flow<Screen>
         get() {
-            return _image!!
+            return _screen ?: emptyFlow()
         }
+    val state = mutableStateOf(MainState())
 
-    fun updateRomUri(romUri:  String, controller: Controller) {
+    init {
         viewModelScope.launch {
-            _image = interactor.prepareGb(viewModelScope, romUri, controller)
+            host.externalControllerAvailable().collect { extControllerAvailable ->
+                state.value = state.value.copy(touchControllerEnabled = !extControllerAvailable)
+            }
+        }
+    }
 
-            state.value = state.value.copy(romUri = romUri)
+    fun touchControllerListener(): TouchControllerListener {
+        return touchController
+    }
+
+    fun updateRomUri(romUri:  String) {
+        runJob?.cancel()
+        runJob = viewModelScope.launch {
+            _screen = interactor.prepareGb(
+                viewModelScope,
+                romUri,
+                GroupController(
+                    listOf(extController, touchController)
+                )
+            )
+
+            state.value = state.value.copy(isGameRunning = true)
         }
     }
 

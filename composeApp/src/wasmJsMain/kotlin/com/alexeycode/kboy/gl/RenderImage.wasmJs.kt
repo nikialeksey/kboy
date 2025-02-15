@@ -17,7 +17,7 @@ import org.khronos.webgl.WebGLRenderingContextBase
 import org.w3c.dom.HTMLCanvasElement
 
 @Composable
-actual fun RenderImage(image: Screen) {
+actual fun RenderScreen(image: Screen) {
     var localImage by remember { mutableStateOf(image) }
 
     LaunchedEffect(image) {

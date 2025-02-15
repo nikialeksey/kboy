@@ -3,21 +3,20 @@ package com.alexeycode.kboy
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.runtime.remember
+import com.alexeycode.kboy.host.AndroidHost
+import com.alexeycode.kboy.io.Controller
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         setContent {
-            App()
+            val host = remember { AndroidHost() }
+            App(
+                host = host,
+                extController = Controller.Dummy()
+            )
         }
     }
-}
-
-@Preview
-@Composable
-fun AppAndroidPreview() {
-    App()
 }
