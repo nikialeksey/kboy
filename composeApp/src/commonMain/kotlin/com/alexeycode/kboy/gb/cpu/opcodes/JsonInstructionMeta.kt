@@ -7,10 +7,10 @@ class JsonInstructionMeta(
     private val instructionJson: JsonObject
 ) : InstructionMeta {
 
-    private val _isImmediate by lazy {
+    private val _isImmediate by lazy(mode = LazyThreadSafetyMode.NONE) {
         instructionJson["immediate"]?.jsonPrimitive?.content?.toBoolean() ?: false
     }
-    private val _cycles by lazy {
+    private val _cycles by lazy(mode = LazyThreadSafetyMode.NONE) {
         val cycles = instructionJson["cycles"]?.jsonArray?.map { it.jsonPrimitive.int } ?: emptyList()
 
         if (cycles.isEmpty()) {
@@ -21,13 +21,13 @@ class JsonInstructionMeta(
             GbCycles(cycles[0], cycles[1])
         }
     }
-    private val _bytes by lazy {
+    private val _bytes by lazy(mode = LazyThreadSafetyMode.NONE) {
         instructionJson["bytes"]?.jsonPrimitive?.int ?: 0
     }
-    private val _mnemonic by lazy {
+    private val _mnemonic by lazy(mode = LazyThreadSafetyMode.NONE) {
         instructionJson["mnemonic"]?.jsonPrimitive?.content ?: "Unknown mnemonic"
     }
-    private val _operands by lazy {
+    private val _operands by lazy(mode = LazyThreadSafetyMode.NONE) {
         instructionJson["operands"]
             ?.jsonArray
             ?.map {
@@ -35,7 +35,7 @@ class JsonInstructionMeta(
             }
             ?: emptyList()
     }
-    private val _flags by lazy {
+    private val _flags by lazy(mode = LazyThreadSafetyMode.NONE) {
         instructionJson["flags"]
             ?.jsonObject
             ?.toMap()

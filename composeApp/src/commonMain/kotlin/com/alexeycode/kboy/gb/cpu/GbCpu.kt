@@ -25,27 +25,27 @@ class GbCpu(
 
             if (clockCyclesSpentOnInterrupts == 0) {
                 val oldPc = registers.pc().get()
-                val instructionData = instructions.instruction(oldPc)
-                registers.pc().set(instructionData.nextAddress.asInt())
+                instructions.loadInstruction(oldPc)
+                registers.pc().set(instructions.nextAddress())
 
-                val isExt = instructionData.isExtInstruction
+                val isExt = instructions.isExtInstruction()
                 val clockCyclesSpent = try {
                     if (isExt) {
                         extInstruction.execute(
-                            instructionData.instructionMeta,
-                            instructionData.operands
+                            instructions.instructionMeta(),
+                            instructions.operands()
                         )
                     } else {
                         instruction.execute(
-                            instructionData.instructionMeta,
-                            instructionData.operands
+                            instructions.instructionMeta(),
+                            instructions.operands()
                         )
                     }
                 } catch (e: IllegalArgumentException) {
                     throw RuntimeException("CPU can not execute instruction at address 0x${oldPc.toString(16).uppercase()}", e)
                 }
 
-                val opcode = instructionData.instructionMeta.opcode()
+                val opcode = instructions.instructionMeta().opcode()
                 if (!isExt && opcode == 0x76) {
                     haltMode = true
                 }

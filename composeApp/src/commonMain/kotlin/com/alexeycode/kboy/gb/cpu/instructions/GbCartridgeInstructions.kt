@@ -1,10 +1,11 @@
 package com.alexeycode.kboy.gb.cpu.instructions
 
-import com.alexeycode.kboy.gb.cpu.instructions.address.SimpleAddress
+import com.alexeycode.kboy.gb.cpu.instructions.operands.Operand
 import com.alexeycode.kboy.gb.cpu.instructions.operands.Z80FlagOperand
 import com.alexeycode.kboy.gb.cpu.instructions.operands.Z80LiteralOperand
 import com.alexeycode.kboy.gb.cpu.instructions.operands.Z80RegisterOperand
 import com.alexeycode.kboy.gb.cpu.instructions.operands.Z80ValueOperand
+import com.alexeycode.kboy.gb.cpu.opcodes.InstructionMeta
 import com.alexeycode.kboy.gb.cpu.opcodes.Opcodes
 import com.alexeycode.kboy.gb.mem.Rom
 
@@ -13,12 +14,17 @@ class GbCartridgeInstructions : Instructions {
     private val opcodes: Opcodes
     private val data: Rom
 
+    private var nextAddress: Int = 0
+    private var isExtInstruction: Boolean = false
+    private var instructionMeta: InstructionMeta = InstructionMeta.Dummy()
+    private var operands: List<Operand> = emptyList()
+
     constructor(opcodes: Opcodes, data: Rom) {
         this.opcodes = opcodes
         this.data = data
     }
 
-    override fun instruction(address: Int): ReadInstruction {
+    override fun loadInstruction(address: Int) {
         var p = address
         val code = data.read8(p++)
         val isExtInstruction = code == 0xCB
@@ -33,8 +39,11 @@ class GbCartridgeInstructions : Instructions {
             val operandName = operandMeta.name()
             if (bytes != 0) {
                 var value = 0
-                (p until (p + bytes)).map { data.read8(it) }.forEachIndexed { index, part ->
+                var index = 0
+                for (a in p until (p + bytes)) {
+                    val part = data.read8(a)
                     value += part * (1 shl (index * 8))
+                    index++
                 }
                 p += bytes
                 if (operandName == "r8") {
@@ -45,9 +54,12 @@ class GbCartridgeInstructions : Instructions {
                 }
                 Z80ValueOperand(value, operandMeta.bytes(), operandMeta.isImmediate())
             } else {
-                if (operandName in arrayOf("NZ", "Z", "NC") || (operandName == "C" && instructionMeta.mnemonic() in arrayOf("CALL", "RET", "JR", "JP"))) {
+                val isFlagOperand = operandName[0] == 'N' || operandName[0] == 'Z' // "NZ", "Z", "NC"
+                val mnemonic = instructionMeta.mnemonic()
+                val isCFlagOperand = operandName[0] == 'C' && (mnemonic == "CALL" || mnemonic == "RET" || mnemonic == "JR" || mnemonic == "JP")
+                if (isFlagOperand || isCFlagOperand) {
                     Z80FlagOperand(operandName, operandMeta.isImmediate())
-                } else if (operandName.any(Char::isDigit)) {
+                } else if ((operandName.length == 3 && operandName.last() == 'H') || (operandName.length == 1 && operandName[0].isDigit())) {
                     Z80LiteralOperand(operandName)
                 } else {
                     Z80RegisterOperand(
@@ -59,6 +71,25 @@ class GbCartridgeInstructions : Instructions {
             }
         }
 
-        return ReadInstruction(SimpleAddress(p), isExtInstruction, instructionMeta, operands)
+        this.nextAddress = p
+        this.isExtInstruction = isExtInstruction
+        this.instructionMeta = instructionMeta
+        this.operands = operands
+    }
+
+    override fun nextAddress(): Int {
+        return this.nextAddress
+    }
+
+    override fun isExtInstruction(): Boolean {
+        return this.isExtInstruction
+    }
+
+    override fun instructionMeta(): InstructionMeta {
+        return this.instructionMeta
+    }
+
+    override fun operands(): List<Operand> {
+        return this.operands
     }
 }

@@ -43,18 +43,26 @@ class Z80FlagOperand : Operand {
     }
 
     override fun check(registers: Registers): Boolean {
-        return if (name == "NZ") {
-            !registers.flag().z().isEnabled()
-        } else if (name == "Z") {
-            registers.flag().z().isEnabled()
-        } else if (name == "NC") {
-            !registers.flag().c().isEnabled()
-        } else if (name == "C") {
-            registers.flag().c().isEnabled()
+        return if (name.length == 1) {
+            if (name[0] == 'Z') {
+                registers.flag().z().isEnabled()
+            } else if (name[0] == 'C') {
+                registers.flag().c().isEnabled()
+            } else {
+                throw IllegalArgumentException(
+                    "You tried to check unknown flag '$name'!"
+                )
+            }
         } else {
-            throw IllegalArgumentException(
-                "You tried to check unknown flag '$name'!"
-            )
+            if (name.last() == 'Z' /*"NZ"*/) {
+                !registers.flag().z().isEnabled()
+            } else if (name.last() == 'C' /*"NC"*/) {
+                !registers.flag().c().isEnabled()
+            } else {
+                throw IllegalArgumentException(
+                    "You tried to check unknown flag '$name'!"
+                )
+            }
         }
     }
 

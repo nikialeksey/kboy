@@ -4,7 +4,7 @@ class SimpleAddress(
     private val address: Int
 ) : Address {
 
-    private val hex by lazy {
+    private val hex by lazy(mode = LazyThreadSafetyMode.NONE) {
         address.toString(16).uppercase().padStart(4, padChar = '0')
     }
 

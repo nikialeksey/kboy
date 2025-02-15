@@ -9,16 +9,16 @@ class JsonOperandMeta(
 ) : OperandMeta {
 
 
-    private val _isImmediate by lazy {
+    private val _isImmediate by lazy(mode = LazyThreadSafetyMode.NONE) {
         operandJson["immediate"]?.jsonPrimitive?.content?.toBoolean() ?: false
     }
-    private val _name by lazy {
+    private val _name by lazy(mode = LazyThreadSafetyMode.NONE) {
         operandJson["name"]?.jsonPrimitive?.content ?: "Unknown operand name"
     }
-    private val _bytes by lazy {
+    private val _bytes by lazy(mode = LazyThreadSafetyMode.NONE) {
         operandJson["bytes"]?.jsonPrimitive?.int ?: 0
     }
-    private val _sign by lazy {
+    private val _sign by lazy(mode = LazyThreadSafetyMode.NONE) {
         val increment = operandJson["increment"]
             ?.jsonPrimitive
             ?.content
