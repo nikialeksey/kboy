@@ -22,7 +22,7 @@ import com.alexeycode.kboy.gb.ppu.GbWindow
 import com.alexeycode.kboy.gb.ppu.Screen
 import com.alexeycode.kboy.gb.serial.BufferSerial
 import com.alexeycode.kboy.io.Controller
-import com.alexeycode.kboy.io.readFile
+import com.alexeycode.kboy.io.FileSystem
 import kboy.composeapp.generated.resources.Res
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -32,7 +32,9 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 
-class MainInteractor {
+class MainInteractor(
+    private val fileSystem: FileSystem
+) {
 
     @OptIn(ExperimentalResourceApi::class)
     suspend fun prepareGb(scope: CoroutineScope, romUri: String, controller: Controller): Flow<Screen> {
@@ -49,7 +51,7 @@ class MainInteractor {
 
         val memory = GbMemory(interrupts, timer, dma, serial, joypad, lcdStatus, lcdControl, palette, background, window)
         val dmaTransfer = GbDmaTransfer(memory, dma)
-        val cartridge = GbCartridge(GbCartridgeData(readFile(romUri)))
+        val cartridge = GbCartridge(GbCartridgeData(fileSystem.readFile(romUri)))
         cartridge.upload(memory)
 
         val registers = InMemoryRegisters()

@@ -15,7 +15,7 @@ import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.launch
 
 class MainViewModel(
-    private val interactor: MainInteractor = MainInteractor(),
+    private val interactor: MainInteractor,
     private val host: Host,
     private val extController: Controller,
     private val touchController: TouchController = TouchController()

@@ -19,7 +19,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.alexeycode.kboy.gb.ppu.GbScreen
@@ -29,6 +28,7 @@ import com.alexeycode.kboy.gb.ppu.Screen
 import com.alexeycode.kboy.gl.RenderScreen
 import com.alexeycode.kboy.host.Host
 import com.alexeycode.kboy.io.Controller
+import com.alexeycode.kboy.io.FileSystem
 import com.alexeycode.kboy.io.TouchControllerListener
 import com.alexeycode.kboy.main.components.AB
 import com.alexeycode.kboy.main.components.DPad
@@ -43,10 +43,13 @@ data class MainState(
 @Composable
 fun Main(
     host: Host,
+    fileSystem: FileSystem,
     extController: Controller,
     viewModel: MainViewModel = viewModel {
         MainViewModel(
-            interactor = MainInteractor(),
+            interactor = MainInteractor(
+                fileSystem
+            ),
             host = host,
             extController = extController
         )
