@@ -1,7 +1,6 @@
 package com.alexeycode.kboy.gb.cpu.instructions
 
 import com.alexeycode.kboy.gb.cpu.instructions.address.SimpleAddress
-import com.alexeycode.kboy.gb.cpu.instructions.operands.Operand
 import com.alexeycode.kboy.gb.cpu.opcodes.InstructionMeta
 import com.alexeycode.kboy.gb.cpu.registers.Registers
 import com.diogonunes.jcolor.Ansi
@@ -29,11 +28,6 @@ class PrintableInstructions(
             Attribute.BOLD()
         )
         val instructionPart = "$instructionCode $instructionName"
-        val operandsPart = Ansi.colorize(
-            origin.operands().joinToString { it.toString() }.padEnd(16),
-            Attribute.BRIGHT_BLACK_TEXT(),
-            Attribute.BOLD()
-        )
 
         val registerPart = Ansi.colorize(
             "Registers: ",
@@ -57,7 +51,7 @@ class PrintableInstructions(
             Attribute.BRIGHT_CYAN_TEXT()
         )
 
-        println("$addressPart $instructionPart $operandsPart $registerPart, $flagsPart")
+        println("$addressPart $instructionPart $registerPart, $flagsPart")
     }
 
     override fun nextAddress(): Int {
@@ -70,10 +64,6 @@ class PrintableInstructions(
 
     override fun instructionMeta(): InstructionMeta {
         return origin.instructionMeta()
-    }
-
-    override fun operands(): List<Operand> {
-        return origin.operands()
     }
 
 }

@@ -1,6 +1,5 @@
 package com.alexeycode.kboy.gb.cpu.instructions
 
-import com.alexeycode.kboy.gb.cpu.instructions.operands.Operand
 import com.alexeycode.kboy.gb.cpu.interrupts.Interrupts
 import com.alexeycode.kboy.gb.cpu.registers.Registers
 import com.alexeycode.kboy.gb.mem.Memory
@@ -17,7 +16,7 @@ class SimpleInstruction : Instruction {
         interrupts: Interrupts
     ) : this(
         listOf(
-            MiscInstruction(registers, interrupts),
+            MiscInstruction(registers, memory, interrupts),
             JumpsInstruction(registers, memory),
             CallsInstruction(registers, memory),
             RestartsInstruction(registers, memory),
@@ -42,13 +41,10 @@ class SimpleInstruction : Instruction {
         this.memory = memory
     }
 
-    override fun execute(
-        opcode: Int,
-        operands: List<Operand>
-    ): Int {
+    override fun execute(opcode: Int): Int {
         try {
             for (instruction in instructions) {
-                val clockCycles = instruction.execute(opcode, operands)
+                val clockCycles = instruction.execute(opcode)
                 if (clockCycles != 0) {
                     return clockCycles
                 }

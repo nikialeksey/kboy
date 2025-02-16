@@ -1,18 +1,16 @@
 package com.alexeycode.kboy.gb.cpu.instructions
 
-import com.alexeycode.kboy.gb.cpu.instructions.operands.Operand
 import com.alexeycode.kboy.gb.cpu.interrupts.Interrupts
-import com.alexeycode.kboy.gb.cpu.opcodes.InstructionMeta
 import com.alexeycode.kboy.gb.cpu.registers.Registers
+import com.alexeycode.kboy.gb.mem.Memory
+import com.alexeycode.kboy.gb.mem.readNext8
 
 class MiscInstruction(
     private val r: Registers,
+    private val mem: Memory,
     private val interrupts: Interrupts
 ) : Instruction {
-    override fun execute(
-        opcode: Int,
-        operands: List<Operand>
-    ): Int {
+    override fun execute(opcode: Int): Int {
         return when (opcode) {
             // Misc / control instructions
             0x00 -> {
@@ -23,7 +21,7 @@ class MiscInstruction(
             0x10 -> {
                 // stop? TODO proceed n8 here
                 // https://gist.github.com/SonoSooS/c0055300670d678b5ae8433e20bea595#nop-and-stop
-                operands[0]
+                mem.readNext8(r)
 
                 4
             }

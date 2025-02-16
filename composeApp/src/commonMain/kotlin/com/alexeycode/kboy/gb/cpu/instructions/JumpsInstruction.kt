@@ -1,34 +1,31 @@
 package com.alexeycode.kboy.gb.cpu.instructions
 
-import com.alexeycode.kboy.gb.cpu.instructions.operands.Operand
-import com.alexeycode.kboy.gb.cpu.opcodes.InstructionMeta
 import com.alexeycode.kboy.gb.cpu.registers.Registers
 import com.alexeycode.kboy.gb.mem.Memory
+import com.alexeycode.kboy.gb.mem.readNext16
+import com.alexeycode.kboy.gb.mem.readNextSigned8
 
 class JumpsInstruction(
     private val r: Registers,
     private val mem: Memory,
 ) : Instruction {
 
-    override fun execute(
-        opcode: Int,
-        operands: List<Operand>
-    ): Int {
+    override fun execute(opcode: Int): Int {
         return when (opcode) {
             // Jumps
-            0x18 -> jumpStep({ operands[0].read8(mem, r) /* e8 */ })
-            0x20 -> conditionalJumpStep({ !r.flag().z().isEnabled() }, { operands[1].read8(mem, r) /* e8 */ })
-            0x28 -> conditionalJumpStep({ r.flag().z().isEnabled() }, { operands[1].read8(mem, r) /* e8 */ })
-            0x30 -> conditionalJumpStep({ !r.flag().c().isEnabled() }, { operands[1].read8(mem, r) /* e8 */ })
-            0x38 -> conditionalJumpStep({ r.flag().c().isEnabled() }, { operands[1].read8(mem, r) /* e8 */ })
+            0x18 -> jumpStep({ mem.readNextSigned8(r) /* e8 */ })
+            0x20 -> conditionalJumpStep({ !r.flag().z().isEnabled() }, { mem.readNextSigned8(r) /* e8 */ })
+            0x28 -> conditionalJumpStep({ r.flag().z().isEnabled() }, { mem.readNextSigned8(r) /* e8 */ })
+            0x30 -> conditionalJumpStep({ !r.flag().c().isEnabled() }, { mem.readNextSigned8(r) /* e8 */ })
+            0x38 -> conditionalJumpStep({ r.flag().c().isEnabled() }, { mem.readNextSigned8(r) /* e8 */ })
             0xC3 -> {
-                r.pc().set(operands[0].read16(mem, r) /* a16 */)
+                r.pc().set(mem.readNext16(r) /* a16 */)
                 16
             }
-            0xC2 -> conditionalJumpTo({ !r.flag().z().isEnabled() }, { operands[1].read16(mem, r) /* a16 */ })
-            0xCA -> conditionalJumpTo({ r.flag().z().isEnabled() }, { operands[1].read16(mem, r) /* a16 */ })
-            0xD2 -> conditionalJumpTo({ !r.flag().c().isEnabled() }, { operands[1].read16(mem, r) /* a16 */ })
-            0xDA -> conditionalJumpTo({ r.flag().c().isEnabled() }, { operands[1].read16(mem, r) /* a16 */ })
+            0xC2 -> conditionalJumpTo({ !r.flag().z().isEnabled() }, { mem.readNext16(r) /* a16 */ })
+            0xCA -> conditionalJumpTo({ r.flag().z().isEnabled() }, { mem.readNext16(r) /* a16 */ })
+            0xD2 -> conditionalJumpTo({ !r.flag().c().isEnabled() }, { mem.readNext16(r) /* a16 */ })
+            0xDA -> conditionalJumpTo({ r.flag().c().isEnabled() }, { mem.readNext16(r) /* a16 */ })
             0xE9 -> {
                 r.pc().set(r.hl().get())
                 4
@@ -46,8 +43,9 @@ class JumpsInstruction(
     }
 
     private fun conditionalJumpStep(condition: () -> Boolean, step: () -> Int): Int {
+        val s = step()
         return if (condition()) {
-            r.pc().set(r.pc().get() + step())
+            r.pc().set(r.pc().get() + s)
 
             12
         } else {
@@ -56,8 +54,9 @@ class JumpsInstruction(
     }
 
     private fun conditionalJumpTo(condition: () -> Boolean, to: () -> Int): Int {
+        val t = to()
         return if (condition()) {
-            r.pc().set(to())
+            r.pc().set(t)
 
             16
         } else {

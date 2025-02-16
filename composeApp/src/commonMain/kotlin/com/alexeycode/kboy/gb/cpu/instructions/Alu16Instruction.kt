@@ -1,20 +1,16 @@
 package com.alexeycode.kboy.gb.cpu.instructions
 
-import com.alexeycode.kboy.gb.cpu.instructions.operands.Operand
-import com.alexeycode.kboy.gb.cpu.opcodes.InstructionMeta
 import com.alexeycode.kboy.gb.cpu.registers.Register
 import com.alexeycode.kboy.gb.cpu.registers.Registers
 import com.alexeycode.kboy.gb.mem.Memory
+import com.alexeycode.kboy.gb.mem.readNextSigned8
 
 class Alu16Instruction(
     private val r: Registers,
     private val mem: Memory,
 ) : Instruction {
 
-    override fun execute(
-        opcode: Int,
-        operands: List<Operand>
-    ): Int {
+    override fun execute(opcode: Int): Int {
         return when (opcode) {
             // 16-bit arithmetic / logical instructions
             // 16-bit inc
@@ -37,7 +33,7 @@ class Alu16Instruction(
 
             0xE8 -> {
                 val a = r.sp().get()
-                val n = operands[1].read8(mem, r) /* e8 */
+                val n = mem.readNextSigned8(r) /* e8 */
                 val result = (a + n).and(0xFFFF)
                 r.sp().set(result)
 

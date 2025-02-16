@@ -1,16 +1,12 @@
 package com.alexeycode.kboy.gb.cpu.instructions
 
-import com.alexeycode.kboy.gb.cpu.instructions.operands.Operand
 import com.alexeycode.kboy.gb.cpu.registers.Registers
 
 class SimpleRotateInstruction(
     private val r: Registers,
 ) : Instruction {
 
-    override fun execute(
-        opcode: Int,
-        operands: List<Operand>
-    ): Int {
+    override fun execute(opcode: Int): Int {
         return when (opcode) {
             // 8-bit shift, rotate and bit instructions
             0x07 -> {

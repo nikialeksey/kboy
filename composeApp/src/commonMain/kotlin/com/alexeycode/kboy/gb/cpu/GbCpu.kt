@@ -9,12 +9,12 @@ import com.alexeycode.kboy.gb.cpu.registers.Registers
 import com.alexeycode.kboy.gb.mem.Memory
 
 class GbCpu(
-    private val registers: Registers,
-    private val memory: Memory,
+    private val r: Registers,
+    private val mem: Memory,
     private val interrupts: Interrupts,
     private val instructions: Instructions,
-    private val instruction: Instruction = SimpleInstruction(registers, memory, interrupts),
-    private val extInstruction: Instruction = ExtInstruction(registers, memory)
+    private val instruction: Instruction = SimpleInstruction(r, mem, interrupts),
+    private val extInstruction: Instruction = ExtInstruction(r, mem)
 ) : Cpu {
 
     private var haltMode = false
@@ -24,23 +24,18 @@ class GbCpu(
             val clockCyclesSpentOnInterrupts = runInterrupts()
 
             if (clockCyclesSpentOnInterrupts == 0) {
-                val oldPc = registers.pc().get()
+                val oldPc = r.pc().get()
                 instructions.loadInstruction(oldPc)
-                registers.pc().set(instructions.nextAddress())
-
+                val instructionMeta = instructions.instructionMeta()
+                val opcode = instructionMeta.opcode()
                 val isExt = instructions.isExtInstruction()
-                val opcode = instructions.instructionMeta().opcode()
+                r.pc().set(oldPc + if (isExt) 2 else 1)
+
                 val clockCyclesSpent = try {
                     if (isExt) {
-                        extInstruction.execute(
-                            opcode,
-                            instructions.operands()
-                        )
+                        extInstruction.execute(opcode)
                     } else {
-                        instruction.execute(
-                            opcode,
-                            instructions.operands()
-                        )
+                        instruction.execute(opcode)
                     }
                 } catch (e: IllegalArgumentException) {
                     throw RuntimeException("CPU can not execute instruction at address 0x${oldPc.toString(16).uppercase()}", e)
@@ -66,11 +61,11 @@ class GbCpu(
     private fun runInterrupts(): Int {
         var clockCyclesSpent = 0
         interrupts.tryRun { address: Int ->
-            val pc = registers.pc().get()
-            memory.write8(registers.sp().get() - 1, pc.shr(8).and(0xFF))
-            memory.write8(registers.sp().get() - 2, pc.and(0xFF))
-            registers.sp().set(registers.sp().get() - 2)
-            registers.pc().set(address)
+            val pc = r.pc().get()
+            mem.write8(r.sp().get() - 1, pc.shr(8).and(0xFF))
+            mem.write8(r.sp().get() - 2, pc.and(0xFF))
+            r.sp().set(r.sp().get() - 2)
+            r.pc().set(address)
 
             // TODO should I do timer.tick() here?
             clockCyclesSpent = 12 // maybe 12, because write+write+execute

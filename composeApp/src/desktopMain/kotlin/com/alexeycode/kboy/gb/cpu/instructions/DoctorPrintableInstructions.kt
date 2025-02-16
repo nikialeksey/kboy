@@ -1,6 +1,5 @@
 package com.alexeycode.kboy.gb.cpu.instructions
 
-import com.alexeycode.kboy.gb.cpu.instructions.operands.Operand
 import com.alexeycode.kboy.gb.cpu.opcodes.InstructionMeta
 import com.alexeycode.kboy.gb.cpu.registers.Registers
 import com.alexeycode.kboy.gb.mem.Memory
@@ -49,11 +48,6 @@ class DoctorPrintableInstructions(
     override fun instructionMeta(): InstructionMeta {
         return origin.instructionMeta()
     }
-
-    override fun operands(): List<Operand> {
-        return origin.operands()
-    }
-
 
     private fun Int.hex(): String {
         return this.toString(16).uppercase().padStart(2, padChar = '0')

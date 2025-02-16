@@ -112,8 +112,8 @@ class GbCpuTest {
             ram
         )
         val cpu = GbCpu(
-            registers = registers,
-            memory = ram,
+            r = registers,
+            mem = ram,
             interrupts = interrupts,
             instructions = instructions,
         )

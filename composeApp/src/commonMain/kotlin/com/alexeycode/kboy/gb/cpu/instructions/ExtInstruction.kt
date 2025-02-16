@@ -1,6 +1,5 @@
 package com.alexeycode.kboy.gb.cpu.instructions
 
-import com.alexeycode.kboy.gb.cpu.instructions.operands.Operand
 import com.alexeycode.kboy.gb.cpu.registers.Registers
 import com.alexeycode.kboy.gb.mem.Memory
 
@@ -8,10 +7,7 @@ class ExtInstruction(
     private val r: Registers,
     private val mem: Memory,
 ) : Instruction {
-    override fun execute(
-        opcode: Int,
-        operands: List<Operand>
-    ): Int {
+    override fun execute(opcode: Int): Int {
         return when (opcode) {
             // 8-bit shift, rotate and bit instructions
             0x00 -> rlc({ r.b().get() }, { r.b().set(it) }, 8)

@@ -1,6 +1,5 @@
 package com.alexeycode.kboy.gb.cpu.instructions
 
-import com.alexeycode.kboy.gb.cpu.instructions.operands.Operand
 import com.alexeycode.kboy.gb.cpu.registers.Registers
 import com.alexeycode.kboy.gb.mem.Memory
 
@@ -9,10 +8,7 @@ class RestartsInstruction(
     private val mem: Memory,
 ) : Instruction {
 
-    override fun execute(
-        opcode: Int,
-        operands: List<Operand>
-    ): Int {
+    override fun execute(opcode: Int): Int {
         return when (opcode) {
             // Restarts
             0xC7 -> restartTo({ 0x00 })
