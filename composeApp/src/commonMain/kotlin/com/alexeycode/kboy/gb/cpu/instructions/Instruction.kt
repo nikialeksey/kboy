@@ -13,7 +13,7 @@ interface Instruction {
      * @return number of Clock cycles spent
      */
     fun execute(
-        meta: InstructionMeta,
+        opcode: Int,
         operands: List<Operand>
     ): Int
 }

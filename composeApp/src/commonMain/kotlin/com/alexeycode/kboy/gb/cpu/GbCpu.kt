@@ -29,15 +29,16 @@ class GbCpu(
                 registers.pc().set(instructions.nextAddress())
 
                 val isExt = instructions.isExtInstruction()
+                val opcode = instructions.instructionMeta().opcode()
                 val clockCyclesSpent = try {
                     if (isExt) {
                         extInstruction.execute(
-                            instructions.instructionMeta(),
+                            opcode,
                             instructions.operands()
                         )
                     } else {
                         instruction.execute(
-                            instructions.instructionMeta(),
+                            opcode,
                             instructions.operands()
                         )
                     }
@@ -45,7 +46,6 @@ class GbCpu(
                     throw RuntimeException("CPU can not execute instruction at address 0x${oldPc.toString(16).uppercase()}", e)
                 }
 
-                val opcode = instructions.instructionMeta().opcode()
                 if (!isExt && opcode == 0x76) {
                     haltMode = true
                 }

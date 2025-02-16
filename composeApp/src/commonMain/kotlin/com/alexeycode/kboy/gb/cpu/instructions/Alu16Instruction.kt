@@ -12,10 +12,10 @@ class Alu16Instruction(
 ) : Instruction {
 
     override fun execute(
-        meta: InstructionMeta,
+        opcode: Int,
         operands: List<Operand>
     ): Int {
-        return when (meta.opcode()) {
+        return when (opcode) {
             // 16-bit arithmetic / logical instructions
             // 16-bit inc
             0x03 -> inc(r.bc())

@@ -1,7 +1,6 @@
 package com.alexeycode.kboy.gb.cpu.instructions
 
 import com.alexeycode.kboy.gb.cpu.instructions.operands.Operand
-import com.alexeycode.kboy.gb.cpu.opcodes.InstructionMeta
 import com.alexeycode.kboy.gb.cpu.registers.Registers
 
 class SimpleRotateInstruction(
@@ -9,10 +8,10 @@ class SimpleRotateInstruction(
 ) : Instruction {
 
     override fun execute(
-        meta: InstructionMeta,
+        opcode: Int,
         operands: List<Operand>
     ): Int {
-        return when (meta.opcode()) {
+        return when (opcode) {
             // 8-bit shift, rotate and bit instructions
             0x07 -> {
                 val n = r.a().get()

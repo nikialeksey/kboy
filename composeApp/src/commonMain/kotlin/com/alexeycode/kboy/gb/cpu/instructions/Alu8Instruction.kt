@@ -11,10 +11,9 @@ class Alu8Instruction(
 ) : Instruction {
 
     override fun execute(
-        meta: InstructionMeta,
+        opcode: Int,
         operands: List<Operand>
     ): Int {
-        val opcode = meta.opcode()
         return when (opcode) {
             // 8-bit arithmetic / logical instructions
             // 8-bit increments

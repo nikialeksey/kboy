@@ -2,7 +2,6 @@ package com.alexeycode.kboy.gb.cpu.instructions
 
 import com.alexeycode.kboy.gb.cpu.instructions.operands.Operand
 import com.alexeycode.kboy.gb.cpu.interrupts.Interrupts
-import com.alexeycode.kboy.gb.cpu.opcodes.InstructionMeta
 import com.alexeycode.kboy.gb.cpu.registers.Registers
 import com.alexeycode.kboy.gb.mem.Memory
 
@@ -44,12 +43,12 @@ class SimpleInstruction : Instruction {
     }
 
     override fun execute(
-        meta: InstructionMeta,
+        opcode: Int,
         operands: List<Operand>
     ): Int {
         try {
             for (instruction in instructions) {
-                val clockCycles = instruction.execute(meta, operands)
+                val clockCycles = instruction.execute(opcode, operands)
                 if (clockCycles != 0) {
                     return clockCycles
                 }
@@ -57,6 +56,6 @@ class SimpleInstruction : Instruction {
         } catch (e: Exception) {
             throw e
         }
-        throw IllegalArgumentException("Unknown instruction! Instruction meta: $meta")
+        throw IllegalArgumentException("Unknown instruction! Instruction opcode: ${opcode.toString(16)}")
     }
 }

@@ -11,10 +11,10 @@ class JumpsInstruction(
 ) : Instruction {
 
     override fun execute(
-        meta: InstructionMeta,
+        opcode: Int,
         operands: List<Operand>
     ): Int {
-        return when (meta.opcode()) {
+        return when (opcode) {
             // Jumps
             0x18 -> jumpStep({ operands[0].read8(mem, r) /* e8 */ })
             0x20 -> conditionalJumpStep({ !r.flag().z().isEnabled() }, { operands[1].read8(mem, r) /* e8 */ })

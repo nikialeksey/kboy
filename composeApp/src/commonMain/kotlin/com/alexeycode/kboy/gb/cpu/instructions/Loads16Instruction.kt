@@ -11,10 +11,10 @@ class Loads16Instruction(
 ) : Instruction {
 
     override fun execute(
-        meta: InstructionMeta,
+        opcode: Int,
         operands: List<Operand>
     ): Int {
-        return when (meta.opcode()) {
+        return when (opcode) {
             // 16-bit load instructions
             0x01, 0x11, 0x21, 0x31 -> {
                 val result = operands[1].read16(mem, r)

@@ -11,10 +11,10 @@ class CallsInstruction(
 ) : Instruction {
 
     override fun execute(
-        meta: InstructionMeta,
+        opcode: Int,
         operands: List<Operand>
     ): Int {
-        return when (meta.opcode()) {
+        return when (opcode) {
             // Calls
             0xCD -> {
                 call({ operands[0].read16(mem, r) /* a16 */ })

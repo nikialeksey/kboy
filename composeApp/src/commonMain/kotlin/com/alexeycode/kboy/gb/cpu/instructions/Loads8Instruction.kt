@@ -32,10 +32,9 @@ class Loads8Instruction : Instruction {
     }
 
     override fun execute(
-        meta: InstructionMeta,
+        opcode: Int,
         operands: List<Operand>
     ): Int {
-        val opcode = meta.opcode()
         return when (opcode) {
             // 8-bit loads
             0x02, 0x12,

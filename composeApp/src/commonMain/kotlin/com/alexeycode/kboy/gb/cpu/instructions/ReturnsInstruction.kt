@@ -13,10 +13,10 @@ class ReturnsInstruction(
 ) : Instruction {
 
     override fun execute(
-        meta: InstructionMeta,
+        opcode: Int,
         operands: List<Operand>
     ): Int {
-        return when (meta.opcode()) {
+        return when (opcode) {
             // Returns
             0xC9 -> {
                 val low = mem.read8(r.sp().get())

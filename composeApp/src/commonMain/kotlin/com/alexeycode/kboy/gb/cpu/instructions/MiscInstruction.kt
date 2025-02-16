@@ -10,10 +10,10 @@ class MiscInstruction(
     private val interrupts: Interrupts
 ) : Instruction {
     override fun execute(
-        meta: InstructionMeta,
+        opcode: Int,
         operands: List<Operand>
     ): Int {
-        return when (meta.opcode()) {
+        return when (opcode) {
             // Misc / control instructions
             0x00 -> {
                 // no-op
