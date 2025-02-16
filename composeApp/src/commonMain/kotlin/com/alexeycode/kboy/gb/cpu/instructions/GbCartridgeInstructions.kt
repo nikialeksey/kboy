@@ -1,7 +1,6 @@
 package com.alexeycode.kboy.gb.cpu.instructions
 
 import com.alexeycode.kboy.gb.cpu.instructions.operands.Operand
-import com.alexeycode.kboy.gb.cpu.instructions.operands.Z80LiteralOperand
 import com.alexeycode.kboy.gb.cpu.instructions.operands.Z80RegisterOperand
 import com.alexeycode.kboy.gb.cpu.instructions.operands.Z80ValueOperand
 import com.alexeycode.kboy.gb.cpu.opcodes.InstructionMeta
@@ -61,7 +60,7 @@ class GbCartridgeInstructions : Instructions {
                 if (isFlagOperand || isCFlagOperand) {
                     dummyOperand
                 } else if ((operandName.length == 3 && operandName.last() == 'H') || (operandName.length == 1 && operandName[0].isDigit())) {
-                    Z80LiteralOperand(operandName)
+                    dummyOperand
                 } else {
                     Z80RegisterOperand(
                         operandName,
