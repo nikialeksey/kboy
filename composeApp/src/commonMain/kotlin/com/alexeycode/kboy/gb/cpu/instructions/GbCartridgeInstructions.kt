@@ -1,7 +1,6 @@
 package com.alexeycode.kboy.gb.cpu.instructions
 
 import com.alexeycode.kboy.gb.cpu.instructions.operands.Operand
-import com.alexeycode.kboy.gb.cpu.instructions.operands.Z80FlagOperand
 import com.alexeycode.kboy.gb.cpu.instructions.operands.Z80LiteralOperand
 import com.alexeycode.kboy.gb.cpu.instructions.operands.Z80RegisterOperand
 import com.alexeycode.kboy.gb.cpu.instructions.operands.Z80ValueOperand
@@ -18,6 +17,8 @@ class GbCartridgeInstructions : Instructions {
     private var isExtInstruction: Boolean = false
     private var instructionMeta: InstructionMeta = InstructionMeta.Dummy()
     private var operands: List<Operand> = emptyList()
+
+    private val dummyOperand = Operand.Dummy()
 
     constructor(opcodes: Opcodes, data: Rom) {
         this.opcodes = opcodes
@@ -58,7 +59,7 @@ class GbCartridgeInstructions : Instructions {
                 val mnemonic = instructionMeta.mnemonic()
                 val isCFlagOperand = operandName[0] == 'C' && (mnemonic == "CALL" || mnemonic == "RET" || mnemonic == "JR" || mnemonic == "JP")
                 if (isFlagOperand || isCFlagOperand) {
-                    Z80FlagOperand(operandName, operandMeta.isImmediate())
+                    dummyOperand
                 } else if ((operandName.length == 3 && operandName.last() == 'H') || (operandName.length == 1 && operandName[0].isDigit())) {
                     Z80LiteralOperand(operandName)
                 } else {

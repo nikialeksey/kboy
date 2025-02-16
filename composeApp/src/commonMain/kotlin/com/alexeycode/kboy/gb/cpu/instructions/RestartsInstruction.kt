@@ -1,13 +1,12 @@
 package com.alexeycode.kboy.gb.cpu.instructions
 
 import com.alexeycode.kboy.gb.cpu.instructions.operands.Operand
-import com.alexeycode.kboy.gb.cpu.opcodes.InstructionMeta
 import com.alexeycode.kboy.gb.cpu.registers.Registers
 import com.alexeycode.kboy.gb.mem.Memory
 
 class RestartsInstruction(
-    private val registers: Registers,
-    private val memory: Memory,
+    private val r: Registers,
+    private val mem: Memory,
 ) : Instruction {
 
     override fun execute(
@@ -16,18 +15,27 @@ class RestartsInstruction(
     ): Int {
         return when (opcode) {
             // Restarts
-            0xC7, 0xCF, 0xD7, 0xDF, 0xE7, 0xEF, 0xF7, 0xFF -> {
-                val pc = registers.pc().get()
-                memory.write8(registers.sp().get() - 1, pc.shr(8).and(0xFF))
-                memory.write8(registers.sp().get() - 2, pc.and(0xFF))
-                registers.sp().set(registers.sp().get() - 2)
-                registers.pc().set(operands[0].read16(memory, registers))
-
-                16
-            }
+            0xC7 -> restartTo({ 0x00 })
+            0xCF -> restartTo({ 0x08 })
+            0xD7 -> restartTo({ 0x10 })
+            0xDF -> restartTo({ 0x18 })
+            0xE7 -> restartTo({ 0x20 })
+            0xEF -> restartTo({ 0x28 })
+            0xF7 -> restartTo({ 0x30 })
+            0xFF -> restartTo({ 0x38 })
             else -> {
                 0
             }
         }
+    }
+
+    private fun restartTo(address: () -> Int): Int {
+        val pc = r.pc().get()
+        mem.write8(r.sp().get() - 1, pc.shr(8).and(0xFF))
+        mem.write8(r.sp().get() - 2, pc.and(0xFF))
+        r.sp().set(r.sp().get() - 2)
+        r.pc().set(address())
+
+        return 16
     }
 }
