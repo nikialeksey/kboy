@@ -6,7 +6,7 @@ import com.alexeycode.kboy.gb.cpu.opcodes.InstructionMeta
 import com.alexeycode.kboy.gb.cpu.registers.Registers
 
 class MiscInstruction(
-    private val registers: Registers,
+    private val r: Registers,
     private val interrupts: Interrupts
 ) : Instruction {
     override fun execute(
@@ -18,79 +18,81 @@ class MiscInstruction(
             0x00 -> {
                 // no-op
 
-                meta.cycles().action()
+                4
             }
             0x10 -> {
-                // stop?
+                // stop? TODO proceed n8 here
+                // https://gist.github.com/SonoSooS/c0055300670d678b5ae8433e20bea595#nop-and-stop
+                operands[0]
 
-                meta.cycles().action()
+                4
             }
             0x27 -> { // decimal adjust to BCD
-                var result = registers.a().get()
-                if (registers.flag().n().isEnabled()) {
-                    if (registers.flag().h().isEnabled()) {
+                var result = r.a().get()
+                if (r.flag().n().isEnabled()) {
+                    if (r.flag().h().isEnabled()) {
                         result = (result - 0x06).and(0xFF)
                     }
-                    if (registers.flag().c().isEnabled()) {
+                    if (r.flag().c().isEnabled()) {
                         result = (result - 0x60).and(0xFF)
                     }
                 } else {
-                    if (registers.flag().h().isEnabled() || (result.and(0x0F)) > 9) {
+                    if (r.flag().h().isEnabled() || (result.and(0x0F)) > 9) {
                         result += 0x06
                     }
-                    if (registers.flag().c().isEnabled() || result > 0x9F) {
+                    if (r.flag().c().isEnabled() || result > 0x9F) {
                         result += 0x60
                     }
                 }
 
-                registers.flag().h().disable()
+                r.flag().h().disable()
                 if (result > 0xFF || result < 0) {
-                    registers.flag().c().enable()
+                    r.flag().c().enable()
                 }
                 result = result.and(0xFF)
-                registers.flag().z().setEnabled(result == 0)
-                registers.a().set(result)
+                r.flag().z().setEnabled(result == 0)
+                r.a().set(result)
 
-                meta.cycles().action()
-            }
-            0x2F -> {
-                registers.flag().n().enable()
-                registers.flag().h().enable()
-                val value = registers.a().get()
-                registers.a().set(value.inv().and(0xFF))
-
-                meta.cycles().action()
-            }
-            0x3F -> {
-                registers.flag().n().disable()
-                registers.flag().h().disable()
-                registers.flag().c().setEnabled(!registers.flag().c().isEnabled())
-
-                meta.cycles().action()
+                4
             }
             0x37 -> {
-                registers.flag().n().disable()
-                registers.flag().h().disable()
-                registers.flag().c().enable()
+                r.flag().n().disable()
+                r.flag().h().disable()
+                r.flag().c().enable()
 
-                meta.cycles().action()
+                4
+            }
+            0x2F -> {
+                r.flag().n().enable()
+                r.flag().h().enable()
+                val value = r.a().get()
+                r.a().set(value.inv().and(0xFF))
+
+                4
+            }
+            0x3F -> {
+                r.flag().n().disable()
+                r.flag().h().disable()
+                r.flag().c().setEnabled(!r.flag().c().isEnabled())
+
+                4
             }
             0x76 -> {
                 // halt?
 
-                meta.cycles().action()
+                4
             }
             0xF3 -> {
                 // disable interrupts
                 interrupts.disable()
 
-                meta.cycles().action()
+                4
             }
             0xFB -> {
                 // enable interrupts
                 interrupts.enable()
 
-                meta.cycles().action()
+                4
             }
             else -> {
                 0

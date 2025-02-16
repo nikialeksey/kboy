@@ -72,10 +72,6 @@ class Z80RegisterOperand : Operand {
         }
     }
 
-    override fun check(registers: Registers): Boolean {
-        throw IllegalStateException("You can not check register operands!")
-    }
-
     override fun toString(): String {
         val v = name
         val vSign = if (sign == 0) {

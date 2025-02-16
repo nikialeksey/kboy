@@ -23,7 +23,7 @@ class RestartsInstruction(
                 registers.sp().set(registers.sp().get() - 2)
                 registers.pc().set(operands[0].read16(memory, registers))
 
-                meta.cycles().action()
+                16
             }
             else -> {
                 0

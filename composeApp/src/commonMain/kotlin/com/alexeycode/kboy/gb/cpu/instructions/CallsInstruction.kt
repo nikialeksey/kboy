@@ -6,8 +6,8 @@ import com.alexeycode.kboy.gb.cpu.registers.Registers
 import com.alexeycode.kboy.gb.mem.Memory
 
 class CallsInstruction(
-    private val registers: Registers,
-    private val memory: Memory,
+    private val r: Registers,
+    private val mem: Memory,
 ) : Instruction {
 
     override fun execute(
@@ -17,31 +17,41 @@ class CallsInstruction(
         return when (meta.opcode()) {
             // Calls
             0xCD -> {
-                val pc = registers.pc().get()
-                memory.write8(registers.sp().get() - 1, pc.shr(8).and(0xFF))
-                memory.write8(registers.sp().get() - 2, pc.and(0xFF))
-                registers.sp().set(registers.sp().get() - 2)
-                registers.pc().set(operands[0].read16(memory, registers))
-
-                meta.cycles().action()
+                call({ operands[0].read16(mem, r) /* a16 */ })
             }
-            0xC4, 0xCC, 0xD4, 0xDC -> {
-                if (operands[0].check(registers)) {
-                    val pc = registers.pc().get()
+            0xC4 -> conditionCall({ !r.flag().z().isEnabled() }, { operands[1].read16(mem, r) /* a16 */ })
+            0xCC -> conditionCall({ r.flag().z().isEnabled() }, { operands[1].read16(mem, r) /* a16 */ })
+            0xD4 -> conditionCall({ !r.flag().c().isEnabled() }, { operands[1].read16(mem, r) /* a16 */ })
+            0xDC -> conditionCall({ r.flag().c().isEnabled() }, { operands[1].read16(mem, r) /* a16 */ })
 
-                    memory.write8(registers.sp().get() - 1, pc.shr(8).and(0xFF))
-                    memory.write8(registers.sp().get() - 2, pc.and(0xFF))
-                    registers.sp().set(registers.sp().get() - 2)
-                    registers.pc().set(operands[1].read16(memory, registers))
-
-                    meta.cycles().action()
-                } else {
-                    meta.cycles().none()
-                }
-            }
             else -> {
                 0
             }
         }
+    }
+
+    private fun conditionCall(condition: () -> Boolean, nextAddress: () -> Int): Int {
+        return if (condition()) {
+            val pc = r.pc().get()
+
+            mem.write8(r.sp().get() - 1, pc.shr(8).and(0xFF))
+            mem.write8(r.sp().get() - 2, pc.and(0xFF))
+            r.sp().set(r.sp().get() - 2)
+            r.pc().set(nextAddress())
+
+            24
+        } else {
+            12
+        }
+    }
+
+    private fun call(nextAddress: () -> Int): Int {
+        val pc = r.pc().get()
+        mem.write8(r.sp().get() - 1, pc.shr(8).and(0xFF))
+        mem.write8(r.sp().get() - 2, pc.and(0xFF))
+        r.sp().set(r.sp().get() - 2)
+        r.pc().set(nextAddress())
+
+        return 24
     }
 }

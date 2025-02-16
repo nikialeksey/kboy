@@ -42,30 +42,6 @@ class Z80FlagOperand : Operand {
         )
     }
 
-    override fun check(registers: Registers): Boolean {
-        return if (name.length == 1) {
-            if (name[0] == 'Z') {
-                registers.flag().z().isEnabled()
-            } else if (name[0] == 'C') {
-                registers.flag().c().isEnabled()
-            } else {
-                throw IllegalArgumentException(
-                    "You tried to check unknown flag '$name'!"
-                )
-            }
-        } else {
-            if (name.last() == 'Z' /*"NZ"*/) {
-                !registers.flag().z().isEnabled()
-            } else if (name.last() == 'C' /*"NC"*/) {
-                !registers.flag().c().isEnabled()
-            } else {
-                throw IllegalArgumentException(
-                    "You tried to check unknown flag '$name'!"
-                )
-            }
-        }
-    }
-
     override fun toString(): String {
         val v = name
         return if (isImmediate) {

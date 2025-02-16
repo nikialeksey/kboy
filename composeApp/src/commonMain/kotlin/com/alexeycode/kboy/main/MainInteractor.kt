@@ -77,7 +77,7 @@ class MainInteractor(
             launch { controller.down().collect { pressed -> if (pressed) joypad.down().press() else joypad.down().release() } }
             withContext(Dispatchers.Default) {
                 while (isActive) {
-                    gb.run(1)
+                    gb.run(10000)
                 }
             }
         }

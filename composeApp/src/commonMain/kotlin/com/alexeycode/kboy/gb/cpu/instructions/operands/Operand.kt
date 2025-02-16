@@ -9,5 +9,4 @@ interface Operand {
     fun read16(memory: Memory, registers: Registers): Int
     fun write16(memory: Memory, registers: Registers, value: Int)
     fun incOrDec(registers: Registers)
-    fun check(registers: Registers): Boolean
 }

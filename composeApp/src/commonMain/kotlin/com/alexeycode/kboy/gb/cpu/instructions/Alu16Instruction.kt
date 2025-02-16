@@ -2,12 +2,13 @@ package com.alexeycode.kboy.gb.cpu.instructions
 
 import com.alexeycode.kboy.gb.cpu.instructions.operands.Operand
 import com.alexeycode.kboy.gb.cpu.opcodes.InstructionMeta
+import com.alexeycode.kboy.gb.cpu.registers.Register
 import com.alexeycode.kboy.gb.cpu.registers.Registers
 import com.alexeycode.kboy.gb.mem.Memory
 
 class Alu16Instruction(
-    private val registers: Registers,
-    private val memory: Memory,
+    private val r: Registers,
+    private val mem: Memory,
 ) : Instruction {
 
     override fun execute(
@@ -17,50 +18,68 @@ class Alu16Instruction(
         return when (meta.opcode()) {
             // 16-bit arithmetic / logical instructions
             // 16-bit inc
-            0x03, 0x13, 0x23, 0x33 -> {
-                val value = operands[0].read16(memory, registers)
-                val result = (value + 1).and(0xFFFF)
-                operands[0].write16(memory, registers, result)
+            0x03 -> inc(r.bc())
+            0x13 -> inc(r.de())
+            0x23 -> inc(r.hl())
+            0x33 -> inc(r.sp())
 
-                meta.cycles().action()
-            }
             // 16-bit dec
-            0x0B, 0x1B, 0x2B, 0x3B -> {
-                val value = operands[0].read16(memory, registers)
-                val result = (value - 1).and(0xFFFF)
-                operands[0].write16(memory, registers, result)
+            0x0B -> dec(r.bc())
+            0x1B -> dec(r.de())
+            0x2B -> dec(r.hl())
+            0x3B -> dec(r.sp())
 
-                meta.cycles().action()
-            }
             // 16-bit add
-            0x09, 0x19, 0x29, 0x39 -> {
-                val a = operands[0].read16(memory, registers)
-                val n = operands[1].read16(memory, registers)
-                val result = (a + n).and(0xFFFF)
-                operands[0].write16(memory, registers, result)
+            0x09 -> add(r.bc())
+            0x19 -> add(r.de())
+            0x29 -> add(r.hl())
+            0x39 -> add(r.sp())
 
-                registers.flag().n().disable()
-                registers.flag().h().setEnabled((a.and(0x0FFF) + n.and(0x0FFF)) > 0x0FFF)
-                registers.flag().c().setEnabled((a + n) > 0xFFFF)
-
-                meta.cycles().action()
-            }
             0xE8 -> {
-                val a = operands[0].read16(memory, registers)
-                val n = operands[1].read8(memory, registers)
+                val a = r.sp().get()
+                val n = operands[1].read8(mem, r) /* e8 */
                 val result = (a + n).and(0xFFFF)
-                operands[0].write16(memory, registers, result)
+                r.sp().set(result)
 
-                registers.flag().z().disable()
-                registers.flag().n().disable()
-                registers.flag().h().setEnabled((a.and(0x0F) + n.and(0x0F)) > 0x0F)
-                registers.flag().c().setEnabled((a.and(0xFF) + n.and(0xFF)) > 0xFF)
+                r.flag().z().disable()
+                r.flag().n().disable()
+                r.flag().h().setEnabled((a.and(0x0F) + n.and(0x0F)) > 0x0F)
+                r.flag().c().setEnabled((a.and(0xFF) + n.and(0xFF)) > 0xFF)
 
-                meta.cycles().action()
+                16
             }
             else -> {
                 0
             }
         }
+    }
+
+    private fun inc(r: Register): Int {
+        val value = r.get()
+        val result = (value + 1).and(0xFFFF)
+        r.set(result)
+
+        return 8
+    }
+
+    private fun dec(r: Register): Int {
+        val value = r.get()
+        val result = (value - 1).and(0xFFFF)
+        r.set(result)
+
+        return 8
+    }
+
+    private fun add(r: Register): Int {
+        val a = this.r.hl().get()
+        val n = r.get()
+        val result = (a + n).and(0xFFFF)
+        this.r.hl().set(result)
+
+        this.r.flag().n().disable()
+        this.r.flag().h().setEnabled((a.and(0x0FFF) + n.and(0x0FFF)) > 0x0FFF)
+        this.r.flag().c().setEnabled((a + n) > 0xFFFF)
+
+        return 8
     }
 }

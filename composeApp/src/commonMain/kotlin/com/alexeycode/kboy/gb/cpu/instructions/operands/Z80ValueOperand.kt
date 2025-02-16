@@ -63,12 +63,6 @@ class Z80ValueOperand : Operand {
         )
     }
 
-    override fun check(registers: Registers): Boolean {
-        throw IllegalStateException(
-            "You can not check value operands!"
-        )
-    }
-
     override fun toString(): String {
         val v = "0x${value.toString(16).uppercase()}"
         return if (isImmediate) {

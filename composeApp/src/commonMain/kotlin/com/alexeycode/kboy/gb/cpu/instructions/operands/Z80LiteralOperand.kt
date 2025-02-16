@@ -32,10 +32,6 @@ class Z80LiteralOperand : Operand {
         throw IllegalStateException("You can not inc/dec to literal operand!")
     }
 
-    override fun check(registers: Registers): Boolean {
-        throw IllegalStateException("You can not check register operands!")
-    }
-
     override fun toString(): String {
         return name
     }
