@@ -92,7 +92,7 @@ class GbTimer(
                     7
                 }
                 var previousBitEnabled = false
-                for (n in previousDiv..div) {
+                for (n in previousDiv .. div) {
                     if (n and (1.shl(bit)) != 0) {
                         previousBitEnabled = true
                         break
