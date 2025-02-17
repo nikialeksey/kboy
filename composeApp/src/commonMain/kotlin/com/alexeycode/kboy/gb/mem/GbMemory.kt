@@ -102,92 +102,64 @@ class GbMemory : Memory {
     }
 
     override fun read8(address: Int): Int {
-        return if (address == 0xFF00) {
-            joypad.get()
-        } else if (address == 0xFF04) {
-            timer.div()
-        } else if (address == 0xFF05) {
-            timer.tima()
-        } else if (address == 0xFF06) {
-            timer.tma()
-        } else if (address == 0xFF07) {
-            timer.tac()
-        } else if (address == 0xFF0F) {
-            interrupts.ifFlag()
-        } else if (address == 0xFF40) {
-            lcdControl.get()
-        } else if (address == 0xFF41) {
-            lcdStatus.stat()
-        } else if (address == 0xFF42) {
-            background.scy()
-        } else if (address == 0xFF43) {
-            background.scx()
-        } else if (address == 0xFF44) {
-            lcdStatus.ly()
-        } else if (address == 0xFF45) {
-            lcdStatus.lyc()
-        } else if (address == 0xFF46) {
-            dma.value()
-        } else if (address == 0xFF47) {
-            return palette.getBgp()
-        } else if (address == 0xFF48) {
-            return palette.getObp0()
-        } else if (address == 0xFF49) {
-            return palette.getObp1()
-        } else if (address == 0xFF4A) {
-            window.wy()
-        } else if (address == 0xFF4B) {
-            window.wx()
-        } else if (address == 0xFFFF) {
-            interrupts.ieFlag()
-        } else {
+        return if (address < 0xFF00) {
             data[address]
+        } else {
+            when (address) {
+                0xFF00 -> joypad.get()
+                0xFF04 -> timer.div()
+                0xFF05 -> timer.tima()
+                0xFF06 -> timer.tma()
+                0xFF07 -> timer.tac()
+                0xFF0F -> interrupts.ifFlag()
+                0xFF40 -> lcdControl.get()
+                0xFF41 -> lcdStatus.stat()
+                0xFF42 -> background.scy()
+                0xFF43 -> background.scx()
+                0xFF44 -> lcdStatus.ly()
+                0xFF45 -> lcdStatus.lyc()
+                0xFF46 -> dma.value()
+                0xFF47 -> palette.getBgp()
+                0xFF48 -> palette.getObp0()
+                0xFF49 -> palette.getObp1()
+                0xFF4A -> window.wy()
+                0xFF4B -> window.wx()
+                0xFFFF -> interrupts.ieFlag()
+                else -> data[address]
+            }
         }
     }
 
     override fun write8(address: Int, value: Int) {
-        if (address == 0xFF00) {
-            joypad.update(value)
-        } else if (address == 0xFF01) {
-            serial.put(value)
-        } else if (address == 0xFF04) {
-            timer.resetDiv()
-        } else if (address == 0xFF05) {
-            timer.updateTima(value)
-        } else if (address == 0xFF06) {
-            timer.updateTma(value)
-        } else if (address == 0xFF07) {
-            timer.updateTac(value)
-        } else if (address == 0xFF0F) {
-            interrupts.updateIfFlag(value)
-        } else if (address == 0xFF40) {
-            lcdControl.update(value)
-        } else if (address == 0xFF41) {
-            lcdStatus.updateStat(value)
-        } else if (address == 0xFF42) {
-            background.updateScy(value)
-        } else if (address == 0xFF43) {
-            background.updateScx(value)
-        } else if (address == 0xFF44) {
-            // LY read only
-        } else if (address == 0xFF45) {
-            lcdStatus.updateLyc(value)
-        } else if (address == 0xFF46) {
-            dma.updateValue(value)
-        } else if (address == 0xFF47) {
-            palette.updateBgp(value)
-        } else if (address == 0xFF48) {
-            palette.updateObp0(value)
-        } else if (address == 0xFF49) {
-            palette.updateObp1(value)
-        } else if (address == 0xFF4A) {
-            window.updateWy(value)
-        } else if (address == 0xFF4B) {
-            window.updateWx(value)
-        } else if (address == 0xFFFF) {
-            interrupts.updateIeFlag(value)
-        } else {
+        if (address < 0xFF00) {
             data[address] = value
+        } else {
+            when (address) {
+                0xFF00 -> joypad.update(value)
+                0xFF01 -> serial.put(value)
+                0xFF04 -> timer.resetDiv()
+                0xFF05 -> timer.updateTima(value)
+                0xFF06 -> timer.updateTma(value)
+                0xFF07 -> timer.updateTac(value)
+                0xFF0F -> interrupts.updateIfFlag(value)
+                0xFF40 -> lcdControl.update(value)
+                0xFF41 -> lcdStatus.updateStat(value)
+                0xFF42 -> background.updateScy(value)
+                0xFF43 -> background.updateScx(value)
+                0xFF44 -> {
+                    // LY read only
+                }
+
+                0xFF45 -> lcdStatus.updateLyc(value)
+                0xFF46 -> dma.updateValue(value)
+                0xFF47 -> palette.updateBgp(value)
+                0xFF48 -> palette.updateObp0(value)
+                0xFF49 -> palette.updateObp1(value)
+                0xFF4A -> window.updateWy(value)
+                0xFF4B -> window.updateWx(value)
+                0xFFFF -> interrupts.updateIeFlag(value)
+                else -> data[address] = value
+            }
         }
     }
 }

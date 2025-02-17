@@ -40,7 +40,7 @@ class ReturnsInstruction(
         }
     }
 
-    private fun conditionalRet(condition: () -> Boolean): Int {
+    private inline fun conditionalRet(condition: () -> Boolean): Int {
         return if (condition()) {
             val low = mem.read8(r.sp().get())
             val high = mem.read8(r.sp().get() + 1)

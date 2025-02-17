@@ -43,7 +43,8 @@ class SimpleInstruction : Instruction {
 
     override fun execute(opcode: Int): Int {
         try {
-            for (instruction in instructions) {
+            for (i in 0 until instructions.size) {
+                val instruction = instructions[i]
                 val clockCycles = instruction.execute(opcode)
                 if (clockCycles != 0) {
                     return clockCycles

@@ -126,7 +126,7 @@ class Alu8Instruction(
         }
     }
 
-    private fun increment(
+    private inline fun increment(
         read: () -> Int,
         write: (Int) -> Unit,
         cycles: Int
@@ -142,7 +142,7 @@ class Alu8Instruction(
         return cycles
     }
 
-    private fun decrement(
+    private inline fun decrement(
         read: () -> Int,
         write: (Int) -> Unit,
         cycles: Int
@@ -158,7 +158,7 @@ class Alu8Instruction(
         return cycles
     }
 
-    private fun add(read1: () -> Int, read2: () -> Int, cycles: Int): Int {
+    private inline fun add(read1: () -> Int, read2: () -> Int, cycles: Int): Int {
         val a = read1()
         val n = read2()
         val result = (a + n).and(0xFF)
@@ -172,7 +172,7 @@ class Alu8Instruction(
         return cycles
     }
 
-    private fun adc(read1: () -> Int, read2: () -> Int, cycles: Int): Int {
+    private inline fun adc(read1: () -> Int, read2: () -> Int, cycles: Int): Int {
         val a = read1()
         val n = read2()
         val c = if (r.flag().c().isEnabled()) 1 else 0
@@ -187,7 +187,7 @@ class Alu8Instruction(
         return cycles
     }
 
-    private fun sub(read1: () -> Int, read2: () -> Int, cycles: Int): Int {
+    private inline fun sub(read1: () -> Int, read2: () -> Int, cycles: Int): Int {
         val a = read1()
         val n = read2()
         val result = (a - n).and(0xFF)
@@ -201,7 +201,7 @@ class Alu8Instruction(
         return cycles
     }
 
-    private fun sbc(read1: () -> Int, read2: () -> Int, cycles: Int): Int {
+    private inline fun sbc(read1: () -> Int, read2: () -> Int, cycles: Int): Int {
         val a = read1()
         val n = read2()
         val c = if (r.flag().c().isEnabled()) 1 else 0
@@ -218,7 +218,7 @@ class Alu8Instruction(
         return cycles
     }
 
-    private fun and(read: () -> Int, cycles: Int): Int {
+    private inline fun and(read: () -> Int, cycles: Int): Int {
         val a = r.a().get()
         val n = read()
         val result = a.and(n)
@@ -232,7 +232,7 @@ class Alu8Instruction(
         return cycles
     }
 
-    private fun xor(read: () -> Int, cycles: Int): Int {
+    private inline fun xor(read: () -> Int, cycles: Int): Int {
         val a = r.a().get()
         val n = read()
         val result = a.xor(n)
@@ -246,7 +246,7 @@ class Alu8Instruction(
         return cycles
     }
 
-    private fun or(read: () -> Int, cycles: Int): Int {
+    private inline fun or(read: () -> Int, cycles: Int): Int {
         val a = r.a().get()
         val n = read()
         val result = a.or(n)
@@ -260,7 +260,7 @@ class Alu8Instruction(
         return cycles
     }
 
-    private fun cp(read: () -> Int, cycles: Int): Int {
+    private inline fun cp(read: () -> Int, cycles: Int): Int {
         val a = r.a().get()
         val n = read()
         val result = (a - n).and(0xFF)

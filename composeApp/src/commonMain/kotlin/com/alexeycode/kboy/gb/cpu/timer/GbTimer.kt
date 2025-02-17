@@ -91,7 +91,13 @@ class GbTimer(
                 } else /*if (tacBits == 0b11)*/ {
                     7
                 }
-                val previousBitEnabled = (previousDiv..div).any { it and (1.shl(bit)) != 0 }
+                var previousBitEnabled = false
+                for (n in previousDiv..div) {
+                    if (n and (1.shl(bit)) != 0) {
+                        previousBitEnabled = true
+                        break
+                    }
+                }
                 val newBitDisabled = div and (1.shl(bit)) == 0
                 if (previousBitEnabled && newBitDisabled) {
                     tima++

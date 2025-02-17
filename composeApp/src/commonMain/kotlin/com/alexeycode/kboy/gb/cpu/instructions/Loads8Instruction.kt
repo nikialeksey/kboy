@@ -2,34 +2,13 @@ package com.alexeycode.kboy.gb.cpu.instructions
 
 import com.alexeycode.kboy.gb.cpu.registers.Registers
 import com.alexeycode.kboy.gb.mem.Memory
-import com.alexeycode.kboy.gb.mem.OffsetMemory
 import com.alexeycode.kboy.gb.mem.readNext16
 import com.alexeycode.kboy.gb.mem.readNext8
 
-class Loads8Instruction : Instruction {
-
-    private val r: Registers
+class Loads8Instruction(
+    private val r: Registers,
     private val mem: Memory
-    private val memFF: Memory
-
-    constructor(
-        registers: Registers,
-        memory: Memory,
-    ) : this(
-        registers,
-        memory,
-        OffsetMemory(memory, 0xFF00),
-    )
-
-    constructor(
-        registers: Registers,
-        memory: Memory,
-        memoryFF: Memory,
-    ) {
-        this.r = registers
-        this.mem = memory
-        this.memFF = memoryFF
-    }
+) : Instruction {
 
     override fun execute(opcode: Int): Int {
         return when (opcode) {
@@ -112,14 +91,14 @@ class Loads8Instruction : Instruction {
             0x7E -> load({ mem.read8(r.hl().get()) }, { r.a().set(it) }, 8)
             0x7F -> load({ r.a().get() }, { r.a().set(it) }, 4)
 
-            0xE0 -> load({ r.a().get() }, { memFF.write8(mem.readNext8(r), it) }, 12)
-            0xF0 -> load({ memFF.read8(mem.readNext8(r)) }, { r.a().set(it) }, 12)
+            0xE0 -> load({ r.a().get() }, { mem.write8(0xFF00 + mem.readNext8(r), it) }, 12)
+            0xF0 -> load({ mem.read8(0xFF00 + mem.readNext8(r)) }, { r.a().set(it) }, 12)
 
             0xEA -> load({ r.a().get() }, { mem.write8(mem.readNext16(r), it) }, 16)
             0xFA -> load({ mem.read8(mem.readNext16(r)) }, { r.a().set(it) }, 16)
 
-            0xE2 -> load({ r.a().get() }, { memFF.write8(r.c().get(), it) }, 8)
-            0xF2 -> load({ memFF.read8(r.c().get()) }, { r.a().set(it) }, 8)
+            0xE2 -> load({ r.a().get() }, { mem.write8(0xFF00 + r.c().get(), it) }, 8)
+            0xF2 -> load({ mem.read8(0xFF00 + r.c().get()) }, { r.a().set(it) }, 8)
 
             0x22 -> load({ r.a().get() }, { mem.write8(r.hl().get(), it); r.hl().set(r.hl().get() + 1) }, 8)
             0x32 -> load({ r.a().get() }, { mem.write8(r.hl().get(), it); r.hl().set(r.hl().get() - 1) }, 8)
@@ -147,7 +126,7 @@ class Loads8Instruction : Instruction {
         }
     }
 
-    private fun load(read: () -> Int, write: (Int) -> Unit, cycles: Int): Int {
+    private inline fun load(read: () -> Int, write: (Int) -> Unit, cycles: Int): Int {
         val result = read()
         write(result.and(0xFF))
 

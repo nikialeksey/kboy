@@ -25,12 +25,14 @@ class RestartsInstruction(
         }
     }
 
-    private fun restartTo(address: () -> Int): Int {
+    private inline fun restartTo(address: () -> Int): Int {
+        val a = address()
+
         val pc = r.pc().get()
         mem.write8(r.sp().get() - 1, pc.shr(8).and(0xFF))
         mem.write8(r.sp().get() - 2, pc.and(0xFF))
         r.sp().set(r.sp().get() - 2)
-        r.pc().set(address())
+        r.pc().set(a)
 
         return 16
     }

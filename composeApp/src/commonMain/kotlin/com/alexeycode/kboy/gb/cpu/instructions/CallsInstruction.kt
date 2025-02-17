@@ -26,7 +26,7 @@ class CallsInstruction(
         }
     }
 
-    private fun conditionCall(condition: () -> Boolean, nextAddress: () -> Int): Int {
+    private inline fun conditionCall(condition: () -> Boolean, nextAddress: () -> Int): Int {
         val address = nextAddress()
         return if (condition()) {
             val pc = r.pc().get()
@@ -42,12 +42,13 @@ class CallsInstruction(
         }
     }
 
-    private fun call(nextAddress: () -> Int): Int {
+    private inline fun call(nextAddress: () -> Int): Int {
+        val address = nextAddress()
         val pc = r.pc().get()
         mem.write8(r.sp().get() - 1, pc.shr(8).and(0xFF))
         mem.write8(r.sp().get() - 2, pc.and(0xFF))
         r.sp().set(r.sp().get() - 2)
-        r.pc().set(nextAddress())
+        r.pc().set(address)
 
         return 24
     }

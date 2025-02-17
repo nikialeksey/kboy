@@ -4,25 +4,17 @@ import com.alexeycode.kboy.gb.cpu.registers.Registers
 
 fun Memory.readNext8(r: Registers): Int {
     val result = read8(r.pc().get())
-
     r.pc().set(r.pc().get() + 1)
 
     return result
 }
 
 fun Memory.readNext16(r: Registers): Int {
-    val p = r.pc().get()
-    var result = 0
-    var index = 0
-    for (a in p until (p + 2)) {
-        val part = read8(a)
-        result += part * (1 shl (index * 8))
-        index++
-    }
-
+    val low = read8(r.pc().get())
+    val high = read8(r.pc().get() + 1)
     r.pc().set(r.pc().get() + 2)
 
-    return result
+    return high.shl(8) + low
 }
 
 fun Memory.readNextSigned8(r: Registers): Int {

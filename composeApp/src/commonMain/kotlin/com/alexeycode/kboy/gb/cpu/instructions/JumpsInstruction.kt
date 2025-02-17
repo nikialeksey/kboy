@@ -36,13 +36,14 @@ class JumpsInstruction(
         }
     }
 
-    private fun jumpStep(step: () -> Int): Int {
-        r.pc().set(r.pc().get() + step())
+    private inline fun jumpStep(step: () -> Int): Int {
+        val s = step()
+        r.pc().set(r.pc().get() + s)
 
         return 12
     }
 
-    private fun conditionalJumpStep(condition: () -> Boolean, step: () -> Int): Int {
+    private inline fun conditionalJumpStep(condition: () -> Boolean, step: () -> Int): Int {
         val s = step()
         return if (condition()) {
             r.pc().set(r.pc().get() + s)
@@ -53,7 +54,7 @@ class JumpsInstruction(
         }
     }
 
-    private fun conditionalJumpTo(condition: () -> Boolean, to: () -> Int): Int {
+    private inline fun conditionalJumpTo(condition: () -> Boolean, to: () -> Int): Int {
         val t = to()
         return if (condition()) {
             r.pc().set(t)

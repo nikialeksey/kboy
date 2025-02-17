@@ -18,11 +18,19 @@ class Loads16Instruction(
             0x21 -> load({ mem.readNext16(r) }, { r.hl().set(it) }, 12)
             0x31 -> load({ mem.readNext16(r) }, { r.sp().set(it) }, 12)
 
-            0x08 -> load({ r.sp().get() }, { mem.write8(mem.readNext16(r), it.and(0xFF)) }, 20)
+            0x08 -> load(
+                { r.sp().get() },
+                {
+                    val target = mem.readNext16(r)
+                    mem.write8(target, it.and(0xFF))
+                    mem.write8(target + 1, it.shr(8))
+                },
+                20
+            )
             0xF8 -> {
                 val a = r.sp().get()
                 val b = mem.readNextSigned8(r)
-                val result = a + b
+                val result = (a + b).and(0xFFFF)
                 r.hl().set(result)
 
                 r.flag().z().disable()
@@ -50,14 +58,14 @@ class Loads16Instruction(
         }
     }
 
-    private fun load(read: () -> Int, write: (Int) -> Unit, cycles: Int): Int {
+    private inline fun load(read: () -> Int, write: (Int) -> Unit, cycles: Int): Int {
         val result = read()
         write(result)
 
         return cycles
     }
 
-    private fun pop(write: (Int) -> Unit): Int {
+    private inline fun pop(write: (Int) -> Unit): Int {
         val low = mem.read8(r.sp().get())
         val high = mem.read8(r.sp().get() + 1)
         r.sp().set(r.sp().get() + 2)
@@ -66,7 +74,7 @@ class Loads16Instruction(
         return 12
     }
 
-    private fun push(read: () -> Int): Int {
+    private inline fun push(read: () -> Int): Int {
         val value = read()
         mem.write8(r.sp().get() - 1, value.shr(8).and(0xFF))
         mem.write8(r.sp().get() - 2, value.and(0xFF))

@@ -24,7 +24,7 @@ import kotlin.test.Test
 import kotlin.test.assertContains
 
 @OptIn(ExperimentalResourceApi::class)
-class GbCpuTest {
+class DesktopGbCpuTest {
 
     @Test
     fun test01() = runTest {
@@ -110,7 +110,7 @@ class GbCpuTest {
         )
         val gb = SimpleGb(
             timer = timer,
-            cpu = cpu,
+            cpu = DoctorGbCpu(cpu, registers, ram),
             dma = dmaTransfer,
             ppu = GbPpu(interrupts, ram, lcdStatus, lcdControl, palette, background, window)
         )

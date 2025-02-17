@@ -2,7 +2,6 @@ package com.alexeycode.kboy.gb.cpu
 
 import com.alexeycode.kboy.gb.cpu.instructions.ExtInstruction
 import com.alexeycode.kboy.gb.cpu.instructions.Instruction
-import com.alexeycode.kboy.gb.cpu.instructions.Instructions
 import com.alexeycode.kboy.gb.cpu.instructions.SimpleInstruction
 import com.alexeycode.kboy.gb.cpu.interrupts.Interrupts
 import com.alexeycode.kboy.gb.cpu.registers.Registers
@@ -12,7 +11,6 @@ class GbCpu(
     private val r: Registers,
     private val mem: Memory,
     private val interrupts: Interrupts,
-    private val instructions: Instructions,
     private val instruction: Instruction = SimpleInstruction(r, mem, interrupts),
     private val extInstruction: Instruction = ExtInstruction(r, mem)
 ) : Cpu {
@@ -25,11 +23,15 @@ class GbCpu(
 
             if (clockCyclesSpentOnInterrupts == 0) {
                 val oldPc = r.pc().get()
-                instructions.loadInstruction(oldPc)
-                val instructionMeta = instructions.instructionMeta()
-                val opcode = instructionMeta.opcode()
-                val isExt = instructions.isExtInstruction()
-                r.pc().set(oldPc + if (isExt) 2 else 1)
+                var p = r.pc().get()
+                val code = mem.read8(p++)
+                val isExt = code == 0xCB
+                val opcode = if (isExt) {
+                    mem.read8(p++)
+                } else {
+                    code
+                }
+                r.pc().set(p)
 
                 val clockCyclesSpent = try {
                     if (isExt) {

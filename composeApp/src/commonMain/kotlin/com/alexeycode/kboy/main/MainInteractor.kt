@@ -4,9 +4,7 @@ import com.alexeycode.kboy.gb.SimpleGb
 import com.alexeycode.kboy.gb.cartridge.GbCartridge
 import com.alexeycode.kboy.gb.cartridge.GbCartridgeData
 import com.alexeycode.kboy.gb.cpu.GbCpu
-import com.alexeycode.kboy.gb.cpu.instructions.GbCartridgeInstructions
 import com.alexeycode.kboy.gb.cpu.interrupts.GbInterrupts
-import com.alexeycode.kboy.gb.cpu.opcodes.GbOpcodes
 import com.alexeycode.kboy.gb.cpu.registers.InMemoryRegisters
 import com.alexeycode.kboy.gb.cpu.timer.GbTimer
 import com.alexeycode.kboy.gb.joypad.GbJoypad
@@ -23,20 +21,17 @@ import com.alexeycode.kboy.gb.ppu.Screen
 import com.alexeycode.kboy.gb.serial.BufferSerial
 import com.alexeycode.kboy.io.Controller
 import com.alexeycode.kboy.io.FileSystem
-import kboy.composeapp.generated.resources.Res
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import org.jetbrains.compose.resources.ExperimentalResourceApi
 
 class MainInteractor(
     private val fileSystem: FileSystem
 ) {
 
-    @OptIn(ExperimentalResourceApi::class)
     suspend fun prepareGb(scope: CoroutineScope, romUri: String, controller: Controller): Flow<Screen> {
         val interrupts = GbInterrupts()
         val timer = GbTimer(interrupts)
@@ -55,13 +50,10 @@ class MainInteractor(
         cartridge.upload(memory)
 
         val registers = InMemoryRegisters()
-        val opcodes = GbOpcodes(Res.readBytes("files/Opcodes.json"))
-        val instructions = GbCartridgeInstructions(opcodes, memory)
         val cpu = GbCpu(
             registers,
             memory,
-            interrupts,
-            instructions
+            interrupts
         )
         val ppu = GbPpu(interrupts, memory, lcdStatus, lcdControl, palette, background, window)
         val gb = SimpleGb(timer, cpu, dmaTransfer, ppu)
