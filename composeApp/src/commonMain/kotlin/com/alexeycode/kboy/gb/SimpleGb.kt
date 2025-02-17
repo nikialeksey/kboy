@@ -11,12 +11,15 @@ class SimpleGb(
     private val dma: DmaTransfer,
     private val ppu: Ppu
 ) : Gb {
-    override fun run(cpuCycles: Int) {
+    override fun run(cpuCycles: Int): Int {
+        var clockCyclesSpent = 0
         for (cycle in 0 until cpuCycles) {
             val clockCycles = cpu.tick()
             timer.tick(clockCycles)
             dma.tick(clockCycles)
             ppu.tick(clockCycles)
+            clockCyclesSpent += clockCycles
         }
+        return clockCyclesSpent
     }
 }

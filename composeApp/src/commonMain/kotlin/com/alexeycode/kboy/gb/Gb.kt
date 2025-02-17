@@ -1,5 +1,5 @@
 package com.alexeycode.kboy.gb
 
 interface Gb {
-    fun run(cpuCycles: Int)
+    fun run(cpuCycles: Int): Int
 }

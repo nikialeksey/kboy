@@ -27,6 +27,7 @@ import com.alexeycode.kboy.gb.ppu.Screen
 import com.alexeycode.kboy.gl.RenderScreen
 import com.alexeycode.kboy.host.Host
 import com.alexeycode.kboy.host.Roms
+import com.alexeycode.kboy.host.Time
 import com.alexeycode.kboy.io.Controller
 import com.alexeycode.kboy.io.FileSystem
 import com.alexeycode.kboy.io.TouchControllerListener
@@ -45,11 +46,13 @@ fun Main(
     host: Host,
     roms: Roms,
     fileSystem: FileSystem,
+    time: Time,
     extController: Controller,
     viewModel: MainViewModel = viewModel {
         MainViewModel(
             interactor = MainInteractor(
-                fileSystem
+                fileSystem,
+                time,
             ),
             roms = roms,
             host = host,

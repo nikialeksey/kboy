@@ -9,6 +9,7 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.lifecycleScope
 import com.alexeycode.kboy.host.AndroidHost
 import com.alexeycode.kboy.host.AndroidRoms
+import com.alexeycode.kboy.host.AndroidTime
 import com.alexeycode.kboy.io.AndroidFileSystem
 import com.alexeycode.kboy.io.Controller
 import com.alexeycode.kboy.io.LoadRomContract
@@ -21,6 +22,7 @@ class MainActivity : ComponentActivity() {
     private val loadRom = registerForActivityResult(LoadRomContract(), roms)
 
     private val fileSystem = AndroidFileSystem(this)
+    private val time = AndroidTime()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,6 +38,7 @@ class MainActivity : ComponentActivity() {
                 host = host,
                 roms = roms,
                 fileSystem = fileSystem,
+                time = time,
                 extController = Controller.Dummy()
             )
         }

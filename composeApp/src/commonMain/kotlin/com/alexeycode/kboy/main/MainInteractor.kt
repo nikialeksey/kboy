@@ -17,19 +17,23 @@ import com.alexeycode.kboy.gb.ppu.GbLcdStatus
 import com.alexeycode.kboy.gb.ppu.GbPalette
 import com.alexeycode.kboy.gb.ppu.GbPpu
 import com.alexeycode.kboy.gb.ppu.GbWindow
+import com.alexeycode.kboy.gb.ppu.RENDER_CYCLES
 import com.alexeycode.kboy.gb.ppu.Screen
 import com.alexeycode.kboy.gb.serial.BufferSerial
+import com.alexeycode.kboy.host.Time
 import com.alexeycode.kboy.io.Controller
 import com.alexeycode.kboy.io.FileSystem
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class MainInteractor(
-    private val fileSystem: FileSystem
+    private val fileSystem: FileSystem,
+    private val time: Time,
 ) {
 
     suspend fun prepareGb(scope: CoroutineScope, romUri: String, controller: Controller): Flow<Screen> {
@@ -68,8 +72,29 @@ class MainInteractor(
             launch { controller.up().collect { pressed -> if (pressed) joypad.up().press() else joypad.up().release() } }
             launch { controller.down().collect { pressed -> if (pressed) joypad.down().press() else joypad.down().release() } }
             withContext(Dispatchers.Default) {
+                var clockCyclesSinceLastFrame = 0
+                var timeSinceLastFrame = time.currentTimeMs()
+
                 while (isActive) {
-                    gb.run(10000)
+                    // 70_224 clock ticks per frame
+                    // we want to have 60 fps
+                    // and CPU tick is about 70_224 / 4 fps
+                    // so if we will do 1000 CPU ticks we can be sure
+                    // that this cycle block will be executed less than one frame
+                    // TODO think about serial transfers
+                    // TODO think about audio unit
+                    val clockCycles = gb.run(1000)
+                    clockCyclesSinceLastFrame += clockCycles
+                    if (clockCyclesSinceLastFrame > RENDER_CYCLES) {
+                        // then we need to wait sometime to sync timings
+                        clockCyclesSinceLastFrame %= RENDER_CYCLES
+                        // each frame duration 1/60 seconds, or 17ms
+                        var lastTimeMs = 0L
+                        while (time.currentTimeMs().apply { lastTimeMs = this@apply } - timeSinceLastFrame < 16) {
+                            delay(1)
+                        }
+                        timeSinceLastFrame = lastTimeMs
+                    }
                 }
             }
         }

@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.asSharedFlow
 const val SCREEN_WIDTH = 160
 const val SCREEN_HEIGHT = 144
 
-private const val RENDER_CYCLES = 70224
+const val RENDER_CYCLES = 70224
 private const val LINE_CYCLES = 456
 private const val OAM_SCAN_CYCLES = 80
 
