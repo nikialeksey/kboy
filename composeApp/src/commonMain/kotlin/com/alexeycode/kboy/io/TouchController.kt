@@ -25,7 +25,6 @@ class TouchController : Controller, TouchControllerListener {
     override fun start() = buttonStart
 
     override fun rightPressed() {
-        println("!!!!!!! right pressed")
         buttonRight.tryEmit(true)
     }
 
@@ -34,7 +33,6 @@ class TouchController : Controller, TouchControllerListener {
     }
 
     override fun leftPressed() {
-        println("!!!!!!! left pressed")
         buttonLeft.tryEmit(true)
     }
 
@@ -43,7 +41,6 @@ class TouchController : Controller, TouchControllerListener {
     }
 
     override fun upPressed() {
-        println("!!!!!!! up pressed")
         buttonUp.tryEmit(true)
     }
 
@@ -52,7 +49,6 @@ class TouchController : Controller, TouchControllerListener {
     }
 
     override fun downPressed() {
-        println("!!!!!!! down pressed")
         buttonDown.tryEmit(true)
     }
 
@@ -77,7 +73,6 @@ class TouchController : Controller, TouchControllerListener {
     }
 
     override fun selectPressed() {
-        println("!!!!!!! select pressed")
         buttonSelect.tryEmit(true)
     }
 
@@ -86,7 +81,6 @@ class TouchController : Controller, TouchControllerListener {
     }
 
     override fun startPressed() {
-        println("!!!!!!! start pressed")
         buttonStart.tryEmit(true)
     }
 
