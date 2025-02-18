@@ -1,5 +1,7 @@
 package com.alexeycode.kboy.main
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -11,6 +13,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Button
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -18,6 +21,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.alexeycode.kboy.gb.ppu.GbScreen
@@ -71,32 +75,42 @@ fun Main(
     val screen = remember(state) { viewModel.screen }
     val touchListener = remember(state) { viewModel.touchControllerListener() }
 
-    if (isTouchEnabled) {
-        GbScreenWithController(
-            isGameRunning = isGameRunning,
-            screen = screen,
-            onSelectRomClicked = onSelectRomClicked,
-            touchControllerListener = touchListener
-        )
-    } else {
-        GbScreen(
-            isGameRunning = isGameRunning,
-            screen = screen,
-            onSelectRomClicked = onSelectRomClicked
-        )
+    Box(
+        modifier = Modifier.fillMaxSize()
+            .background(MaterialTheme.colorScheme.background),
+        contentAlignment = Alignment.Center
+    ) {
+        if (isTouchEnabled) {
+            GbScreenWithController(
+                modifier = Modifier.fillMaxSize(),
+                isGameRunning = isGameRunning,
+                screen = screen,
+                onSelectRomClicked = onSelectRomClicked,
+                touchControllerListener = touchListener
+            )
+        } else {
+            GbScreen(
+                modifier = Modifier
+                    .aspectRatio(SCREEN_WIDTH.toFloat()/SCREEN_HEIGHT.toFloat()),
+                isGameRunning = isGameRunning,
+                screen = screen,
+                onSelectRomClicked = onSelectRomClicked
+            )
+        }
     }
 }
 
 
 @Composable
 fun GbScreenWithController(
+    modifier: Modifier,
     isGameRunning: Boolean,
     screen: Flow<Screen>,
     touchControllerListener: TouchControllerListener,
     onSelectRomClicked: () -> Unit
 ) {
     Row(
-        modifier = Modifier.fillMaxSize()
+        modifier = modifier
     ) {
         Column(
             modifier = Modifier
@@ -168,13 +182,27 @@ private fun GbScreen(
     screen: Flow<Screen>,
     onSelectRomClicked: () -> Unit
 ) {
-    Box(modifier = modifier) {
+    Box(
+        modifier = modifier
+            .background(MaterialTheme.colorScheme.surface)
+    ) {
         if (isGameRunning) {
             val screenSnapshot by screen.collectAsState(GbScreen())
             RenderScreen(screenSnapshot)
         } else {
-            Button(onClick = { onSelectRomClicked() }) {
-                Text("SelectRom")
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .clickable { onSelectRomClicked() }
+                    .padding(16.dp),
+                contentAlignment = Alignment.Center
+            ) {
+                Text(
+                    "Click here to select ROM...",
+                    textAlign = TextAlign.Center,
+                    color = MaterialTheme.colorScheme.onSurface,
+                    style = MaterialTheme.typography.displayMedium
+                )
             }
         }
     }

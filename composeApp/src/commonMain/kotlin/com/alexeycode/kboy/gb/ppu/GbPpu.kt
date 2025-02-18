@@ -182,7 +182,7 @@ class GbPpu(
                 } else {
                     8 - x - 1
                 }
-                val screenX = spriteX - 8 + xInSprite
+                val screenX = spriteX - 8 + x
                 if (screenX >= 0 && screenX < SCREEN_WIDTH) {
                     val bit = (8 - xInSprite - 1)
                     val pixelLow = if (a.and(1.shl(bit)) != 0) 1 else 0

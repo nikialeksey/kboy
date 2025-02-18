@@ -1,9 +1,12 @@
 package com.alexeycode.kboy
 
 import android.content.pm.ActivityInfo
+import android.os.Build
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.material3.dynamicDarkColorScheme
+import androidx.compose.ui.platform.LocalContext
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.lifecycleScope
@@ -13,6 +16,7 @@ import com.alexeycode.kboy.host.AndroidTime
 import com.alexeycode.kboy.io.AndroidFileSystem
 import com.alexeycode.kboy.io.Controller
 import com.alexeycode.kboy.io.LoadRomContract
+import com.alexeycode.kboy.ui.DarkColors
 import kotlinx.coroutines.launch
 
 class MainActivity : ComponentActivity() {
@@ -34,12 +38,23 @@ class MainActivity : ComponentActivity() {
         }
 
         setContent {
+            val context = LocalContext.current
+            val colors = when {
+                (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) -> {
+                    dynamicDarkColorScheme(context)
+                }
+                else -> {
+                    DarkColors
+                }
+            }
+
             App(
                 host = host,
                 roms = roms,
                 fileSystem = fileSystem,
                 time = time,
-                extController = Controller.Dummy()
+                extController = Controller.Dummy(),
+                colorScheme = colors
             )
         }
     }
