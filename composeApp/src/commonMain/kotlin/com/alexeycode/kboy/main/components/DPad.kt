@@ -16,10 +16,12 @@ import androidx.compose.ui.draw.drawWithCache
 import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.drawscope.scale
 import androidx.compose.ui.graphics.drawscope.translate
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 
 @Composable
 fun DPad(
+    buttonSize: Dp = 40.dp,
     onRightPressed: () -> Unit,
     onRightReleased: () -> Unit,
     onLeftPressed: () -> Unit,
@@ -83,7 +85,7 @@ fun DPad(
                     }
                 }
             }
-            .size(120.dp)
+            .size(buttonSize * 3)
     ) {
         Column {
             Row(
@@ -92,8 +94,8 @@ fun DPad(
             ) {
                 Box(
                     modifier = Modifier
-                        .width(40.dp)
-                        .height(40.dp)
+                        .width(buttonSize)
+                        .height(buttonSize)
                         .onPressRelease(onUpPressed, onUpReleased),
                 )
             }
@@ -103,14 +105,14 @@ fun DPad(
             ) {
                 Box(
                     modifier = Modifier
-                        .width(40.dp)
-                        .height(40.dp)
+                        .width(buttonSize)
+                        .height(buttonSize)
                         .onPressRelease(onLeftPressed, onLeftReleased),
                 )
                 Box(
                     modifier = Modifier
-                        .width(40.dp)
-                        .height(40.dp)
+                        .width(buttonSize)
+                        .height(buttonSize)
                         .onPressRelease(onRightPressed, onRightReleased)
                 )
             }
@@ -120,8 +122,8 @@ fun DPad(
             ) {
                 Box(
                     modifier = Modifier
-                        .width(40.dp)
-                        .height(40.dp)
+                        .width(buttonSize)
+                        .height(buttonSize)
                         .onPressRelease(onDownPressed, onDownReleased)
                 )
             }

@@ -75,6 +75,23 @@ fun Main(
     val screen = remember(state) { viewModel.screen }
     val touchListener = remember(state) { viewModel.touchControllerListener() }
 
+    MainScreen(
+        isTouchEnabled,
+        isGameRunning,
+        screen,
+        onSelectRomClicked,
+        touchListener
+    )
+}
+
+@Composable
+fun MainScreen(
+    isTouchEnabled: Boolean,
+    isGameRunning: Boolean,
+    screen: Flow<Screen>,
+    onSelectRomClicked: () -> Unit,
+    touchListener: TouchControllerListener
+) {
     Box(
         modifier = Modifier.fillMaxSize()
             .background(MaterialTheme.colorScheme.background),
@@ -91,7 +108,7 @@ fun Main(
         } else {
             GbScreen(
                 modifier = Modifier
-                    .aspectRatio(SCREEN_WIDTH.toFloat()/SCREEN_HEIGHT.toFloat()),
+                    .aspectRatio(SCREEN_WIDTH.toFloat() / SCREEN_HEIGHT.toFloat()),
                 isGameRunning = isGameRunning,
                 screen = screen,
                 onSelectRomClicked = onSelectRomClicked
@@ -109,17 +126,20 @@ fun GbScreenWithController(
     touchControllerListener: TouchControllerListener,
     onSelectRomClicked: () -> Unit
 ) {
+    val buttonSize = 48.dp
+    val padding = 24.dp
     Row(
         modifier = modifier
     ) {
         Column(
             modifier = Modifier
-                .width(184.dp) // 40 + 40 + 40 + 32*2
-                .padding(32.dp)
+                .width(buttonSize * 3 + padding * 2) // 40 + 40 + 40 + 32*2
+                .padding(padding)
                 .fillMaxHeight(),
             verticalArrangement = Arrangement.Center
         ) {
             DPad(
+                buttonSize = buttonSize,
                 onRightPressed = touchControllerListener::rightPressed,
                 onRightReleased = touchControllerListener::rightReleased,
                 onLeftPressed = touchControllerListener::leftPressed,
@@ -160,9 +180,8 @@ fun GbScreenWithController(
         }
         Column(
             modifier = Modifier
-                .width(184.dp)
-                .padding(32.dp)
-
+                .width(buttonSize * 3 + padding * 2)
+                .padding(padding)
         ) {
             // a/b
             AB(
