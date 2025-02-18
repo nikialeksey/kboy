@@ -88,6 +88,10 @@ class GbPpu(
                             renderBackground()
                         }
 
+                        if (lcdControl.bgAndWindowEnable() && lcdControl.windowEnable() && lcdStatus.ly() >= window.wy()) {
+                            renderWindow()
+                        }
+
                         if (lcdControl.objEnable()) {
                             renderSprites()
                         }
@@ -130,16 +134,38 @@ class GbPpu(
 
             val lineAddress = tileDataAddress + pixelY * 2
 
-            val a = memory.read8(lineAddress)
-            val b = memory.read8(lineAddress + 1)
-
-            val bit = (8 - pixelX - 1)
-            val pixelLow = if (a.and(1.shl(bit)) != 0) 1 else 0
-            val pixelHigh = if (b.and(1.shl(bit)) != 0) 1 else 0
-            val pixel = pixelHigh.shl(1) + pixelLow
-            // 0 1 2 3 4 5 6 7 8 9 A B C D E F
-            //     1     1     1     1
+            val pixel = readPixel(lineAddress, pixelX)
             palette.drawBgpPixel(gbScreen, x, y, pixel)
+        }
+    }
+
+    private fun renderWindow() {
+        val y = lcdStatus.ly()
+        val tilePixelY = (y - window.wy())
+        val tileY = tilePixelY / 8
+        val pixelY = tilePixelY % 8
+
+        for (x in 0 until SCREEN_WIDTH) {
+            val tilePixelX = (x + 7 - window.wx())
+            if (tilePixelX >= 0 && tilePixelX < SCREEN_WIDTH) {
+                val tileX = tilePixelX / 8
+                val pixelX = tilePixelX % 8
+
+                val tileAddress = lcdControl.windowTileMapStart() + tileY * 32 + tileX
+                val tileNumber = memory.read8(tileAddress)
+
+                val tileDataAddress =
+                    if (lcdControl.bgAndWindowTileDataSignedAddressing()) {
+                        lcdControl.bgAndWindowTileDataStart() + tileNumber.toByte() * 16
+                    } else {
+                        lcdControl.bgAndWindowTileDataStart() + tileNumber * 16
+                    }
+
+                val lineAddress = tileDataAddress + pixelY * 2
+
+                val pixel = readPixel(lineAddress, pixelX)
+                palette.drawBgpPixel(gbScreen, x, y, pixel)
+            }
         }
     }
 
@@ -184,10 +210,7 @@ class GbPpu(
                 }
                 val screenX = spriteX - 8 + x
                 if (screenX >= 0 && screenX < SCREEN_WIDTH) {
-                    val bit = (8 - xInSprite - 1)
-                    val pixelLow = if (a.and(1.shl(bit)) != 0) 1 else 0
-                    val pixelHigh = if (b.and(1.shl(bit)) != 0) 1 else 0
-                    val pixel = pixelHigh.shl(1) + pixelLow
+                    val pixel = readPixel(a, b, xInSprite)
 
                     if (attrs.and(1.shl(4)) == 0) {
                         palette.drawObp0Pixel(gbScreen, screenX, lcdStatus.ly(), pixel)
@@ -197,6 +220,21 @@ class GbPpu(
                 }
             }
         }
+    }
+
+    private fun readPixel(lineAddress: Int, pixelX: Int): Int {
+        val a = memory.read8(lineAddress)
+        val b = memory.read8(lineAddress + 1)
+
+        return readPixel(a, b, pixelX)
+    }
+
+    private fun readPixel(a: Int, b: Int, pixelX: Int): Int {
+        val bit = (8 - pixelX - 1)
+        val pixelLow = if (a.and(1.shl(bit)) != 0) 1 else 0
+        val pixelHigh = if (b.and(1.shl(bit)) != 0) 1 else 0
+        val pixel = pixelHigh.shl(1) + pixelLow
+        return pixel
     }
 
     private fun prepareSprites() {
