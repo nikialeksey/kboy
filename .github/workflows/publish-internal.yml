@@ -1,11 +1,11 @@
-name: publish internal testing
+name: Publish internal
 on:
   push:
     branches:
       - 'main'
 
 jobs:
-  publish:
+  publish-android:
     runs-on: macos-latest
     steps:
     - name: Checkout
