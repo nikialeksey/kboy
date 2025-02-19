@@ -18,18 +18,28 @@ default_platform(:android)
 platform :android do
   desc "Runs all the tests"
   lane :test do
-    gradle(task: "test")
+    gradle(
+      task: "test",
+      gradle_path: "../gradlew"
+    )
   end
 
-  desc "Submit a new Alpha Build to Google Play Alpha"
-  lane :beta do
-    gradle(task: 'assemble', build_type: 'Release')
-    upload_to_play_store(track: 'alpha')
+  desc "Submit a new Build to Google Play Internal Testing"
+  lane :internal_testing do
+    gradle(
+      task: 'assemble',
+      build_type: 'Release',
+      gradle_path: "../gradlew"
+    )
+    upload_to_play_store_internal_app_sharing()
   end
 
   desc "Deploy a new version to the Google Play"
   lane :deploy do
-    gradle(task: "clean assembleRelease")
+    gradle(
+      task: "clean assembleRelease",
+      gradle_path: "../gradlew"
+    )
     upload_to_play_store
   end
 end

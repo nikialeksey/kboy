@@ -1,2 +1,2 @@
-json_key_file("../keystore/kboy-1993-f4939c4fceb0.json")
+json_key_file("../keystore/android/fastlane-google-play-key.json")
 package_name("com.alexeycode.kboy")

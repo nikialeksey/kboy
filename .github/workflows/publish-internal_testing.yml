@@ -1,0 +1,26 @@
+name: publish internal testing
+on:
+  push:
+    branches:
+      - 'main'
+
+jobs:
+  publish:
+    runs-on: macos-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: Prepare secrets
+      env:
+        FASTLANE_GOOGLE_PLAY_KEY_FILE: ${{ secrets.FASTLANE_GOOGLE_PLAY_KEY_FILE }}
+        ANDROID_RELEASE_KEYSTORE_PROPERTIES_FILE: ${{ secrets.ANDROID_RELEASE_KEYSTORE_PROPERTIES_FILE }}
+
+      run: |
+        echo "$FASTLANE_GOOGLE_PLAY_KEY_FILE" >> ./keystore/android/fastlane-google-play-key.json
+        echo "$ANDROID_RELEASE_KEYSTORE_PROPERTIES_FILE" >> ./keystore/android/keystore.properties
+        
+    - name: Run Fastlane
+      run: fastlane internal_testing
+      with:
+        working-directory: 'composeApp'

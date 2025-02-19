@@ -119,13 +119,13 @@ kotlin {
     }
 }
 
-val keystoreDebugPropertiesFile = rootProject.file("keystore/keystore-debug.properties")
+val keystoreDebugPropertiesFile = rootProject.file("keystore/android/keystore-debug.properties")
 val keystoreDebugProperties = Properties()
 try {
     keystoreDebugProperties.load(FileInputStream(keystoreDebugPropertiesFile))
 } catch (ignored: IOException) {}
 
-val keystorePropertiesFile = rootProject.file("keystore/keystore.properties")
+val keystorePropertiesFile = rootProject.file("keystore/android/keystore.properties")
 val keystoreProperties = Properties()
 try {
     keystoreProperties.load(FileInputStream(keystorePropertiesFile))
@@ -154,8 +154,8 @@ android {
         applicationId = "com.alexeycode.kboy"
         minSdk = libs.versions.android.minSdk.get().toInt()
         targetSdk = libs.versions.android.targetSdk.get().toInt()
-        versionCode = 1
-        versionName = "1.0"
+        versionCode = 2
+        versionName = "0.0.1"
     }
     packaging {
         resources {
