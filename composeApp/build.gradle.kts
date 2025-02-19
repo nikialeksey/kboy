@@ -119,7 +119,13 @@ kotlin {
     }
 }
 
-val keystorePropertiesFile = rootProject.file("keystore.properties")
+val keystoreDebugPropertiesFile = rootProject.file("keystore/keystore-debug.properties")
+val keystoreDebugProperties = Properties()
+try {
+    keystoreDebugProperties.load(FileInputStream(keystoreDebugPropertiesFile))
+} catch (ignored: IOException) {}
+
+val keystorePropertiesFile = rootProject.file("keystore/keystore.properties")
 val keystoreProperties = Properties()
 try {
     keystoreProperties.load(FileInputStream(keystorePropertiesFile))
@@ -133,14 +139,14 @@ android {
         create("appDebug") {
             keyAlias = "androiddebug"
             keyPassword = "android"
-            storeFile = file("./../debug-keystore.jks")
+            storeFile = rootProject.file("./keystore/debug-keystore.jks")
             storePassword = "android"
         }
         create("appRelease") {
-            keyAlias = (keystoreProperties["releaseKeyAlias"] as String?) ?: "androiddebug"
-            keyPassword = (keystoreProperties["releaseKeyPassword"] as String?) ?: "android"
-            storeFile = file((keystoreProperties["releaseStoreFile"] as String?) ?: "./../debug-keystore.jks")
-            storePassword = (keystoreProperties["releaseStorePassword"] as String?) ?: "android"
+            keyAlias = (keystoreProperties["keyAlias"] as String?) ?: (keystoreDebugProperties["keyAlias"] as String)
+            keyPassword = (keystoreProperties["keyPassword"] as String?) ?: (keystoreDebugProperties["keyPassword"] as String)
+            storeFile = file((keystoreProperties["storeFile"] as String?) ?: (keystoreDebugProperties["storeFile"] as String))
+            storePassword = (keystoreProperties["storePassword"] as String?) ?: (keystoreDebugProperties["storePassword"] as String)
         }
     }
 
@@ -163,8 +169,7 @@ android {
         getByName("release") {
             isMinifyEnabled = true
             proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
+                getDefaultProguardFile("proguard-android-optimize.txt")
             )
             signingConfig = signingConfigs["appRelease"]
         }
