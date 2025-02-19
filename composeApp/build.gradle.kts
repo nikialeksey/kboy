@@ -137,10 +137,10 @@ android {
 
     signingConfigs {
         create("appDebug") {
-            keyAlias = "androiddebug"
-            keyPassword = "android"
-            storeFile = rootProject.file("./keystore/debug-keystore.jks")
-            storePassword = "android"
+            keyAlias = keystoreDebugProperties["keyAlias"] as String
+            keyPassword = keystoreDebugProperties["keyPassword"] as String
+            storeFile = file(keystoreDebugProperties["storeFile"] as String)
+            storePassword = keystoreDebugProperties["storePassword"] as String
         }
         create("appRelease") {
             keyAlias = (keystoreProperties["keyAlias"] as String?) ?: (keystoreDebugProperties["keyAlias"] as String)
