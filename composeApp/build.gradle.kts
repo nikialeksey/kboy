@@ -3,6 +3,9 @@ import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.targets.js.webpack.KotlinWebpackConfig
+import java.io.FileInputStream
+import java.io.IOException
+import java.util.Properties
 
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
@@ -116,9 +119,30 @@ kotlin {
     }
 }
 
+val keystorePropertiesFile = rootProject.file("keystore.properties")
+val keystoreProperties = Properties()
+try {
+    keystoreProperties.load(FileInputStream(keystorePropertiesFile))
+} catch (ignored: IOException) {}
+
 android {
     namespace = "com.alexeycode.kboy"
     compileSdk = libs.versions.android.compileSdk.get().toInt()
+
+    signingConfigs {
+        create("appDebug") {
+            keyAlias = "androiddebug"
+            keyPassword = "android"
+            storeFile = file("./../debug-keystore.jks")
+            storePassword = "android"
+        }
+        create("appRelease") {
+            keyAlias = (keystoreProperties["releaseKeyAlias"] as String?) ?: "androiddebug"
+            keyPassword = (keystoreProperties["releaseKeyPassword"] as String?) ?: "android"
+            storeFile = file((keystoreProperties["releaseStoreFile"] as String?) ?: "./../debug-keystore.jks")
+            storePassword = (keystoreProperties["releaseStorePassword"] as String?) ?: "android"
+        }
+    }
 
     defaultConfig {
         applicationId = "com.alexeycode.kboy"
@@ -133,8 +157,16 @@ android {
         }
     }
     buildTypes {
+        getByName("debug") {
+            signingConfig = signingConfigs["appDebug"]
+        }
         getByName("release") {
-            isMinifyEnabled = false
+            isMinifyEnabled = true
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
+            signingConfig = signingConfigs["appRelease"]
         }
     }
     compileOptions {
