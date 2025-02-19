@@ -21,6 +21,5 @@ jobs:
         echo "$ANDROID_RELEASE_KEYSTORE_PROPERTIES_FILE" >> ./keystore/android/keystore.properties
         
     - name: Run Fastlane
+      working-directory: ./composeApp
       run: fastlane internal_testing
-      with:
-        working-directory: 'composeApp'
