@@ -31,7 +31,10 @@ platform :android do
       build_type: 'Release',
       gradle_path: "../gradlew"
     )
-    upload_to_play_store(track: 'internal')
+    upload_to_play_store(
+      track: 'internal',
+      skip_upload_apk: true
+    )
   end
 
   desc "Deploy a new version to the Google Play"
