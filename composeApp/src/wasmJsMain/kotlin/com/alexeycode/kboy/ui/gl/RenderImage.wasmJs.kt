@@ -1,4 +1,4 @@
-package com.alexeycode.kboy.gl
+package com.alexeycode.kboy.ui.gl
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect

@@ -1,4 +1,4 @@
-package com.alexeycode.kboy.gl
+package com.alexeycode.kboy.ui.gl
 
 import android.content.Context
 import android.opengl.GLES20
@@ -85,7 +85,8 @@ class ScreenGLRenderer(private val screen: () -> Screen) : GLSurfaceView.Rendere
     /**
      * Convert float array to float buffer
      */
-    private val quadrantCoordinatesBuffer: FloatBuffer = ByteBuffer.allocateDirect(QUADRANT_COORDINATES.size * 4).run {
+    private val quadrantCoordinatesBuffer: FloatBuffer = ByteBuffer.allocateDirect(
+        QUADRANT_COORDINATES.size * 4).run {
         order(ByteOrder.nativeOrder())
         asFloatBuffer().apply {
             put(QUADRANT_COORDINATES)
@@ -108,7 +109,8 @@ class ScreenGLRenderer(private val screen: () -> Screen) : GLSurfaceView.Rendere
     /**
      * Convert short array to short buffer
      */
-    private val drawOrderBuffer: ShortBuffer = ByteBuffer.allocateDirect(DRAW_ORDER.size * 2).run {
+    private val drawOrderBuffer: ShortBuffer = ByteBuffer.allocateDirect(
+        DRAW_ORDER.size * 2).run {
         order(ByteOrder.nativeOrder())
         asShortBuffer().apply {
             put(DRAW_ORDER)
@@ -128,9 +130,17 @@ class ScreenGLRenderer(private val screen: () -> Screen) : GLSurfaceView.Rendere
         // Prepare the rendering objects. This involves reading shaders, so may throw an IOException.
         try {
             val vertexShader =
-                ShaderUtil.loadGLShader(TAG, GLES20.GL_VERTEX_SHADER, vertexShader)
+                ShaderUtil.loadGLShader(
+                    TAG,
+                    GLES20.GL_VERTEX_SHADER,
+                    vertexShader
+                )
             val fragmentShader =
-                ShaderUtil.loadGLShader(TAG, GLES20.GL_FRAGMENT_SHADER, fragmentShader)
+                ShaderUtil.loadGLShader(
+                    TAG,
+                    GLES20.GL_FRAGMENT_SHADER,
+                    fragmentShader
+                )
 
             program = GLES20.glCreateProgram()
             GLES20.glAttachShader(program, vertexShader)

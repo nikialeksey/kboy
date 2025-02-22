@@ -1,4 +1,4 @@
-package com.alexeycode.kboy.main.components
+package com.alexeycode.kboy.screens.main.components
 
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.interaction.collectIsPressedAsState

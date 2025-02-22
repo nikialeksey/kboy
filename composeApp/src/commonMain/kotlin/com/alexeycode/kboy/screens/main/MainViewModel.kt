@@ -1,4 +1,4 @@
-package com.alexeycode.kboy.main
+package com.alexeycode.kboy.screens.main
 
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.alexeycode.kboy.gb.ppu.Screen
 import com.alexeycode.kboy.host.Host
 import com.alexeycode.kboy.host.Roms
+import com.alexeycode.kboy.host.Vibrator
 import com.alexeycode.kboy.io.Controller
 import com.alexeycode.kboy.io.GroupController
 import com.alexeycode.kboy.io.TouchController
@@ -19,8 +20,9 @@ class MainViewModel(
     private val interactor: MainInteractor,
     private val roms: Roms,
     private val host: Host,
+    private val vibrator: Vibrator,
     private val extController: Controller,
-    private val touchController: TouchController = TouchController()
+    private val touchController: TouchController = TouchController(vibrator)
 ) : ViewModel() {
 
     private var runJob: Job? = null

@@ -1,4 +1,4 @@
-package com.alexeycode.kboy.main
+package com.alexeycode.kboy.screens.main
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -28,16 +28,17 @@ import com.alexeycode.kboy.gb.ppu.GbScreen
 import com.alexeycode.kboy.gb.ppu.SCREEN_HEIGHT
 import com.alexeycode.kboy.gb.ppu.SCREEN_WIDTH
 import com.alexeycode.kboy.gb.ppu.Screen
-import com.alexeycode.kboy.gl.RenderScreen
+import com.alexeycode.kboy.ui.gl.RenderScreen
 import com.alexeycode.kboy.host.Host
 import com.alexeycode.kboy.host.Roms
 import com.alexeycode.kboy.host.Time
+import com.alexeycode.kboy.host.Vibrator
 import com.alexeycode.kboy.io.Controller
 import com.alexeycode.kboy.io.FileSystem
 import com.alexeycode.kboy.io.TouchControllerListener
-import com.alexeycode.kboy.main.components.AB
-import com.alexeycode.kboy.main.components.DPad
-import com.alexeycode.kboy.main.components.StartSelect
+import com.alexeycode.kboy.screens.main.components.AB
+import com.alexeycode.kboy.screens.main.components.DPad
+import com.alexeycode.kboy.screens.main.components.StartSelect
 import kotlinx.coroutines.flow.Flow
 
 data class MainState(
@@ -50,6 +51,7 @@ fun Main(
     host: Host,
     roms: Roms,
     fileSystem: FileSystem,
+    vibrator: Vibrator,
     time: Time,
     extController: Controller,
     viewModel: MainViewModel = viewModel {
@@ -60,6 +62,7 @@ fun Main(
             ),
             roms = roms,
             host = host,
+            vibrator = vibrator,
             extController = extController
         )
     }

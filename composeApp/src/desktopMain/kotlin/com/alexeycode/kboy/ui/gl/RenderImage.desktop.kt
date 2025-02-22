@@ -1,4 +1,4 @@
-package com.alexeycode.kboy.gl
+package com.alexeycode.kboy.ui.gl
 
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable

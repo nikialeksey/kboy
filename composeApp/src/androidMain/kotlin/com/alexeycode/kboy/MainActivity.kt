@@ -3,9 +3,11 @@ package com.alexeycode.kboy
 import android.content.pm.ActivityInfo
 import android.os.Build
 import android.os.Bundle
+import android.os.Vibrator
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.material3.dynamicDarkColorScheme
+import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalContext
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
@@ -13,6 +15,7 @@ import androidx.lifecycle.lifecycleScope
 import com.alexeycode.kboy.host.AndroidHost
 import com.alexeycode.kboy.host.AndroidRoms
 import com.alexeycode.kboy.host.AndroidTime
+import com.alexeycode.kboy.host.AndroidVibrator
 import com.alexeycode.kboy.io.AndroidFileSystem
 import com.alexeycode.kboy.io.Controller
 import com.alexeycode.kboy.io.LoadRomContract
@@ -47,12 +50,16 @@ class MainActivity : ComponentActivity() {
                     DarkColors
                 }
             }
+            val vibrator = remember(context) {
+                AndroidVibrator(context.getSystemService(Vibrator::class.java))
+            }
 
             App(
                 host = host,
                 roms = roms,
                 fileSystem = fileSystem,
                 time = time,
+                vibrator = vibrator,
                 extController = Controller.Dummy(),
                 colorScheme = colors
             )

@@ -1,4 +1,4 @@
-package com.alexeycode.kboy.main
+package com.alexeycode.kboy.screens.main
 
 import com.alexeycode.kboy.gb.SimpleGb
 import com.alexeycode.kboy.gb.cartridge.GbCartridge

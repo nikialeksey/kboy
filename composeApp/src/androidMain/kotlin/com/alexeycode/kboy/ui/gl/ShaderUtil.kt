@@ -1,4 +1,4 @@
-package com.alexeycode.kboy.gl
+package com.alexeycode.kboy.ui.gl
 
 import android.opengl.GLES20
 import android.util.Log

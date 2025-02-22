@@ -4,7 +4,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import com.alexeycode.kboy.io.TouchControllerListener
-import com.alexeycode.kboy.main.MainScreen
+import com.alexeycode.kboy.screens.main.MainScreen
 import com.alexeycode.kboy.ui.DarkColors
 import kotlinx.coroutines.flow.emptyFlow
 

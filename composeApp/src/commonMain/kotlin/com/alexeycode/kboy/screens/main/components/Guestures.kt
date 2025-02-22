@@ -1,4 +1,4 @@
-package com.alexeycode.kboy.main.components
+package com.alexeycode.kboy.screens.main.components
 
 import androidx.compose.foundation.LocalIndication
 import androidx.compose.foundation.clickable

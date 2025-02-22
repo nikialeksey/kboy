@@ -1,9 +1,12 @@
 package com.alexeycode.kboy.io
 
+import com.alexeycode.kboy.host.Vibrator
 import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.MutableSharedFlow
 
-class TouchController : Controller, TouchControllerListener {
+class TouchController(
+    private val vibrator: Vibrator
+) : Controller, TouchControllerListener {
     private val buttonRight = MutableSharedFlow<Boolean>(0, 1, BufferOverflow.DROP_OLDEST)
     private val buttonLeft = MutableSharedFlow<Boolean>(0, 1, BufferOverflow.DROP_OLDEST)
     private val buttonUp = MutableSharedFlow<Boolean>(0, 1, BufferOverflow.DROP_OLDEST)
@@ -26,6 +29,7 @@ class TouchController : Controller, TouchControllerListener {
 
     override fun rightPressed() {
         buttonRight.tryEmit(true)
+        vibrator.vibrate()
     }
 
     override fun rightReleased() {
@@ -34,6 +38,7 @@ class TouchController : Controller, TouchControllerListener {
 
     override fun leftPressed() {
         buttonLeft.tryEmit(true)
+        vibrator.vibrate()
     }
 
     override fun leftReleased() {
@@ -42,6 +47,7 @@ class TouchController : Controller, TouchControllerListener {
 
     override fun upPressed() {
         buttonUp.tryEmit(true)
+        vibrator.vibrate()
     }
 
     override fun upReleased() {
@@ -50,6 +56,7 @@ class TouchController : Controller, TouchControllerListener {
 
     override fun downPressed() {
         buttonDown.tryEmit(true)
+        vibrator.vibrate()
     }
 
     override fun downReleased() {
@@ -58,6 +65,7 @@ class TouchController : Controller, TouchControllerListener {
 
     override fun aPressed() {
         buttonA.tryEmit(true)
+        vibrator.vibrate()
     }
 
     override fun aReleased() {
@@ -66,6 +74,7 @@ class TouchController : Controller, TouchControllerListener {
 
     override fun bPressed() {
         buttonB.tryEmit(true)
+        vibrator.vibrate()
     }
 
     override fun bReleased() {
@@ -74,6 +83,7 @@ class TouchController : Controller, TouchControllerListener {
 
     override fun selectPressed() {
         buttonSelect.tryEmit(true)
+        vibrator.vibrate()
     }
 
     override fun selectReleased() {
@@ -82,6 +92,7 @@ class TouchController : Controller, TouchControllerListener {
 
     override fun startPressed() {
         buttonStart.tryEmit(true)
+        vibrator.vibrate()
     }
 
     override fun startReleased() {
