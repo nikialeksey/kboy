@@ -91,33 +91,33 @@ class GbPalette(
             screen.setPixel(
                 x,
                 y,
-                0xEE.toByte(),
-                0xEE.toByte(),
-                0xEE.toByte()
+                0xFB.toByte(),
+                0xF9.toByte(),
+                0xFB.toByte()
             )
         } else if (pixelData == 1) {
             screen.setPixel(
                 x,
                 y,
-                0xAA.toByte(),
-                0xAA.toByte(),
-                0xAA.toByte()
+                0xEB.toByte(),
+                0x99.toByte(),
+                0x55.toByte()
             )
         } else if (pixelData == 2) {
             screen.setPixel(
                 x,
                 y,
-                0x66.toByte(),
-                0x66.toByte(),
-                0x66.toByte()
+                0x83.toByte(),
+                0x41.toByte(),
+                0x06.toByte()
             )
         } else if (pixelData == 3) {
             screen.setPixel(
                 x,
                 y,
-                0x22.toByte(),
-                0x22.toByte(),
-                0x22.toByte()
+                0x04.toByte(),
+                0x02.toByte(),
+                0x04.toByte()
             )
         }
     }

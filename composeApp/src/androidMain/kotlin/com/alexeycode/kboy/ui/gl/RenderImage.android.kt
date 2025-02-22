@@ -144,8 +144,8 @@ class ScreenGLRenderer(private val screen: () -> Screen) : GLSurfaceView.Rendere
         GLES20.glActiveTexture(GLES20.GL_TEXTURE0)
         GLES20.glGenTextures(textureUnit.size, textureUnit, 0)
         GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, textureUnit[0])
-        GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_MIN_FILTER, GLES20.GL_LINEAR)
-        GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_MAG_FILTER, GLES20.GL_LINEAR)
+        GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_MIN_FILTER, GLES20.GL_NEAREST)
+        GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_MAG_FILTER, GLES20.GL_NEAREST)
         pixelBuffer = ByteBuffer.allocateDirect(160 * 144 * 4).order(ByteOrder.nativeOrder())
 
         GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, 0)
