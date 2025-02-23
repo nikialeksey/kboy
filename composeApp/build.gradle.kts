@@ -14,6 +14,7 @@ plugins {
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
     alias(libs.plugins.detekt)
+    id("com.alexeycode.buildnumber")
 }
 
 kotlin {
@@ -155,8 +156,7 @@ android {
         applicationId = "com.alexeycode.kboy"
         minSdk = libs.versions.android.minSdk.get().toInt()
         targetSdk = libs.versions.android.targetSdk.get().toInt()
-        versionCode = 2
-        versionName = "0.0.1"
+        versionName = "0.0.3"
     }
     packaging {
         resources {
