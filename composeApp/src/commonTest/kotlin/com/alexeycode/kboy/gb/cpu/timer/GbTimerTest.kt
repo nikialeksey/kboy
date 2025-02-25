@@ -1,7 +1,6 @@
 package com.alexeycode.kboy.gb.cpu.timer
 
 import com.alexeycode.kboy.gb.cpu.interrupts.GbInterrupts
-import com.alexeycode.kboy.gb.cpu.timer.GbTimer
 import kotlin.test.Test
 import kotlin.test.assertEquals
 

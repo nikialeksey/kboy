@@ -82,28 +82,34 @@ class GbTimer(
                 }
             } else {
                 val tacBits = tac and 0b11
-                val bit = if (tacBits == 0b00) {
-                    9
-                } else if (tacBits == 0b01) {
-                    3
-                } else if (tacBits == 0b10) {
-                    5
-                } else /*if (tacBits == 0b11)*/ {
-                    7
-                }
-                var previousBitEnabled = false
-                for (n in previousDiv .. div) {
-                    if (n and (1.shl(bit)) != 0) {
-                        previousBitEnabled = true
-                        break
+                val bit = when (tacBits) {
+                    0b00 -> {
+                        9
+                    }
+                    0b01 -> {
+                        3
+                    }
+                    0b10 -> {
+                        5
+                    }
+                    else -> /*if (tacBits == 0b11)*/ {
+                        7
                     }
                 }
-                val newBitDisabled = div and (1.shl(bit)) == 0
-                if (previousBitEnabled && newBitDisabled) {
-                    tima++
-                    if (tima > 0xFF) {
-                        tima = 0x00
-                        overflow = true
+                for (n in previousDiv .. (div - 1)) {
+                    val previousEnabled = n.and(1.shl(bit)) != 0
+                    val nextDisabled = (n + 1).and(1.shl(bit)) == 0
+                    if (previousEnabled && nextDisabled) {
+                        if (previousEnabled && nextDisabled) {
+                            tima++
+                            if (tima > 0xFF) {
+                                tima = 0x00
+                                overflow = true
+                            }
+                            if (overflow) {
+                                cyclesSinceOverflow++
+                            }
+                        }
                     }
                 }
             }

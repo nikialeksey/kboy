@@ -23,62 +23,70 @@ import org.jetbrains.compose.resources.ExperimentalResourceApi
 import kotlin.test.Test
 import kotlin.test.assertContains
 
+/**
+ * Tests source: https://github.com/L-P/blargg-test-roms
+ */
 @OptIn(ExperimentalResourceApi::class)
 class GbCpuBlarggTest {
 
     @Test
-    fun test01() = runTest {
+    fun testCpuInstrs01() = runTest {
         testBlarggCpuInstrsIndividual("cpu-instrs/01-special.gb")
     }
 
     @Test
-    fun test02() = runTest {
+    fun testCpuInstrs02() = runTest {
         testBlarggCpuInstrsIndividual("cpu-instrs/02-interrupts.gb")
     }
 
     @Test
-    fun test03() = runTest {
+    fun testCpuInstrs03() = runTest {
         testBlarggCpuInstrsIndividual("cpu-instrs/03-op sp,hl.gb")
     }
 
     @Test
-    fun test04() = runTest {
+    fun testCpuInstrs04() = runTest {
         testBlarggCpuInstrsIndividual("cpu-instrs/04-op r,imm.gb")
     }
 
     @Test
-    fun test05() = runTest {
+    fun testCpuInstrs05() = runTest {
         testBlarggCpuInstrsIndividual("cpu-instrs/05-op rp.gb")
     }
 
     @Test
-    fun test06() = runTest {
+    fun testCpuInstrs06() = runTest {
         testBlarggCpuInstrsIndividual("cpu-instrs/06-ld r,r.gb")
     }
 
     @Test
-    fun test07() = runTest {
+    fun testCpuInstrs07() = runTest {
         testBlarggCpuInstrsIndividual("cpu-instrs/07-jr,jp,call,ret,rst.gb")
     }
 
     @Test
-    fun test08() = runTest {
+    fun testCpuInstrs08() = runTest {
         testBlarggCpuInstrsIndividual("cpu-instrs/08-misc instrs.gb")
     }
 
     @Test
-    fun test09() = runTest {
+    fun testCpuInstrs09() = runTest {
         testBlarggCpuInstrsIndividual("cpu-instrs/09-op r,r.gb")
     }
 
     @Test
-    fun test10() = runTest {
+    fun testCpuInstrs10() = runTest {
         testBlarggCpuInstrsIndividual("cpu-instrs/10-bit ops.gb")
     }
 
     @Test
-    fun test11() = runTest {
+    fun testCpuInstrs11() = runTest {
         testBlarggCpuInstrsIndividual("cpu-instrs/11-op a,(hl).gb")
+    }
+
+    @Test
+    fun testInstrTiming() = runTest {
+        testBlarggCpuInstrsIndividual("instr_timing/instr_timing.gb")
     }
 
     private suspend fun testBlarggCpuInstrsIndividual(gbFileName: String) {
