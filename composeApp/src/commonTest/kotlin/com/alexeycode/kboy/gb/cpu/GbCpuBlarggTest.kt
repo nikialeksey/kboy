@@ -24,64 +24,64 @@ import kotlin.test.Test
 import kotlin.test.assertContains
 
 @OptIn(ExperimentalResourceApi::class)
-class GbCpuTest {
+class GbCpuBlarggTest {
 
     @Test
     fun test01() = runTest {
-        testCpuInstrsIndividual("cpu-instrs/01-special.gb")
+        testBlarggCpuInstrsIndividual("cpu-instrs/01-special.gb")
     }
 
     @Test
     fun test02() = runTest {
-        testCpuInstrsIndividual("cpu-instrs/02-interrupts.gb")
+        testBlarggCpuInstrsIndividual("cpu-instrs/02-interrupts.gb")
     }
 
     @Test
     fun test03() = runTest {
-        testCpuInstrsIndividual("cpu-instrs/03-op sp,hl.gb")
+        testBlarggCpuInstrsIndividual("cpu-instrs/03-op sp,hl.gb")
     }
 
     @Test
     fun test04() = runTest {
-        testCpuInstrsIndividual("cpu-instrs/04-op r,imm.gb")
+        testBlarggCpuInstrsIndividual("cpu-instrs/04-op r,imm.gb")
     }
 
     @Test
     fun test05() = runTest {
-        testCpuInstrsIndividual("cpu-instrs/05-op rp.gb")
+        testBlarggCpuInstrsIndividual("cpu-instrs/05-op rp.gb")
     }
 
     @Test
     fun test06() = runTest {
-        testCpuInstrsIndividual("cpu-instrs/06-ld r,r.gb")
+        testBlarggCpuInstrsIndividual("cpu-instrs/06-ld r,r.gb")
     }
 
     @Test
     fun test07() = runTest {
-        testCpuInstrsIndividual("cpu-instrs/07-jr,jp,call,ret,rst.gb")
+        testBlarggCpuInstrsIndividual("cpu-instrs/07-jr,jp,call,ret,rst.gb")
     }
 
     @Test
     fun test08() = runTest {
-        testCpuInstrsIndividual("cpu-instrs/08-misc instrs.gb")
+        testBlarggCpuInstrsIndividual("cpu-instrs/08-misc instrs.gb")
     }
 
     @Test
     fun test09() = runTest {
-        testCpuInstrsIndividual("cpu-instrs/09-op r,r.gb")
+        testBlarggCpuInstrsIndividual("cpu-instrs/09-op r,r.gb")
     }
 
     @Test
     fun test10() = runTest {
-        testCpuInstrsIndividual("cpu-instrs/10-bit ops.gb")
+        testBlarggCpuInstrsIndividual("cpu-instrs/10-bit ops.gb")
     }
 
     @Test
     fun test11() = runTest {
-        testCpuInstrsIndividual("cpu-instrs/11-op a,(hl).gb")
+        testBlarggCpuInstrsIndividual("cpu-instrs/11-op a,(hl).gb")
     }
 
-    private suspend fun testCpuInstrsIndividual(gbFileName: String) {
+    private suspend fun testBlarggCpuInstrsIndividual(gbFileName: String) {
         val interrupts = GbInterrupts()
         val timer = GbTimer(interrupts)
         val dma = GbDma()
@@ -97,7 +97,7 @@ class GbCpuTest {
         val dmaTransfer = GbDmaTransfer(ram, dma)
         val cartridge = GbCartridge(
             GbCartridgeData(
-                Res.readBytes("files/$gbFileName")
+                Res.readBytes("files/test-roms/blargg/$gbFileName")
             )
         )
         cartridge.upload(ram)
