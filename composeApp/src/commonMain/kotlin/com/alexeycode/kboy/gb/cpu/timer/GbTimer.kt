@@ -12,19 +12,21 @@ class GbTimer(
     private var div: Int = 0x0018,
     private var tma: Int = 0x00,
     private var tac: Int = 0xF8,
-    private var tima: Int = 0x00,
+    private var tima: Int = 0x00
 ) : Timer {
 
+    private var accumulatedCycles: Int = 0
     private var nextTma: Int = -1
     private var overflow: Boolean = false
     private var cyclesSinceOverflow: Int = 0
 
     override fun tick(clockCycles: Int) {
-        val beforeDiv = div
+        val before = accumulatedCycles
+        accumulatedCycles = (accumulatedCycles + clockCycles) and 0xFFFF
         div = (div + clockCycles) and 0xFFFF
-        val afterDiv = div
+        val after = accumulatedCycles
 
-        incrementTima(beforeDiv, afterDiv, clockCycles)
+        incrementTima(before, after, clockCycles)
         if (nextTma != -1) {
             tma = nextTma
             nextTma = -1
@@ -90,7 +92,11 @@ class GbTimer(
                     }
                 }
 
-                val timaDiff = div / divider - previousDiv / divider
+                val timaDiff = if (previousDiv < div) {
+                    div / divider - previousDiv / divider
+                } else {
+                    (div + 0xFFFF) / divider - previousDiv / divider
+                }
                 tima += timaDiff
                 if (tima > 0xFF) {
                     overflow = true
