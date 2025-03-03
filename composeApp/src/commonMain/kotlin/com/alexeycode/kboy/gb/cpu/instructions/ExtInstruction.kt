@@ -364,7 +364,7 @@ class ExtInstruction(
     private inline fun sra(read: () -> Int, write: (Int) -> Unit, cycles: Int): Int {
         val n = read()
         val c = n.and(0b0000_0001)
-        val result = n.and(0xFF).shr(1).and(0xFF) + n.and(0b1000_0000)
+        val result = n.and(0xFF).shr(1) + n.and(0b1000_0000)
         write(result)
 
         r.flag().z().setEnabled(result == 0)
@@ -391,7 +391,7 @@ class ExtInstruction(
     private inline fun srl(read: () -> Int, write: (Int) -> Unit, cycles: Int): Int {
         val n = read()
         val c = n.and(0b0000_0001)
-        val result = n.and(0xFF).shr(1).and(0xFF)
+        val result = n.and(0xFF).shr(1)
         write(result)
 
         r.flag().z().setEnabled(result == 0)
@@ -404,9 +404,9 @@ class ExtInstruction(
 
     private inline fun bit(n: Int, read: () -> Int, cycles: Int): Int {
         val a = read()
-        val result = a.and(1.shl(n)) != 0
+        val result = a.and(1.shl(n)) == 0
 
-        r.flag().z().setEnabled(!result)
+        r.flag().z().setEnabled(result)
         r.flag().n().disable()
         r.flag().h().enable()
 
@@ -415,14 +415,14 @@ class ExtInstruction(
 
     private inline fun res(n: Int, read: () -> Int, write: (Int) -> Unit, cycles: Int): Int {
         val a = read()
-        write(a.and(1.shl(n).inv()).and(0xFF))
+        write(a.and(1.shl(n).inv().and(0xFF)))
 
         return cycles
     }
 
     private inline fun set(n: Int, read: () -> Int, write: (Int) -> Unit, cycles: Int): Int {
         val a = read()
-        write(a.or(1.shl(n)).and(0xFF))
+        write(a.or(1.shl(n)))
 
         return cycles
     }

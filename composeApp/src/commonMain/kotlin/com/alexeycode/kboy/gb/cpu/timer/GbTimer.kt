@@ -15,6 +15,7 @@ class GbTimer(
     private var tima: Int = 0x00,
 ) : Timer {
 
+    private var accumulatedCycles: Int = 0
     private var nextTma: Int = -1
     private var overflow: Boolean = false
     private var cyclesSinceOverflow: Int = 0
@@ -100,15 +101,13 @@ class GbTimer(
                     val previousEnabled = n.and(1.shl(bit)) != 0
                     val nextDisabled = (n + 1).and(1.shl(bit)) == 0
                     if (previousEnabled && nextDisabled) {
-                        if (previousEnabled && nextDisabled) {
-                            tima++
-                            if (tima > 0xFF) {
-                                tima = 0x00
-                                overflow = true
-                            }
-                            if (overflow) {
-                                cyclesSinceOverflow++
-                            }
+                        tima++
+                        if (overflow) {
+                            cyclesSinceOverflow++
+                        }
+                        if (tima > 0xFF) {
+                            tima = 0x00
+                            overflow = true
                         }
                     }
                 }

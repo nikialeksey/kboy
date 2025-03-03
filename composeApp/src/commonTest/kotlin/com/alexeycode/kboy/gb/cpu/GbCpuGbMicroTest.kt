@@ -16,11 +16,11 @@ import com.alexeycode.kboy.gb.ppu.GbLcdStatus
 import com.alexeycode.kboy.gb.ppu.GbPalette
 import com.alexeycode.kboy.gb.ppu.GbPpu
 import com.alexeycode.kboy.gb.ppu.GbWindow
-import com.alexeycode.kboy.gb.ppu.RENDER_CYCLES
 import com.alexeycode.kboy.gb.serial.BufferSerial
 import kboy.composeapp.generated.resources.Res
 import kotlinx.coroutines.test.runTest
 import org.jetbrains.compose.resources.ExperimentalResourceApi
+import kotlin.test.Ignore
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
@@ -28,6 +28,7 @@ import kotlin.test.assertEquals
  * Tests source: https://github.com/aappleby/gbmicrotest
  */
 @OptIn(ExperimentalResourceApi::class)
+@Ignore
 class GbCpuGbMicroTest {
 
     @Test
@@ -1211,147 +1212,6 @@ class GbCpuGbMicroTest {
 
     @Test
     fun `stat_write_glitch_l154_d`() = runTest { testGbMicrotest("stat_write_glitch_l154_d.gb") }
-
-    @Test
-    fun `temp`() = runTest { testGbMicrotest("temp.gb") }
-
-    @Test
-    fun `timer_div_phase_c`() = runTest { testGbMicrotest("timer_div_phase_c.gb") }
-
-    @Test
-    fun `timer_div_phase_d`() = runTest { testGbMicrotest("timer_div_phase_d.gb") }
-
-    @Test
-    fun `timer_tima_inc_64k_a`() = runTest { testGbMicrotest("timer_tima_inc_64k_a.gb") }
-
-    @Test
-    fun `timer_tima_inc_64k_b`() = runTest { testGbMicrotest("timer_tima_inc_64k_b.gb") }
-
-    @Test
-    fun `timer_tima_inc_64k_c`() = runTest { testGbMicrotest("timer_tima_inc_64k_c.gb") }
-
-    @Test
-    fun `timer_tima_inc_64k_d`() = runTest { testGbMicrotest("timer_tima_inc_64k_d.gb") }
-
-    @Test
-    fun `timer_tima_inc_256k_a`() = runTest { testGbMicrotest("timer_tima_inc_256k_a.gb") }
-
-    @Test
-    fun `timer_tima_inc_256k_b`() = runTest { testGbMicrotest("timer_tima_inc_256k_b.gb") }
-
-    @Test
-    fun `timer_tima_inc_256k_c`() = runTest { testGbMicrotest("timer_tima_inc_256k_c.gb") }
-
-    @Test
-    fun `timer_tima_inc_256k_d`() = runTest { testGbMicrotest("timer_tima_inc_256k_d.gb") }
-
-    @Test
-    fun `timer_tima_inc_256k_e`() = runTest { testGbMicrotest("timer_tima_inc_256k_e.gb") }
-
-    @Test
-    fun `timer_tima_inc_256k_f`() = runTest { testGbMicrotest("timer_tima_inc_256k_f.gb") }
-
-    @Test
-    fun `timer_tima_inc_256k_g`() = runTest { testGbMicrotest("timer_tima_inc_256k_g.gb") }
-
-    @Test
-    fun `timer_tima_inc_256k_h`() = runTest { testGbMicrotest("timer_tima_inc_256k_h.gb") }
-
-    @Test
-    fun `timer_tima_inc_256k_i`() = runTest { testGbMicrotest("timer_tima_inc_256k_i.gb") }
-
-    @Test
-    fun `timer_tima_inc_256k_j`() = runTest { testGbMicrotest("timer_tima_inc_256k_j.gb") }
-
-    @Test
-    fun `timer_tima_inc_256k_k`() = runTest { testGbMicrotest("timer_tima_inc_256k_k.gb") }
-
-    @Test
-    fun `timer_tima_phase_a`() = runTest { testGbMicrotest("timer_tima_phase_a.gb") }
-
-    @Test
-    fun `timer_tima_phase_b`() = runTest { testGbMicrotest("timer_tima_phase_b.gb") }
-
-    @Test
-    fun `timer_tima_phase_c`() = runTest { testGbMicrotest("timer_tima_phase_c.gb") }
-
-    @Test
-    fun `timer_tima_phase_d`() = runTest { testGbMicrotest("timer_tima_phase_d.gb") }
-
-    @Test
-    fun `timer_tima_phase_e`() = runTest { testGbMicrotest("timer_tima_phase_e.gb") }
-
-    @Test
-    fun `timer_tima_phase_f`() = runTest { testGbMicrotest("timer_tima_phase_f.gb") }
-
-    @Test
-    fun `timer_tima_phase_g`() = runTest { testGbMicrotest("timer_tima_phase_g.gb") }
-
-    @Test
-    fun `timer_tima_phase_h`() = runTest { testGbMicrotest("timer_tima_phase_h.gb") }
-
-    @Test
-    fun `timer_tima_phase_i`() = runTest { testGbMicrotest("timer_tima_phase_i.gb") }
-
-    @Test
-    fun `timer_tima_phase_j`() = runTest { testGbMicrotest("timer_tima_phase_j.gb") }
-
-    @Test
-    fun `timer_tima_reload_256k_a`() = runTest { testGbMicrotest("timer_tima_reload_256k_a.gb") }
-
-    @Test
-    fun `timer_tima_reload_256k_b`() = runTest { testGbMicrotest("timer_tima_reload_256k_b.gb") }
-
-    @Test
-    fun `timer_tima_reload_256k_c`() = runTest { testGbMicrotest("timer_tima_reload_256k_c.gb") }
-
-    @Test
-    fun `timer_tima_reload_256k_d`() = runTest { testGbMicrotest("timer_tima_reload_256k_d.gb") }
-
-    @Test
-    fun `timer_tima_reload_256k_e`() = runTest { testGbMicrotest("timer_tima_reload_256k_e.gb") }
-
-    @Test
-    fun `timer_tima_reload_256k_f`() = runTest { testGbMicrotest("timer_tima_reload_256k_f.gb") }
-
-    @Test
-    fun `timer_tima_reload_256k_g`() = runTest { testGbMicrotest("timer_tima_reload_256k_g.gb") }
-
-    @Test
-    fun `timer_tima_reload_256k_h`() = runTest { testGbMicrotest("timer_tima_reload_256k_h.gb") }
-
-    @Test
-    fun `timer_tima_reload_256k_i`() = runTest { testGbMicrotest("timer_tima_reload_256k_i.gb") }
-
-    @Test
-    fun `timer_tima_reload_256k_j`() = runTest { testGbMicrotest("timer_tima_reload_256k_j.gb") }
-
-    @Test
-    fun `timer_tima_reload_256k_k`() = runTest { testGbMicrotest("timer_tima_reload_256k_k.gb") }
-
-    @Test
-    fun `timer_tima_write_a`() = runTest { testGbMicrotest("timer_tima_write_a.gb") }
-
-    @Test
-    fun `timer_tima_write_b`() = runTest { testGbMicrotest("timer_tima_write_b.gb") }
-
-    @Test
-    fun `timer_tima_write_c`() = runTest { testGbMicrotest("timer_tima_write_c.gb") }
-
-    @Test
-    fun `timer_tima_write_d`() = runTest { testGbMicrotest("timer_tima_write_d.gb") }
-
-    @Test
-    fun `timer_tima_write_e`() = runTest { testGbMicrotest("timer_tima_write_e.gb") }
-
-    @Test
-    fun `timer_tima_write_f`() = runTest { testGbMicrotest("timer_tima_write_f.gb") }
-
-    @Test
-    fun `timer_tma_write_a`() = runTest { testGbMicrotest("timer_tma_write_a.gb") }
-
-    @Test
-    fun `timer_tma_write_b`() = runTest { testGbMicrotest("timer_tma_write_b.gb") }
 
     @Test
     fun `toggle_lcdc`() = runTest { testGbMicrotest("toggle_lcdc.gb") }

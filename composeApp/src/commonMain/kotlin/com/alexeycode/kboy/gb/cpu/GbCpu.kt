@@ -62,7 +62,8 @@ class GbCpu(
 
     private fun runInterrupts(): Int {
         var clockCyclesSpent = 0
-        interrupts.tryRun { address: Int ->
+        val address = interrupts.tryRun()
+        if (address != 0) {
             val pc = r.pc().get()
             mem.write8(r.sp().get() - 1, pc.shr(8).and(0xFF))
             mem.write8(r.sp().get() - 2, pc.and(0xFF))

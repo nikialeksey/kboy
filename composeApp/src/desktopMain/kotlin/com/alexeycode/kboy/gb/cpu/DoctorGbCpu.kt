@@ -2,13 +2,14 @@ package com.alexeycode.kboy.gb.cpu
 
 import com.alexeycode.kboy.gb.cpu.registers.Registers
 import com.alexeycode.kboy.gb.mem.Memory
+import java.io.Closeable
 import java.io.PrintWriter
 
 class DoctorGbCpu(
     private val origin: Cpu,
     private val registers: Registers,
     private val memory: Memory
-) : Cpu {
+) : Cpu, Closeable {
 
     private val logFile = PrintWriter("cpu_instrs.log")
 
@@ -40,5 +41,9 @@ class DoctorGbCpu(
 
     private fun Int.hex(): String {
         return this.toString(16).uppercase().padStart(2, padChar = '0')
+    }
+
+    override fun close() {
+        logFile.close()
     }
 }

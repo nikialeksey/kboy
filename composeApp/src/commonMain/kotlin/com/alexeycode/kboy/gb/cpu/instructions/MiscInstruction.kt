@@ -19,7 +19,7 @@ class MiscInstruction(
                 4
             }
             0x10 -> {
-                // stop? TODO proceed n8 here
+                // stop
                 // https://gist.github.com/SonoSooS/c0055300670d678b5ae8433e20bea595#nop-and-stop
                 mem.readNext8(r)
 
@@ -32,24 +32,26 @@ class MiscInstruction(
                         result = (result - 0x06).and(0xFF)
                     }
                     if (r.flag().c().isEnabled()) {
-                        result = (result - 0x60).and(0xFF)
+                        result -= 0x60
                     }
                 } else {
-                    if (r.flag().h().isEnabled() || (result.and(0x0F)) > 9) {
+                    if (r.flag().h().isEnabled() || (result.and(0x0F)) > 0x09) {
                         result += 0x06
                     }
+
                     if (r.flag().c().isEnabled() || result > 0x9F) {
                         result += 0x60
                     }
                 }
 
-                r.flag().h().disable()
+                r.a().set(result)
+
                 if (result > 0xFF || result < 0) {
                     r.flag().c().enable()
                 }
-                result = result.and(0xFF)
-                r.flag().z().setEnabled(result == 0)
-                r.a().set(result)
+
+                r.flag().h().disable()
+                r.flag().z().setEnabled(result.and(0xFF) == 0)
 
                 4
             }

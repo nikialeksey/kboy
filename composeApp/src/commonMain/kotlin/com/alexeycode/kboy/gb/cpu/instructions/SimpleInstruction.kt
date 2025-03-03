@@ -8,7 +8,6 @@ class SimpleInstruction : Instruction {
 
     private val instructions: List<Instruction>
     private val registers: Registers
-    private val memory: Memory
 
     constructor(
         registers: Registers,
@@ -28,17 +27,14 @@ class SimpleInstruction : Instruction {
             SimpleRotateInstruction(registers)
         ),
         registers,
-        memory
     )
 
     constructor(
         instructions: List<Instruction>,
         registers: Registers,
-        memory: Memory
     ) {
         this.instructions = instructions
         this.registers = registers
-        this.memory = memory
     }
 
     override fun execute(opcode: Int): Int {

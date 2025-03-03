@@ -35,7 +35,6 @@ class Loads16Instruction(
 
                 r.flag().z().disable()
                 r.flag().n().disable()
-                // TODO i'm not sure that I should use here 8-bit comparison
                 r.flag().h().setEnabled((a.and(0x0F) + b.and(0x0F)) > 0x0F)
                 r.flag().c().setEnabled((a.and(0xFF) + b.and(0xFF)) > 0xFF)
 

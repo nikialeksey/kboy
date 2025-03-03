@@ -15,5 +15,5 @@ interface Interrupts {
     fun requestTimer()
     fun requestJoypad()
 
-    fun tryRun(run: (address: Int) -> Unit)
+    fun tryRun(): Int
 }

@@ -13,6 +13,7 @@ const val SCREEN_HEIGHT = 144
 const val RENDER_CYCLES = 70224
 private const val LINE_CYCLES = 456
 private const val OAM_SCAN_CYCLES = 80
+private const val DRAWING_CYCLES = 172
 
 class GbPpu(
     private val interrupts: Interrupts,
@@ -31,7 +32,7 @@ class GbPpu(
     )
     private val screen = _screen.asSharedFlow()
     private val gbScreen = GbScreen()
-    private var cycles = 0 // 70224 clock cycles
+    private var cycles = 0
     private var disabledStateEntered = false
 
     private val spritesSize = 40 // TODO should be 10
@@ -43,6 +44,7 @@ class GbPpu(
 
     private var oamScanStarted = false
     private var lineDrawn = false
+    private var hBlankStarted = false
     private var vBlankStarted = false
 
     override fun tick(clockCycles: Int) {
@@ -53,6 +55,7 @@ class GbPpu(
             val previousLy = lcdStatus.ly()
             lcdStatus.updateLy(cycles / LINE_CYCLES)
             if (previousLy == 153 && lcdStatus.ly() == 0) {
+                vBlankStarted = false
                 requestStatInterruptLycEqualsLy()
                 _screen.tryEmit(gbScreen)
             }
@@ -60,15 +63,14 @@ class GbPpu(
             if (lcdStatus.ly() >= SCREEN_HEIGHT) {
                 // VBlank
                 if (!vBlankStarted) {
+                    vBlankStarted = true
+
                     interrupts.requestVBlank()
                     requestStatInterrupt(4)
                     requestStatInterrupt(5)
                     requestStatInterruptLycEqualsLy()
-                    vBlankStarted = true
                 }
             } else {
-                vBlankStarted = false
-
                 val lineStep = cycles % LINE_CYCLES
                 if (lineStep < OAM_SCAN_CYCLES) {
                     // OAM scan
@@ -78,12 +80,11 @@ class GbPpu(
                         requestStatInterruptLycEqualsLy()
                         prepareSprites()
                     }
-                    lineDrawn = false
-                } else {
+                    hBlankStarted = false
+                } else if (lineStep >= OAM_SCAN_CYCLES && lineStep < OAM_SCAN_CYCLES + DRAWING_CYCLES) {
                     oamScanStarted = false
-                    // drawing + horizontal blank
+                    // drawing
                     if (!lineDrawn) {
-                        requestStatInterrupt(3)
                         if (lcdControl.bgAndWindowEnable()) {
                             renderBackground()
                         }
@@ -97,6 +98,13 @@ class GbPpu(
                         }
 
                         lineDrawn = true
+                    }
+                } else {
+                    lineDrawn = false
+                    // horizontal blank
+                    if (!hBlankStarted) {
+                        requestStatInterrupt(3)
+                        hBlankStarted = true
                     }
                 }
             }

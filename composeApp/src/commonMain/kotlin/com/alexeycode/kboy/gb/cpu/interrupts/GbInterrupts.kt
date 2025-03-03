@@ -49,7 +49,7 @@ class GbInterrupts(
         ifFlag = ifFlag.or(1.shl(4))
     }
 
-    override fun tryRun(run: (address: Int) -> Unit) {
+    override fun tryRun(): Int {
         if (imeEnableCountDown > 0) {
             imeEnableCountDown--
             if (imeEnableCountDown == 0) {
@@ -57,32 +57,36 @@ class GbInterrupts(
             }
         }
 
-        if (ime) {
-            tryExecuteInterrupt(run)
+        return if (ime) {
+            tryExecuteInterrupt()
+        } else {
+            0
         }
     }
 
-    private fun tryExecuteInterrupt(run: (address: Int) -> Unit) {
-        if (isNeededToExec(0, ieFlag, ifFlag)) { // vBlank
+    private fun tryExecuteInterrupt(): Int {
+        return if (isNeededToExec(0, ieFlag, ifFlag)) { // vBlank
             ifFlag = ifFlag.and(1.shl(0).inv())
             ime = false
-            run(0x0040)
+            0x0040
         } else if (isNeededToExec(1, ieFlag, ifFlag)) { // STAT (LCD)
             ifFlag = ifFlag.and(1.shl(1).inv())
             ime = false
-            run(0x0048)
+            0x0048
         } else if (isNeededToExec(2, ieFlag, ifFlag)) { // Timer
             ifFlag = ifFlag.and(1.shl(2).inv())
             ime = false
-            run(0x0050)
+            0x0050
         } else if (isNeededToExec(3, ieFlag, ifFlag)) { // Serial
             ifFlag = ifFlag.and(1.shl(3).inv())
             ime = false
-            run(0x0058)
+            0x0058
         } else if (isNeededToExec(4, ieFlag, ifFlag)) { // Joypad
             ifFlag = ifFlag.and(1.shl(4).inv())
             ime = false
-            run(0x0060)
+            0x0060
+        } else {
+            0
         }
     }
 

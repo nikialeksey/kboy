@@ -210,9 +210,8 @@ class Alu8Instruction(
 
         r.flag().z().setEnabled(result == 0)
         r.flag().n().enable()
-        r.flag().h().setEnabled((a.and(0x0F) - n.and(0x0F) - c) < 0)
-        // TODO interesting, but here C flag is not always updated:
-        // https://github.com/gbdev/gb-opcodes/commit/d091dd1d4a4b9fe783b53d19a8b0c50a28c0c92c
+//        r.flag().h().setEnabled((a.and(0x0F) - n.and(0x0F) - c) < 0)
+        r.flag().h().setEnabled(((a xor n xor (result and 0xff)) and (1 shl 4)) != 0)
         r.flag().c().setEnabled((a.and(0xFF) - n.and(0xFF) - c) < 0)
 
         return cycles
@@ -267,8 +266,8 @@ class Alu8Instruction(
 
         r.flag().z().setEnabled(result == 0)
         r.flag().n().enable()
-        r.flag().h().setEnabled((a.and(0x0F) - n.and(0x0F)) < 0)
-        r.flag().c().setEnabled((a.and(0xFF) - n.and(0xFF)) < 0)
+        r.flag().h().setEnabled(n.and(0x0F) > a.and(0x0F))
+        r.flag().c().setEnabled(n.and(0xFF) > a.and(0xFF))
 
         return cycles
     }
