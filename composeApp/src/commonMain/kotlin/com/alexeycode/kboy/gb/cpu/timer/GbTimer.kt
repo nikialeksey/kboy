@@ -15,15 +15,16 @@ class GbTimer(
     private var tima: Int = 0x00,
 ) : Timer {
 
-    private var accumulatedCycles: Int = 0
     private var nextTma: Int = -1
     private var overflow: Boolean = false
     private var cyclesSinceOverflow: Int = 0
 
     override fun tick(clockCycles: Int) {
-        val previousDiv = div
-        incrementDiv(clockCycles)
-        incrementTima(previousDiv, div, clockCycles)
+        val beforeDiv = div
+        div = (div + clockCycles) and 0xFFFF
+        val afterDiv = div
+
+        incrementTima(beforeDiv, afterDiv, clockCycles)
         if (nextTma != -1) {
             tma = nextTma
             nextTma = -1
@@ -66,52 +67,47 @@ class GbTimer(
         this.tac = tac.or(0xF8)
     }
 
-    private fun incrementDiv(clockCycles: Int) {
-        div = (div + clockCycles) and 0xFFFF
-    }
-
     private fun incrementTima(previousDiv: Int, div: Int, clockCycles: Int) {
         val enabled = (tac and 1.shl(2)) != 0
         if (enabled) {
             if (overflow) {
                 cyclesSinceOverflow += clockCycles
-                if (cyclesSinceOverflow >= 4) {
-                    interrupts.requestTimer()
-                    tima = tma
-                    overflow = false
-                    cyclesSinceOverflow = 0
-                }
+                requestTimerIfNeeded()
             } else {
                 val tacBits = tac and 0b11
-                val bit = when (tacBits) {
+                val divider = when (tacBits) {
                     0b00 -> {
-                        9
+                        1024
                     }
                     0b01 -> {
-                        3
+                        16
                     }
                     0b10 -> {
-                        5
+                        64
                     }
                     else -> /*if (tacBits == 0b11)*/ {
-                        7
+                        256
                     }
                 }
-                for (n in previousDiv .. (div - 1)) {
-                    val previousEnabled = n.and(1.shl(bit)) != 0
-                    val nextDisabled = (n + 1).and(1.shl(bit)) == 0
-                    if (previousEnabled && nextDisabled) {
-                        tima++
-                        if (overflow) {
-                            cyclesSinceOverflow++
-                        }
-                        if (tima > 0xFF) {
-                            tima = 0x00
-                            overflow = true
-                        }
-                    }
+
+                val timaDiff = div / divider - previousDiv / divider
+                tima += timaDiff
+                if (tima > 0xFF) {
+                    overflow = true
+                    cyclesSinceOverflow = tima - 0xFF - 1
+                    tima = 0x00
+                    requestTimerIfNeeded()
                 }
             }
+        }
+    }
+
+    private fun requestTimerIfNeeded() {
+        if (cyclesSinceOverflow >= 4) {
+            interrupts.requestTimer()
+            tima = tma
+            overflow = false
+            cyclesSinceOverflow = 0
         }
     }
 }
