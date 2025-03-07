@@ -83,8 +83,7 @@ class GbBus(
     override fun write8(address: Int, value: Int) {
         if (address >= 0x0000 && address <= 0x7FFF) {
             // rom banks
-            // these should be writable only when cartridge uploading
-            origin.write8(address, value)
+            // read only
         } else if (address >= 0x8000 && address <= 0x9FFF) {
             // vram
             if (!lcdStatus.isDrawing()) {
