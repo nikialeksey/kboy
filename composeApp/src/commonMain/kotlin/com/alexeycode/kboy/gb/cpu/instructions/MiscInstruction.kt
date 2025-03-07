@@ -27,12 +27,14 @@ class MiscInstruction(
             }
             0x27 -> { // decimal adjust to BCD
                 var result = r.a().get()
+                var cFlag = false
                 if (r.flag().n().isEnabled()) {
                     if (r.flag().h().isEnabled()) {
                         result = (result - 0x06).and(0xFF)
                     }
                     if (r.flag().c().isEnabled()) {
                         result -= 0x60
+                        cFlag = true
                     }
                 } else {
                     if (r.flag().h().isEnabled() || (result.and(0x0F)) > 0x09) {
@@ -41,14 +43,13 @@ class MiscInstruction(
 
                     if (r.flag().c().isEnabled() || result > 0x9F) {
                         result += 0x60
+                        cFlag = true
                     }
                 }
 
-                r.a().set(result)
+                r.a().set(result.and(0xFF))
 
-                if (result > 0xFF || result < 0) {
-                    r.flag().c().enable()
-                }
+                r.flag().c().setEnabled(cFlag)
 
                 r.flag().h().disable()
                 r.flag().z().setEnabled(result.and(0xFF) == 0)
@@ -78,7 +79,7 @@ class MiscInstruction(
                 4
             }
             0x76 -> {
-                // halt?
+                // halt
 
                 4
             }

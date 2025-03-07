@@ -3,7 +3,7 @@ package com.alexeycode.kboy.gb.cpu.registers
 import com.alexeycode.kboy.gb.cpu.registers.flags.FlagRegister
 import com.alexeycode.kboy.gb.cpu.registers.flags.SimpleFlagRegister
 
-class InMemoryRegisters : Registers {
+class GbRegisters : Registers {
 
     private val a: Register
     private val f: Register

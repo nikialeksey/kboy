@@ -1,15 +1,16 @@
-package com.alexeycode.kboy.gb.cpu
+package com.alexeycode.kboy.integration.gekkio
 
 import com.alexeycode.kboy.gb.SimpleGb
 import com.alexeycode.kboy.gb.cartridge.GbCartridge
 import com.alexeycode.kboy.gb.cartridge.GbCartridgeData
+import com.alexeycode.kboy.gb.cpu.GbCpu
 import com.alexeycode.kboy.gb.cpu.interrupts.GbInterrupts
-import com.alexeycode.kboy.gb.cpu.registers.InMemoryRegisters
+import com.alexeycode.kboy.gb.cpu.registers.GbRegisters
 import com.alexeycode.kboy.gb.cpu.timer.GbTimer
 import com.alexeycode.kboy.gb.joypad.GbJoypad
+import com.alexeycode.kboy.gb.mem.GbBus
 import com.alexeycode.kboy.gb.mem.GbDma
 import com.alexeycode.kboy.gb.mem.GbDmaTransfer
-import com.alexeycode.kboy.gb.mem.GbMemory
 import com.alexeycode.kboy.gb.ppu.GbBackground
 import com.alexeycode.kboy.gb.ppu.GbLcdControl
 import com.alexeycode.kboy.gb.ppu.GbLcdStatus
@@ -62,23 +63,6 @@ class GbCpuGekkioTest {
     @Test
     fun testOamDmaRegRead() = runTest {
         testGekkioCpuInstrsIndividual("oam_dma/reg_read.gb")
-    }
-
-    @Test
-    fun testPpu() = runTest {
-        // TODO all of comment tests are freezing
-//        testGekkioCpuInstrsIndividual("ppu/hblank_ly_scx_timing-GS.gb")
-//        testGekkioCpuInstrsIndividual("ppu/intr_1_2_timing-GS.gb")
-//        testGekkioCpuInstrsIndividual("ppu/intr_2_0_timing.gb")
-//        testGekkioCpuInstrsIndividual("ppu/intr_2_mode0_timing.gb")
-//        testGekkioCpuInstrsIndividual("ppu/intr_2_mode0_timing_sprites.gb")
-//        testGekkioCpuInstrsIndividual("ppu/intr_2_mode3_timing.gb")
-//        testGekkioCpuInstrsIndividual("ppu/intr_2_oam_ok_timing.gb")
-//        testGekkioCpuInstrsIndividual("ppu/lcdon_timing-GS.gb")
-//        testGekkioCpuInstrsIndividual("ppu/lcdon_write_timing-GS.gb")
-//        testGekkioCpuInstrsIndividual("ppu/stat_irq_blocking.gb")
-//        testGekkioCpuInstrsIndividual("ppu/stat_lyc_onoff.gb")
-        testGekkioCpuInstrsIndividual("ppu/vblank_stat_intr-GS.gb")
     }
 
     @Test
@@ -163,16 +147,15 @@ class GbCpuGekkioTest {
         val background = GbBackground()
         val window = GbWindow()
 
-        val ram = GbMemory(interrupts, timer, dma, serial, joypad, lcdStatus, lcdControl, palette, background, window)
-        val dmaTransfer = GbDmaTransfer(ram, dma)
         val cartridge = GbCartridge(
             GbCartridgeData(
                 Res.readBytes("files/test-roms/gekkio/acceptance/$gbFileName")
             )
         )
-        cartridge.upload(ram)
+        val ram = GbBus(cartridge.memory(), interrupts, timer, dma, serial, joypad, lcdStatus, lcdControl, palette, background, window)
+        val dmaTransfer = GbDmaTransfer(ram, dma)
 
-        val registers = InMemoryRegisters()
+        val registers = GbRegisters()
         val cpu = GbCpu(
             r = registers,
             mem = ram,

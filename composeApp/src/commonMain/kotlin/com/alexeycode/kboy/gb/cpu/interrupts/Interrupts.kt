@@ -11,7 +11,7 @@ interface Interrupts {
     fun updateIfFlag(flag: Int)
 
     fun requestVBlank()
-    fun requestStat()
+    fun requestLcd()
     fun requestTimer()
     fun requestJoypad()
 

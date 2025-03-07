@@ -42,11 +42,6 @@ class GbPpu(
     private val spriteAttrs = IntArray(spritesSize)
     private var spriteCount = 0
 
-    private var oamScanStarted = false
-    private var lineDrawn = false
-    private var hBlankStarted = false
-    private var vBlankStarted = false
-
     override fun tick(clockCycles: Int) {
         if (lcdControl.lcdEnable()) {
             disabledStateEntered = false
@@ -54,57 +49,46 @@ class GbPpu(
             cycles = (cycles + clockCycles) % RENDER_CYCLES
             val previousLy = lcdStatus.ly()
             lcdStatus.updateLy(cycles / LINE_CYCLES)
-            if (previousLy == 153 && lcdStatus.ly() == 0) {
-                vBlankStarted = false
-                requestStatInterruptLycEqualsLy()
-                _screen.tryEmit(gbScreen)
+            lcdStatus.updateLyLyc(lcdStatus.ly() == lcdStatus.lyc())
+            if (previousLy != lcdStatus.ly()) {
+                requestLcdInterruptLycEqualsLy()
             }
 
             if (lcdStatus.ly() >= SCREEN_HEIGHT) {
                 // VBlank
-                if (!vBlankStarted) {
-                    vBlankStarted = true
-
-                    interrupts.requestVBlank()
-                    requestStatInterrupt(4)
-                    requestStatInterrupt(5)
-                    requestStatInterruptLycEqualsLy()
+                if (lcdStatus.isHBlank()) {
+                    hBlankFinishedWork(fromVBlank = true)
+                    lcdStatus.hBlankFinished()
+                    lcdStatus.vBlankStarted()
                 }
             } else {
                 val lineStep = cycles % LINE_CYCLES
                 if (lineStep < OAM_SCAN_CYCLES) {
                     // OAM scan
-                    if (!oamScanStarted) {
-                        oamScanStarted = true
-                        requestStatInterrupt(5)
-                        requestStatInterruptLycEqualsLy()
-                        prepareSprites()
+                    if (!lcdStatus.isOamScan()) {
+                        // hBlank happens every time after line 0..153 completed
+                        if (lcdStatus.isVBlank()) {
+                            vBlankFinishedWork()
+                            lcdStatus.vBlankFinished()
+                        } else if (lcdStatus.isHBlank()) {
+                            hBlankFinishedWork(fromVBlank = false)
+                            lcdStatus.hBlankFinished()
+                        }
+                        lcdStatus.oamScanStarted()
                     }
-                    hBlankStarted = false
                 } else if (lineStep >= OAM_SCAN_CYCLES && lineStep < OAM_SCAN_CYCLES + DRAWING_CYCLES) {
-                    oamScanStarted = false
                     // drawing
-                    if (!lineDrawn) {
-                        if (lcdControl.bgAndWindowEnable()) {
-                            renderBackground()
-                        }
-
-                        if (lcdControl.bgAndWindowEnable() && lcdControl.windowEnable() && lcdStatus.ly() >= window.wy()) {
-                            renderWindow()
-                        }
-
-                        if (lcdControl.objEnable()) {
-                            renderSprites()
-                        }
-
-                        lineDrawn = true
+                    if (lcdStatus.isOamScan()) {
+                        oamScanFinishedWork()
+                        lcdStatus.oamScanFinished()
+                        lcdStatus.drawingStarted()
                     }
                 } else {
-                    lineDrawn = false
                     // horizontal blank
-                    if (!hBlankStarted) {
-                        requestStatInterrupt(3)
-                        hBlankStarted = true
+                    if (lcdStatus.isDrawing()) {
+                        drawingFinishedWork()
+                        lcdStatus.drawingFinished()
+                        lcdStatus.hBlankStarted()
                     }
                 }
             }
@@ -115,6 +99,42 @@ class GbPpu(
                 _screen.tryEmit(gbScreen)
             }
         }
+    }
+
+    private fun drawingFinishedWork() {
+        if (lcdControl.bgAndWindowEnable()) {
+            renderBackground()
+        }
+
+        if (lcdControl.bgAndWindowEnable() && lcdControl.windowEnable() && lcdStatus.ly() >= window.wy()) {
+            renderWindow()
+        }
+
+        if (lcdControl.objEnable()) {
+            renderSprites()
+        }
+
+        requestLcdInterrupt(3)
+    }
+
+    private fun oamScanFinishedWork() {
+        prepareSprites()
+    }
+
+    private fun hBlankFinishedWork(fromVBlank: Boolean) {
+        if (fromVBlank) {
+            // next vBlank
+            interrupts.requestVBlank()
+            requestLcdInterrupt(4)
+        } else {
+            // next oam scan
+        }
+        requestLcdInterrupt(5)
+    }
+
+    private fun vBlankFinishedWork() {
+        requestLcdInterrupt(5)
+        _screen.tryEmit(gbScreen)
     }
 
     private fun renderBackground() {
@@ -133,12 +153,11 @@ class GbPpu(
             val pixelX = tilePixelX % 8
             val tileAddress = lcdControl.bgTileMapStart() + tileY * 32 + tileX
             val tileNumber = memory.read8(tileAddress)
-            val tileDataAddress =
-                if (lcdControl.bgAndWindowTileDataSignedAddressing()) {
-                    lcdControl.bgAndWindowTileDataStart() + tileNumber.toByte() * 16
-                } else {
-                    lcdControl.bgAndWindowTileDataStart() + tileNumber * 16
-                }
+            val tileDataAddress = if (lcdControl.bgAndWindowTileDataSignedAddressing()) {
+                lcdControl.bgAndWindowTileDataStart() + tileNumber.toByte() * 16
+            } else {
+                lcdControl.bgAndWindowTileDataStart() + tileNumber * 16
+            }
 
             val lineAddress = tileDataAddress + pixelY * 2
 
@@ -265,15 +284,15 @@ class GbPpu(
         }
     }
 
-    private fun requestStatInterruptLycEqualsLy() {
+    private fun requestLcdInterruptLycEqualsLy() {
         if (lcdStatus.ly() == lcdStatus.lyc()) {
-            requestStatInterrupt(6)
+            requestLcdInterrupt(6)
         }
     }
 
-    private fun requestStatInterrupt(statBit: Int) {
+    private fun requestLcdInterrupt(statBit: Int) {
         if (lcdStatus.stat().and(1.shl(statBit)) != 0) {
-            interrupts.requestStat()
+            interrupts.requestLcd()
         }
     }
 

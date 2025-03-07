@@ -6,6 +6,7 @@ import com.alexeycode.kboy.gb.cpu.instructions.SimpleInstruction
 import com.alexeycode.kboy.gb.cpu.interrupts.Interrupts
 import com.alexeycode.kboy.gb.cpu.registers.Registers
 import com.alexeycode.kboy.gb.mem.Memory
+import com.alexeycode.kboy.gb.mem.readNext8
 
 class GbCpu(
     private val r: Registers,
@@ -18,20 +19,24 @@ class GbCpu(
     private var haltMode = false
 
     override fun tick(): Int {
-        return if (!haltMode) {
+        return if (haltMode) {
+            if (interrupts.ieFlag().and(interrupts.ifFlag()) != 0) {
+                haltMode = false
+            }
+
+            4
+        } else {
             val clockCyclesSpentOnInterrupts = runInterrupts()
 
             if (clockCyclesSpentOnInterrupts == 0) {
                 val oldPc = r.pc().get()
-                var p = r.pc().get()
-                val code = mem.read8(p++)
+                val code = mem.readNext8(r)
                 val isExt = code == 0xCB
                 val opcode = if (isExt) {
-                    mem.read8(p++)
+                    mem.readNext8(r)
                 } else {
                     code
                 }
-                r.pc().set(p)
 
                 val clockCyclesSpent = try {
                     if (isExt) {
@@ -51,12 +56,6 @@ class GbCpu(
             } else {
                 clockCyclesSpentOnInterrupts
             }
-        } else {
-            if (interrupts.ieFlag().and(interrupts.ifFlag()) != 0) {
-                haltMode = false
-            }
-
-            4
         }
     }
 

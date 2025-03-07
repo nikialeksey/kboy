@@ -37,7 +37,7 @@ class GbInterrupts(
         ifFlag = ifFlag.or(1.shl(0))
     }
 
-    override fun requestStat() {
+    override fun requestLcd() {
         ifFlag = ifFlag.or(1.shl(1))
     }
 

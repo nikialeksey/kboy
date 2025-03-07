@@ -1,7 +1,12 @@
 package com.alexeycode.kboy.gb.cartridge
 
 import com.alexeycode.kboy.gb.mem.Memory
+import com.alexeycode.kboy.gb.mem.Rom
 
 interface Cartridge {
-    fun upload(to: Memory)
+
+    fun memory(): Memory
+
+    fun vram(): Memory
+
 }

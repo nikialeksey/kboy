@@ -53,11 +53,7 @@ class GbLcdControl(
     }
 
     override fun bgAndWindowTileDataSignedAddressing(): Boolean {
-        return if (value.and(1.shl(4)) != 0) {
-            false
-        } else {
-            true
-        }
+        return value.and(1.shl(4)) == 0
     }
 
     override fun bgTileMapStart(): Int {

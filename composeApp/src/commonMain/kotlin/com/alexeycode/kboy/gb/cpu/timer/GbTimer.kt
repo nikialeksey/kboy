@@ -39,6 +39,7 @@ class GbTimer(
 
     override fun resetDiv() {
         div = 0
+        accumulatedCycles = 0
     }
 
     override fun tima(): Int {
