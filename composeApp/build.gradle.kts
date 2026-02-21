@@ -2,23 +2,18 @@ import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
-import org.jetbrains.kotlin.gradle.targets.js.webpack.KotlinWebpackConfig
-import java.io.FileInputStream
-import java.io.IOException
-import java.util.Properties
 
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.kotlinSerialization)
-    alias(libs.plugins.androidApplication)
+    alias(libs.plugins.androidMultiplatformLibrary)
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
     alias(libs.plugins.detekt)
-    id("com.alexeycode.buildnumber")
 }
 
 kotlin {
-    androidTarget {
+    android {
         @OptIn(ExperimentalKotlinGradlePluginApi::class)
         compilerOptions {
             jvmTarget.set(JvmTarget.JVM_17)
@@ -31,6 +26,11 @@ kotlin {
                 )
             )
         }
+    }
+    androidLibrary {
+        namespace = "com.alexeycode.kboy"
+        minSdk = libs.versions.android.minSdk.get().toInt()
+        compileSdk = libs.versions.android.compileSdk.get().toInt()
     }
     
     listOf(
@@ -59,19 +59,10 @@ kotlin {
     
     @OptIn(ExperimentalWasmDsl::class)
     wasmJs {
-        moduleName = "KBoy"
+        outputModuleName = "KBoy"
         browser {
-            val rootDirPath = project.rootDir.path
-            val projectDirPath = project.projectDir.path
             commonWebpackConfig {
                 outputFileName = "KBoy.js"
-                devServer = (devServer ?: KotlinWebpackConfig.DevServer()).apply {
-                    static = (static ?: mutableListOf()).apply {
-                        // Serve sources to debug inside browser
-                        add(rootDirPath)
-                        add(projectDirPath)
-                    }
-                }
             }
         }
         binaries.executable()
@@ -81,22 +72,24 @@ kotlin {
         val desktopMain by getting
         
         androidMain.dependencies {
-            implementation(compose.preview)
-            implementation(libs.androidx.activity.compose)
-            implementation(libs.androidx.core.splashscreen)
         }
         commonMain.dependencies {
             implementation(libs.kotlin.io)
             implementation(libs.kotlin.serialization.json)
-            implementation(compose.runtime)
-            implementation(compose.foundation)
-            implementation(compose.material3)
-            implementation(compose.ui)
-            implementation(compose.components.resources)
-            implementation(compose.components.uiToolingPreview)
+            implementation(libs.compose.runtime)
+            implementation(libs.compose.foundation)
+            implementation(libs.compose.material3)
+            implementation(libs.compose.ui)
+            implementation(libs.compose.components.resources)
+            implementation(libs.compose.components.uiToolingPreview)
             implementation(libs.androidx.lifecycle.viewmodel)
             implementation(libs.androidx.lifecycle.viewmodel.compose)
             implementation(libs.androidx.lifecycle.runtime.compose)
+            implementation(libs.ktor.client.core)
+            implementation(libs.ktor.client.cio)
+            implementation(libs.ktor.client.websockets)
+            implementation(libs.ktor.server.cio)
+            implementation(libs.ktor.server.websockets)
         }
         desktopMain.dependencies {
             implementation(compose.desktop.currentOs)
@@ -112,6 +105,10 @@ kotlin {
             implementation("org.lwjgl:lwjgl-opengl:3.3.3:natives-windows")
             implementation("org.lwjgl:lwjgl:3.3.3:natives-linux")
             implementation("org.lwjgl:lwjgl-opengl:3.3.3:natives-linux")
+
+            implementation(libs.jmdns)
+        }
+        iosMain.dependencies {
         }
 
         commonTest.dependencies {
@@ -121,69 +118,8 @@ kotlin {
     }
 }
 
-val keystoreDebugPropertiesFile = rootProject.file("keystore/android/keystore-debug.properties")
-val keystoreDebugProperties = Properties()
-try {
-    keystoreDebugProperties.load(FileInputStream(keystoreDebugPropertiesFile))
-} catch (ignored: IOException) {}
-
-val keystorePropertiesFile = rootProject.file("keystore/android/keystore.properties")
-val keystoreProperties = Properties()
-try {
-    keystoreProperties.load(FileInputStream(keystorePropertiesFile))
-} catch (ignored: IOException) {}
-
-android {
-    namespace = "com.alexeycode.kboy"
-    compileSdk = libs.versions.android.compileSdk.get().toInt()
-
-    signingConfigs {
-        create("appDebug") {
-            keyAlias = keystoreDebugProperties["keyAlias"] as String
-            keyPassword = keystoreDebugProperties["keyPassword"] as String
-            storeFile = file(keystoreDebugProperties["storeFile"] as String)
-            storePassword = keystoreDebugProperties["storePassword"] as String
-        }
-        create("appRelease") {
-            keyAlias = (keystoreProperties["keyAlias"] as String?) ?: (keystoreDebugProperties["keyAlias"] as String)
-            keyPassword = (keystoreProperties["keyPassword"] as String?) ?: (keystoreDebugProperties["keyPassword"] as String)
-            storeFile = file((keystoreProperties["storeFile"] as String?) ?: (keystoreDebugProperties["storeFile"] as String))
-            storePassword = (keystoreProperties["storePassword"] as String?) ?: (keystoreDebugProperties["storePassword"] as String)
-        }
-    }
-
-    defaultConfig {
-        applicationId = "com.alexeycode.kboy"
-        minSdk = libs.versions.android.minSdk.get().toInt()
-        targetSdk = libs.versions.android.targetSdk.get().toInt()
-        versionName = "0.0.3"
-    }
-    packaging {
-        resources {
-            excludes += "/META-INF/{AL2.0,LGPL2.1}"
-        }
-    }
-    buildTypes {
-        getByName("debug") {
-            signingConfig = signingConfigs["appDebug"]
-        }
-        getByName("release") {
-            isMinifyEnabled = true
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt")
-            )
-            signingConfig = signingConfigs["appRelease"]
-        }
-    }
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
-    }
-}
-
 dependencies {
     detektPlugins(libs.detekt.formatting)
-    debugImplementation(compose.uiTooling)
 }
 
 compose.desktop {

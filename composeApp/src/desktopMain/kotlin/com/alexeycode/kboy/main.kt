@@ -10,11 +10,18 @@ import androidx.compose.ui.window.application
 import com.alexeycode.kboy.host.DesktopHost
 import com.alexeycode.kboy.host.DesktopRoms
 import com.alexeycode.kboy.host.DesktopTime
-import com.alexeycode.kboy.io.DesktopController
-import com.alexeycode.kboy.io.DesktopFileSystem
+import com.alexeycode.kboy.host.io.DesktopController
+import com.alexeycode.kboy.host.io.DesktopFileSystem
+import com.alexeycode.kboy.host.network.DesktopMultiplayerNetwork
 import com.alexeycode.kboy.ui.FileDialog
+import kboy.composeapp.generated.resources.Res
+import kboy.composeapp.generated.resources.ic_launcher
+import org.jetbrains.compose.resources.painterResource
 
 fun main() = application {
+
+    val multiplayerNetwork = DesktopMultiplayerNetwork()
+    multiplayerNetwork.start()
 
     val host = remember { DesktopHost() }
     val roms = remember { DesktopRoms() }
@@ -34,7 +41,10 @@ fun main() = application {
         onKeyEvent = extController::onKeyEvent,
         onCloseRequest = ::exitApplication,
         title = "KBoy",
+        icon = painterResource(Res.drawable.ic_launcher)
     ) {
+        // to change title bar color:
+        // https://www.codespeedy.com/how-to-change-the-color-of-title-bar-in-jframe-in-java/
         App(
             host = host,
             roms = roms,

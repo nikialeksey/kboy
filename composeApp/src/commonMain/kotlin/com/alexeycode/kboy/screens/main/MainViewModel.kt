@@ -7,10 +7,10 @@ import com.alexeycode.kboy.gb.ppu.Screen
 import com.alexeycode.kboy.host.Host
 import com.alexeycode.kboy.host.Roms
 import com.alexeycode.kboy.host.Vibrator
-import com.alexeycode.kboy.io.Controller
-import com.alexeycode.kboy.io.GroupController
-import com.alexeycode.kboy.io.TouchController
-import com.alexeycode.kboy.io.TouchControllerListener
+import com.alexeycode.kboy.host.io.Controller
+import com.alexeycode.kboy.host.io.GroupController
+import com.alexeycode.kboy.host.io.TouchController
+import com.alexeycode.kboy.host.io.TouchControllerListener
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow

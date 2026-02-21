@@ -86,9 +86,9 @@ class GbBus(
             // read only
         } else if (address >= 0x8000 && address <= 0x9FFF) {
             // vram
-            if (!lcdStatus.isDrawing()) {
+//            if (!lcdStatus.isDrawing()) {
                 origin.write8(address, value)
-            }
+//            }
         } else if (address >= 0xA000 && address <= 0xBFFF) {
             // ERAM
             origin.write8(address, value)

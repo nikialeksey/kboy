@@ -1,23 +1,9 @@
 package com.alexeycode.kboy.integration.blargg
 
-import com.alexeycode.kboy.gb.SimpleGb
 import com.alexeycode.kboy.gb.cartridge.GbCartridge
 import com.alexeycode.kboy.gb.cartridge.GbCartridgeData
-import com.alexeycode.kboy.gb.cpu.GbCpu
-import com.alexeycode.kboy.gb.cpu.interrupts.GbInterrupts
-import com.alexeycode.kboy.gb.cpu.registers.GbRegisters
-import com.alexeycode.kboy.gb.cpu.timer.GbTimer
-import com.alexeycode.kboy.gb.joypad.GbJoypad
-import com.alexeycode.kboy.gb.mem.GbBus
-import com.alexeycode.kboy.gb.mem.GbDma
-import com.alexeycode.kboy.gb.mem.GbDmaTransfer
-import com.alexeycode.kboy.gb.ppu.GbBackground
-import com.alexeycode.kboy.gb.ppu.GbLcdControl
-import com.alexeycode.kboy.gb.ppu.GbLcdStatus
-import com.alexeycode.kboy.gb.ppu.GbPalette
-import com.alexeycode.kboy.gb.ppu.GbPpu
-import com.alexeycode.kboy.gb.ppu.GbWindow
 import com.alexeycode.kboy.gb.serial.BufferSerial
+import com.alexeycode.kboy.integration.TestsGb
 import kboy.composeapp.generated.resources.Res
 import kotlinx.coroutines.test.runTest
 import org.jetbrains.compose.resources.ExperimentalResourceApi
@@ -110,58 +96,13 @@ class GbCpuBlarggTest {
     }
 
     private suspend fun testBlarggCpuInstrsIndividual(gbFileName: String) {
-        val interrupts = GbInterrupts()
-        val timer = GbTimer(interrupts)
-        val dma = GbDma()
-        val serial = BufferSerial()
-        val joypad = GbJoypad(interrupts)
-        val lcdStatus = GbLcdStatus()
-        val lcdControl = GbLcdControl()
-        val palette = GbPalette()
-        val background = GbBackground()
-        val window = GbWindow()
-
         val cartridge = GbCartridge(
             GbCartridgeData(
                 Res.readBytes("files/test-roms/blargg/$gbFileName")
             )
         )
-        val memory = cartridge.memory()
-        val bus = GbBus(
-            memory,
-            interrupts,
-            timer,
-            dma,
-            serial,
-            joypad,
-            lcdStatus,
-            lcdControl,
-            palette,
-            background,
-            window
-        )
-        val dmaTransfer = GbDmaTransfer(memory, dma)
-
-        val registers = GbRegisters()
-        val cpu = GbCpu(
-            r = registers,
-            mem = bus,
-            interrupts = interrupts
-        )
-        val gb = SimpleGb(
-            timer = timer,
-            cpu = cpu,
-            dma = dmaTransfer,
-            ppu = GbPpu(
-                interrupts,
-                memory,
-                lcdStatus,
-                lcdControl,
-                palette,
-                background,
-                window
-            )
-        )
+        val serial = BufferSerial()
+        val gb = TestsGb(cartridge, serial)
         while (true) {
             gb.run(100_000)
             val outputMessage = serial.asByteArray().decodeToString()

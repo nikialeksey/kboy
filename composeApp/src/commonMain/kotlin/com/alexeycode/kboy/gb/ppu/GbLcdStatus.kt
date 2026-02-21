@@ -46,7 +46,7 @@ class GbLcdStatus : LcdStatus {
         } else {
             0
         }
-        return stat// or mode or lyLyc
+        return 0b1000_0000 or stat or lyLyc// or mode
     }
 
     override fun updateStat(value: Int) {

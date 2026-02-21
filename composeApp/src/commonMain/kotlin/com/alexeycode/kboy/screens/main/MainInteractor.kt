@@ -21,8 +21,8 @@ import com.alexeycode.kboy.gb.ppu.RENDER_CYCLES
 import com.alexeycode.kboy.gb.ppu.Screen
 import com.alexeycode.kboy.gb.serial.BufferSerial
 import com.alexeycode.kboy.host.Time
-import com.alexeycode.kboy.io.Controller
-import com.alexeycode.kboy.io.FileSystem
+import com.alexeycode.kboy.host.io.Controller
+import com.alexeycode.kboy.host.io.FileSystem
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -102,6 +102,10 @@ class MainInteractor(
                             delay(1)
                         }
                         timeSinceLastFrame = lastTimeMs
+
+//                        // each frame duration 1/60 seconds, or 17ms
+//                        delay(16 - (time.currentTimeMs() - timeSinceLastFrame))
+//                        timeSinceLastFrame = time.currentTimeMs()
                     }
                 }
             }

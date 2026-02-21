@@ -3,15 +3,15 @@ package com.alexeycode.kboy
 import androidx.compose.material3.ColorScheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.tooling.preview.Preview
 import com.alexeycode.kboy.host.Host
 import com.alexeycode.kboy.host.Roms
 import com.alexeycode.kboy.host.Time
 import com.alexeycode.kboy.host.Vibrator
-import com.alexeycode.kboy.io.Controller
-import com.alexeycode.kboy.io.FileSystem
+import com.alexeycode.kboy.host.io.Controller
+import com.alexeycode.kboy.host.io.FileSystem
 import com.alexeycode.kboy.screens.main.Main
 import com.alexeycode.kboy.ui.DarkColors
-import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
 @Preview

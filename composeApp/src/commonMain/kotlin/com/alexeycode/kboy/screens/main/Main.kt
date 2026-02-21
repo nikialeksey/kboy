@@ -33,9 +33,9 @@ import com.alexeycode.kboy.host.Host
 import com.alexeycode.kboy.host.Roms
 import com.alexeycode.kboy.host.Time
 import com.alexeycode.kboy.host.Vibrator
-import com.alexeycode.kboy.io.Controller
-import com.alexeycode.kboy.io.FileSystem
-import com.alexeycode.kboy.io.TouchControllerListener
+import com.alexeycode.kboy.host.io.Controller
+import com.alexeycode.kboy.host.io.FileSystem
+import com.alexeycode.kboy.host.io.TouchControllerListener
 import com.alexeycode.kboy.screens.main.components.AB
 import com.alexeycode.kboy.screens.main.components.DPad
 import com.alexeycode.kboy.screens.main.components.StartSelect
