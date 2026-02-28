@@ -10,7 +10,7 @@
       </option>
       <option name="taskNames">
         <list>
-          <option value=":composeApp:wasmJsBrowserRun" />
+          <option value=":kboy-lib:wasmJsBrowserRun" />
         </list>
       </option>
       <option name="vmOptions" />

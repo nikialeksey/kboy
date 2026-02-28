@@ -10,13 +10,13 @@
       </option>
       <option name="taskNames">
         <list>
-          <option value=":composeApp:detekt" />
-          <option value=":composeApp:detektAndroidDebug" />
-          <option value=":composeApp:detektAndroidDebugUnitTest" />
-          <option value=":composeApp:detektIosArm64Main" />
-          <option value=":composeApp:detektIosArm64Test" />
-          <option value=":composeApp:detektWasmJsMain" />
-          <option value=":composeApp:detektWasmJsTest" />
+          <option value=":kboy-lib:detekt" />
+          <option value=":kboy-lib:detektAndroidDebug" />
+          <option value=":kboy-lib:detektAndroidDebugUnitTest" />
+          <option value=":kboy-lib:detektIosArm64Main" />
+          <option value=":kboy-lib:detektIosArm64Test" />
+          <option value=":kboy-lib:detektWasmJsMain" />
+          <option value=":kboy-lib:detektWasmJsTest" />
         </list>
       </option>
       <option name="vmOptions" />

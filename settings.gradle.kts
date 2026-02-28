@@ -1,5 +1,4 @@
 rootProject.name = "KBoy"
-enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 
 pluginManagement {
     includeBuild("buildLogic")
@@ -30,5 +29,5 @@ dependencyResolutionManagement {
     }
 }
 
-include(":composeApp")
-include(":apps:android")
+include(":kboy-lib")
+include(":kboy:android")
