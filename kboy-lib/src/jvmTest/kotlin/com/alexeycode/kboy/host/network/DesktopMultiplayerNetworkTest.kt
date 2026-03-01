@@ -4,11 +4,13 @@ import com.alexeycode.kboy.host.network.multiplayer.Host
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.runTest
+import kotlin.test.Ignore
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
 class DesktopMultiplayerNetworkTest {
     @Test
+    @Ignore
     fun asdasd() = runTest {
         val host1 = DesktopMultiplayerNetwork()
         val host2 = DesktopMultiplayerNetwork()

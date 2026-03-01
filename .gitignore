@@ -6,6 +6,8 @@ xcuserdata
 !src/**/build/
 local.properties
 .idea
+!.idea/icon.png
+!.idea/runConfigurations/Tests_Jvm.xml.xml
 !.idea/runConfigurations/Lint_Detekt.xml
 !.idea/runConfigurations/Run_Desktop.xml
 !.idea/runConfigurations/Run_Browser.xml

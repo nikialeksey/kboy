@@ -130,14 +130,28 @@ dependencies {
     detektPlugins(libs.detekt.formatting)
 }
 
-compose.desktop {
-    application {
-        mainClass = "com.alexeycode.kboy.MainKt"
+compose {
+    resources {
+        packageOfResClass = "com.alexeycode.kboy.lib"
+    }
 
-        nativeDistributions {
-            targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
-            packageName = "com.alexeycode.kboy"
-            packageVersion = "1.0.0"
+    desktop {
+        application {
+            mainClass = "com.alexeycode.kboy.MainKt"
+
+            nativeDistributions {
+                targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
+                packageName = "com.alexeycode.kboy"
+                packageVersion = "1.0.0"
+            }
         }
     }
+}
+
+detekt {
+
+}
+
+tasks.withType<io.gitlab.arturbosch.detekt.Detekt>().configureEach {
+    exclude("**/generated/**")
 }

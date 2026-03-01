@@ -1,7 +1,7 @@
 package pro.devdesign.gameboy.cpu.opcodes
 
 import com.alexeycode.kboy.gb.cpu.opcodes.GbOpcodes
-import kboy.composeapp.generated.resources.Res
+import com.alexeycode.kboy.lib.Res
 import kotlinx.coroutines.test.runTest
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import kotlin.test.Test

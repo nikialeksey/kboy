@@ -1,6 +1,5 @@
 package com.alexeycode.kboy.gb.cpu
 
-import kboy.composeapp.generated.resources.Res
 import kotlinx.coroutines.test.runTest
 import kotlin.test.Test
 

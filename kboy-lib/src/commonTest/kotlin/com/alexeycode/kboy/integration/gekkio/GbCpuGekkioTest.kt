@@ -4,7 +4,7 @@ import com.alexeycode.kboy.gb.cartridge.GbCartridge
 import com.alexeycode.kboy.gb.cartridge.GbCartridgeData
 import com.alexeycode.kboy.gb.serial.BufferSerial
 import com.alexeycode.kboy.integration.TestsGb
-import kboy.composeapp.generated.resources.Res
+import com.alexeycode.kboy.lib.Res
 import kotlinx.coroutines.test.runTest
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import kotlin.test.Ignore

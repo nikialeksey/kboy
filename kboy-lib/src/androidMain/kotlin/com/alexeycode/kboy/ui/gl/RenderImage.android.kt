@@ -12,7 +12,6 @@ import androidx.core.graphics.createBitmap
 import com.alexeycode.kboy.gb.ppu.Screen
 import java.nio.ByteBuffer
 
-
 @Composable
 actual fun RenderScreen(image: Screen) {
     val bitmap = remember {
