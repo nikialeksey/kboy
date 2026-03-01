@@ -3,6 +3,8 @@ package com.alexeycode.kboy.host
 import android.os.Build
 import android.os.VibrationEffect
 
+private const val VIBRATE_MS = 100L
+
 class AndroidVibrator(
     private val vibrator: android.os.Vibrator
 ) : Vibrator {
@@ -14,10 +16,10 @@ class AndroidVibrator(
                     VibrationEffect.createPredefined(VibrationEffect.EFFECT_CLICK)
                 )
             } else {
-                vibrator.vibrate(100L)
+                vibrator.vibrate(VIBRATE_MS)
             }
         } else {
-            vibrator.vibrate(100L)
+            vibrator.vibrate(VIBRATE_MS)
         }
     }
 }

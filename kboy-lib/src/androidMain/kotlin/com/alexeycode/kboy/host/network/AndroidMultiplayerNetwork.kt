@@ -11,41 +11,45 @@ class AndroidMultiplayerNetwork(
 ) : MultiplayerNetwork {
 
     init {
-        nsdManager.discoverServices("_kboy._tcp", NsdManager.PROTOCOL_DNS_SD, object : NsdManager.DiscoveryListener {
-            override fun onDiscoveryStarted(p0: String?) {
-                println("!!!!!!!!!!!!!!!!!!! onDiscoveryStarted")
-            }
+        nsdManager.discoverServices(
+            "_kboy._tcp",
+            NsdManager.PROTOCOL_DNS_SD,
+            object : NsdManager.DiscoveryListener {
+                override fun onDiscoveryStarted(p0: String?) {
+                    println("!!!!!!!!!!!!!!!!!!! onDiscoveryStarted")
+                }
 
-            override fun onDiscoveryStopped(p0: String?) {
-                println("!!!!!!!!!!!!!!!!!!! onDiscoveryStopped")
-            }
+                override fun onDiscoveryStopped(p0: String?) {
+                    println("!!!!!!!!!!!!!!!!!!! onDiscoveryStopped")
+                }
 
-            override fun onServiceFound(p0: NsdServiceInfo?) {
-                println("!!!!!!!!!!!!!!!!!!! onServiceFound")
-            }
+                override fun onServiceFound(p0: NsdServiceInfo?) {
+                    println("!!!!!!!!!!!!!!!!!!! onServiceFound")
+                }
 
-            override fun onServiceLost(p0: NsdServiceInfo?) {
-                println("!!!!!!!!!!!!!!!!!!! onServiceLost")
-            }
+                override fun onServiceLost(p0: NsdServiceInfo?) {
+                    println("!!!!!!!!!!!!!!!!!!! onServiceLost")
+                }
 
-            override fun onStartDiscoveryFailed(
-                p0: String?,
-                p1: Int
-            ) {
-                println("!!!!!!!!!!!!!!!!!!! onStartDiscoveryFailed")
-            }
+                override fun onStartDiscoveryFailed(
+                    p0: String?,
+                    p1: Int
+                ) {
+                    println("!!!!!!!!!!!!!!!!!!! onStartDiscoveryFailed")
+                }
 
-            override fun onStopDiscoveryFailed(
-                p0: String?,
-                p1: Int
-            ) {
-                println("!!!!!!!!!!!!!!!!!!! onStopDiscoveryFailed")
+                override fun onStopDiscoveryFailed(
+                    p0: String?,
+                    p1: Int
+                ) {
+                    println("!!!!!!!!!!!!!!!!!!! onStopDiscoveryFailed")
+                }
             }
-
-        })
+        )
     }
 
     override fun start() {
+        // ignored
     }
 
     override fun hosts(): Flow<List<Host>> {
@@ -53,5 +57,6 @@ class AndroidMultiplayerNetwork(
     }
 
     override fun stop() {
+        // ignored
     }
 }

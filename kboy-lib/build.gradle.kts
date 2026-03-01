@@ -1,3 +1,4 @@
+import io.gitlab.arturbosch.detekt.Detekt
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
@@ -149,9 +150,10 @@ compose {
 }
 
 detekt {
-
+    autoCorrect = true
+    config.setFrom(file("${rootProject.projectDir}/buildLogic/config/detekt/detekt.yml"))
 }
 
-tasks.withType<io.gitlab.arturbosch.detekt.Detekt>().configureEach {
-    exclude("**/generated/**")
+tasks.withType<Detekt>().configureEach {
+    exclude { it.file.path.contains("build/generated") }
 }
