@@ -1,5 +1,5 @@
 # KBoy
-
+[![Check on PR](https://github.com/nikialeksey/kboy/actions/workflows/check.yml/badge.svg)](https://github.com/nikialeksey/kboy/actions/workflows/check.yml)
 
 
 ## Thanks

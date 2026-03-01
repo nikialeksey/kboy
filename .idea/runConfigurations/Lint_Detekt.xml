@@ -12,6 +12,8 @@
         <list>
           <option value=":kboy-lib:detekt" />
           <option value=":kboy-lib:detektAndroidMain" />
+          <option value=":kboy-lib:detektJvmMain" />
+          <option value=":kboy-lib:detektJvmTest" />
           <option value=":kboy-lib:detektIosArm64Main" />
           <option value=":kboy-lib:detektIosArm64Test" />
           <option value=":kboy-lib:detektWasmJsMain" />

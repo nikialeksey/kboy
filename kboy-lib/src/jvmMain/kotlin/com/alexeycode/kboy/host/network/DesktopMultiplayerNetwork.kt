@@ -2,7 +2,6 @@ package com.alexeycode.kboy.host.network
 
 import com.alexeycode.kboy.host.network.multiplayer.Host
 import io.ktor.server.application.install
-import io.ktor.server.application.port
 import io.ktor.server.cio.CIO
 import io.ktor.server.cio.CIOApplicationEngine
 import io.ktor.server.engine.EmbeddedServer
@@ -19,7 +18,6 @@ import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.runBlocking
 import kotlinx.io.IOException
 import java.net.InetAddress
-import java.net.ServerSocket
 import javax.jmdns.JmDNS
 import javax.jmdns.ServiceInfo
 
@@ -55,7 +53,7 @@ class DesktopMultiplayerNetwork : MultiplayerNetwork {
             println("!!!!!!!!!!!!!!!!!!!!!! start webSocket on a port $port")
             jmDnsServiceInfo = ServiceInfo.create(jmDnsServiceType, "kboy", port, "")
             jmDns.registerService(jmDnsServiceInfo)
-        } catch (e: IOException) {
+        } catch (ignored: IOException) {
             // in this case we should disable multiplayer feature
         }
     }

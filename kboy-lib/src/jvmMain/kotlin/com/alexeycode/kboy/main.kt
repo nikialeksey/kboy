@@ -13,13 +13,12 @@ import com.alexeycode.kboy.host.DesktopTime
 import com.alexeycode.kboy.host.io.DesktopController
 import com.alexeycode.kboy.host.io.DesktopFileSystem
 import com.alexeycode.kboy.host.network.DesktopMultiplayerNetwork
-import com.alexeycode.kboy.ui.FileDialog
 import com.alexeycode.kboy.lib.Res
 import com.alexeycode.kboy.lib.ic_launcher
+import com.alexeycode.kboy.ui.FileDialog
 import org.jetbrains.compose.resources.painterResource
 
 fun main() = application {
-
     val multiplayerNetwork = DesktopMultiplayerNetwork()
     multiplayerNetwork.start()
 

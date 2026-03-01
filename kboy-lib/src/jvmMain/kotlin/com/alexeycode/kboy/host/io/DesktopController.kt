@@ -5,7 +5,6 @@ import androidx.compose.ui.input.key.KeyEvent
 import androidx.compose.ui.input.key.KeyEventType
 import androidx.compose.ui.input.key.key
 import androidx.compose.ui.input.key.type
-import com.alexeycode.kboy.host.io.Controller
 import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.MutableSharedFlow
 
@@ -45,5 +44,4 @@ class DesktopController : Controller, KeyListener {
             else -> false
         }
     }
-
 }

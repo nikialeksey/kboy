@@ -26,8 +26,6 @@ class DesktopMultiplayerNetworkTest {
 
             delay(3000)
 
-            val s = StringBuilder()
-
             assertEquals(1, host1Hosts.size)
             assertEquals(1, host2Hosts.size)
         } finally {
