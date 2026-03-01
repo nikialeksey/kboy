@@ -14,8 +14,8 @@ import com.alexeycode.kboy.host.io.DesktopController
 import com.alexeycode.kboy.host.io.DesktopFileSystem
 import com.alexeycode.kboy.host.network.DesktopMultiplayerNetwork
 import com.alexeycode.kboy.ui.FileDialog
-import kboy.composeapp.generated.resources.Res
-import kboy.composeapp.generated.resources.ic_launcher
+import kboy.kboy_lib.generated.resources.Res
+import kboy.kboy_lib.generated.resources.ic_launcher
 import org.jetbrains.compose.resources.painterResource
 
 fun main() = application {

@@ -13,6 +13,7 @@ plugins {
 }
 
 kotlin {
+    applyDefaultHierarchyTemplate()
     android {
         @OptIn(ExperimentalKotlinGradlePluginApi::class)
         compilerOptions {
@@ -44,7 +45,7 @@ kotlin {
         }
     }
     
-    jvm("desktop") {
+    jvm {
         compilerOptions {
             freeCompilerArgs.addAll(
                 listOf(
@@ -69,40 +70,58 @@ kotlin {
     }
     
     sourceSets {
-        val desktopMain by getting
-        
-        androidMain.dependencies {
+        commonMain {
+            dependencies {
+                implementation(libs.kotlin.io)
+                implementation(libs.kotlin.serialization.json)
+                implementation(libs.compose.runtime)
+                implementation(libs.compose.foundation)
+                implementation(libs.compose.material3)
+                implementation(libs.compose.ui)
+                implementation(libs.compose.components.resources)
+                implementation(libs.compose.components.uiToolingPreview)
+                implementation(libs.androidx.lifecycle.viewmodel)
+                implementation(libs.androidx.lifecycle.viewmodel.compose)
+                implementation(libs.androidx.lifecycle.runtime.compose)
+                implementation(libs.ktor.client.core)
+                implementation(libs.ktor.client.cio)
+                implementation(libs.ktor.client.websockets)
+                implementation(libs.ktor.server.cio)
+                implementation(libs.ktor.server.websockets)
+            }
         }
-        commonMain.dependencies {
-            implementation(libs.kotlin.io)
-            implementation(libs.kotlin.serialization.json)
-            implementation(libs.compose.runtime)
-            implementation(libs.compose.foundation)
-            implementation(libs.compose.material3)
-            implementation(libs.compose.ui)
-            implementation(libs.compose.components.resources)
-            implementation(libs.compose.components.uiToolingPreview)
-            implementation(libs.androidx.lifecycle.viewmodel)
-            implementation(libs.androidx.lifecycle.viewmodel.compose)
-            implementation(libs.androidx.lifecycle.runtime.compose)
-            implementation(libs.ktor.client.core)
-            implementation(libs.ktor.client.cio)
-            implementation(libs.ktor.client.websockets)
-            implementation(libs.ktor.server.cio)
-            implementation(libs.ktor.server.websockets)
-        }
-        desktopMain.dependencies {
-            implementation(compose.desktop.currentOs)
-            implementation(libs.kotlinx.coroutines.swing)
-            implementation(libs.ansi.color)
-            implementation(libs.jmdns)
-        }
-        iosMain.dependencies {
+        commonTest {
+            dependencies {
+                implementation(libs.kotlin.test)
+                implementation(libs.kotlinx.coroutines.test)
+            }
         }
 
-        commonTest.dependencies {
-            implementation(libs.kotlin.test)
-            implementation(libs.kotlinx.coroutines.test)
+
+        val nonAndroid by creating {
+            dependsOn(commonMain.get())
+        }
+
+        androidMain {
+            dependencies {
+            }
+        }
+        jvmMain {
+            dependsOn(nonAndroid)
+            dependencies {
+                implementation(compose.desktop.currentOs)
+                implementation(libs.kotlinx.coroutines.swing)
+                implementation(libs.ansi.color)
+                implementation(libs.jmdns)
+            }
+        }
+        iosMain {
+            dependsOn(nonAndroid)
+            dependencies {
+            }
+        }
+        webMain {
+            dependsOn(nonAndroid)
         }
     }
 }
