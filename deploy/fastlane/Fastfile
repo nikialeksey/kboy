@@ -29,7 +29,7 @@ platform :android do
     gradle(
       task: 'assemble',
       build_type: 'Release',
-      gradle_path: "../android/gradlew"
+      gradle_path: "../../gradlew"
     )
     upload_to_play_store(
       track: 'internal',
@@ -41,7 +41,7 @@ platform :android do
   lane :deploy do
     gradle(
       task: "clean assembleRelease",
-      gradle_path: "../android/gradlew"
+      gradle_path: "../../gradlew"
     )
     upload_to_play_store
   end
