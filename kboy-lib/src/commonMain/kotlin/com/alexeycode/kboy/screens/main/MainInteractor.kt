@@ -101,10 +101,6 @@ class MainInteractor(
                             delay(1)
                         }
                         timeSinceLastFrame = lastTimeMs
-
-//                        // each frame duration 1/60 seconds, or 17ms
-//                        delay(16 - (time.currentTimeMs() - timeSinceLastFrame))
-//                        timeSinceLastFrame = time.currentTimeMs()
                     }
                 }
             }
