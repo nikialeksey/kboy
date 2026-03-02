@@ -8,10 +8,10 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
 import com.alexeycode.kboy.host.DesktopHost
+import com.alexeycode.kboy.host.DesktopRomFile
 import com.alexeycode.kboy.host.DesktopRoms
 import com.alexeycode.kboy.host.DesktopTime
 import com.alexeycode.kboy.host.io.DesktopController
-import com.alexeycode.kboy.host.io.DesktopFileSystem
 import com.alexeycode.kboy.host.network.DesktopMultiplayerNetwork
 import com.alexeycode.kboy.lib.Res
 import com.alexeycode.kboy.lib.ic_launcher
@@ -24,7 +24,6 @@ fun main() = application {
 
     val host = remember { DesktopHost() }
     val roms = remember { DesktopRoms() }
-    val fileSystem = remember { DesktopFileSystem() }
     val time = remember { DesktopTime() }
     val extController = remember { DesktopController() }
 
@@ -47,7 +46,6 @@ fun main() = application {
         App(
             host = host,
             roms = roms,
-            fileSystem = fileSystem,
             time = time,
             extController = extController
         )
@@ -55,7 +53,7 @@ fun main() = application {
         if (isSelectRom) {
             FileDialog(onCloseRequest = {
                 if (it != null) {
-                    roms.selectedRom(it)
+                    roms.selectedRom(DesktopRomFile(it))
                 }
                 isSelectRom = false
             })

@@ -1,19 +1,24 @@
 package com.alexeycode.kboy
 
+import android.content.Context
 import android.net.Uri
 import androidx.activity.result.ActivityResultCallback
+import com.alexeycode.kboy.host.AndroidRomFile
+import com.alexeycode.kboy.host.RomFile
 import com.alexeycode.kboy.host.Roms
 import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 
-class AndroidRoms : Roms, ActivityResultCallback<Uri?> {
+class AndroidRoms(
+    private val applicationContext: Context
+) : Roms, ActivityResultCallback<Uri?> {
 
-    private val romUris = MutableSharedFlow<String>(0, 1, BufferOverflow.DROP_OLDEST)
+    private val romUris = MutableSharedFlow<RomFile>(0, 1, BufferOverflow.DROP_OLDEST)
     private val startRomSelectionEvents = MutableSharedFlow<Unit>(0, 1, BufferOverflow.DROP_OLDEST)
 
-    override fun selectedRomUri(): Flow<String> {
+    override fun selectedRomFile(): Flow<RomFile> {
         return romUris.asSharedFlow()
     }
 
@@ -27,7 +32,7 @@ class AndroidRoms : Roms, ActivityResultCallback<Uri?> {
 
     override fun onActivityResult(result: Uri?) {
         if (result != null) {
-            romUris.tryEmit(result.toString())
+            romUris.tryEmit(AndroidRomFile(applicationContext.contentResolver, result))
         }
     }
 }

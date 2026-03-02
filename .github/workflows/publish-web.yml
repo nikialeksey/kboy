@@ -1,0 +1,25 @@
+name: Deploy KBoy to GitHub Pages
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 'Checkout'
+        uses: actions/checkout@v6
+      - name: 'Setup Prerequisites'
+        uses: ./.github/actions/setup-prerequisites
+      - name: 'Build web'
+        run: ./gradlew :kboy-lib:wasmJsBrowserDistribution
+      - name: 'Configure GitHub Pages'
+        uses: actions/configure-pages@v5
+      - name: 'Upload artifact'
+        uses: actions/upload-pages-artifact@v3
+      - name: 'Deploy'
+        uses: actions/deploy-pages@v4

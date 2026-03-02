@@ -1,9 +1,6 @@
 package com.alexeycode.kboy
 
-import android.app.Activity
 import android.content.pm.ActivityInfo
-import android.net.nsd.NsdManager
-import android.net.wifi.WifiManager
 import android.os.Build
 import android.os.Bundle
 import android.os.Vibrator
@@ -16,13 +13,9 @@ import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.lifecycleScope
 import com.alexeycode.kboy.host.AndroidHost
-import com.alexeycode.kboy.AndroidRoms
 import com.alexeycode.kboy.host.AndroidTime
 import com.alexeycode.kboy.host.AndroidVibrator
-import com.alexeycode.kboy.host.io.AndroidFileSystem
 import com.alexeycode.kboy.host.io.Controller
-import com.alexeycode.kboy.LoadRomContract
-import com.alexeycode.kboy.host.network.AndroidMultiplayerNetwork
 import com.alexeycode.kboy.ui.DarkColors
 import kotlinx.coroutines.launch
 
@@ -33,7 +26,6 @@ class MainActivity : ComponentActivity() {
     private val roms = AndroidRoms()
     private val loadRom = registerForActivityResult(LoadRomContract(), roms)
 
-    private val fileSystem = AndroidFileSystem(this)
     private val time = AndroidTime()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -68,7 +60,6 @@ class MainActivity : ComponentActivity() {
             App(
                 host = host,
                 roms = roms,
-                fileSystem = fileSystem,
                 time = time,
                 vibrator = vibrator,
                 extController = Controller.Dummy(),

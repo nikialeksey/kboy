@@ -8,9 +8,9 @@ import com.alexeycode.kboy.gb.cpu.interrupts.GbInterrupts
 import com.alexeycode.kboy.gb.cpu.registers.GbRegisters
 import com.alexeycode.kboy.gb.cpu.timer.GbTimer
 import com.alexeycode.kboy.gb.joypad.GbJoypad
+import com.alexeycode.kboy.gb.mem.GbBus
 import com.alexeycode.kboy.gb.mem.GbDma
 import com.alexeycode.kboy.gb.mem.GbDmaTransfer
-import com.alexeycode.kboy.gb.mem.GbBus
 import com.alexeycode.kboy.gb.ppu.GbBackground
 import com.alexeycode.kboy.gb.ppu.GbLcdControl
 import com.alexeycode.kboy.gb.ppu.GbLcdStatus
@@ -20,9 +20,9 @@ import com.alexeycode.kboy.gb.ppu.GbWindow
 import com.alexeycode.kboy.gb.ppu.RENDER_CYCLES
 import com.alexeycode.kboy.gb.ppu.Screen
 import com.alexeycode.kboy.gb.serial.BufferSerial
+import com.alexeycode.kboy.host.RomFile
 import com.alexeycode.kboy.host.Time
 import com.alexeycode.kboy.host.io.Controller
-import com.alexeycode.kboy.host.io.FileSystem
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -32,11 +32,10 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class MainInteractor(
-    private val fileSystem: FileSystem,
     private val time: Time,
 ) {
 
-    suspend fun prepareGb(scope: CoroutineScope, romUri: String, controller: Controller): Flow<Screen> {
+    suspend fun prepareGb(scope: CoroutineScope, file: RomFile, controller: Controller): Flow<Screen> {
         val interrupts = GbInterrupts()
         val timer = GbTimer(interrupts)
         val dma = GbDma()
@@ -48,7 +47,7 @@ class MainInteractor(
         val background = GbBackground()
         val window = GbWindow()
 
-        val cartridge = GbCartridge(GbCartridgeData(fileSystem.readFile(romUri)))
+        val cartridge = GbCartridge(GbCartridgeData(file.read()))
         val memory = cartridge.memory()
         val bus = GbBus(
             memory,

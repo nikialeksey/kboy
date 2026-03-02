@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.alexeycode.kboy.gb.ppu.Screen
 import com.alexeycode.kboy.host.Host
+import com.alexeycode.kboy.host.RomFile
 import com.alexeycode.kboy.host.Roms
 import com.alexeycode.kboy.host.Vibrator
 import com.alexeycode.kboy.host.io.Controller
@@ -40,8 +41,8 @@ class MainViewModel(
             }
         }
         viewModelScope.launch {
-            roms.selectedRomUri().collect { romUri: String ->
-                updateRomUri(romUri)
+            roms.selectedRomFile().collect { file: RomFile ->
+                updateRomUri(file)
             }
         }
     }
@@ -50,12 +51,12 @@ class MainViewModel(
         return touchController
     }
 
-    fun updateRomUri(romUri:  String) {
+    fun updateRomUri(file: RomFile) {
         runJob?.cancel()
         runJob = viewModelScope.launch {
             _screen = interactor.prepareGb(
                 viewModelScope,
-                romUri,
+                file,
                 GroupController(
                     listOf(extController, touchController)
                 )

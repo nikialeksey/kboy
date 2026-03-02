@@ -4,11 +4,11 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
 
 interface Roms {
-    fun selectedRomUri(): Flow<String>
+    fun selectedRomFile(): Flow<RomFile>
     fun selectRom()
 
     class Dummy : Roms {
-        override fun selectedRomUri(): Flow<String> {
+        override fun selectedRomFile(): Flow<RomFile> {
             return emptyFlow()
         }
 

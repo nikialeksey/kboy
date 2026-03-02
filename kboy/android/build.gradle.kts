@@ -72,6 +72,6 @@ android {
 dependencies {
     implementation(project(":kboy-lib"))
     implementation(libs.androidx.activity.compose)
-    implementation(compose.material3)
+    implementation(libs.compose.material3)
     implementation(libs.androidx.core.splashscreen)
 }

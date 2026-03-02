@@ -9,7 +9,6 @@ import com.alexeycode.kboy.host.Roms
 import com.alexeycode.kboy.host.Time
 import com.alexeycode.kboy.host.Vibrator
 import com.alexeycode.kboy.host.io.Controller
-import com.alexeycode.kboy.host.io.FileSystem
 import com.alexeycode.kboy.screens.main.Main
 import com.alexeycode.kboy.ui.DarkColors
 
@@ -18,7 +17,6 @@ import com.alexeycode.kboy.ui.DarkColors
 fun App(
     host: Host = Host.Dummy(),
     roms: Roms = Roms.Dummy(),
-    fileSystem: FileSystem = FileSystem.Dummy(),
     vibrator: Vibrator = Vibrator.Dummy(),
     time: Time = Time.ProgressiveTime(),
     extController: Controller = Controller.Dummy(),
@@ -30,7 +28,6 @@ fun App(
         Main(
             host,
             roms,
-            fileSystem,
             vibrator,
             time,
             extController

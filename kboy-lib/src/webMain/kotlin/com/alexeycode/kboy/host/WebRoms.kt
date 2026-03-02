@@ -6,8 +6,7 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 
-class DesktopRoms : Roms {
-
+class WebRoms : Roms {
     private val selectRomEvents = MutableSharedFlow<Unit>(0, 1, BufferOverflow.DROP_OLDEST)
     private val selectedRomUri = MutableSharedFlow<RomFile>(0, 1, BufferOverflow.DROP_OLDEST)
 
