@@ -23,7 +23,7 @@ import kotlinx.coroutines.launch
 class MainActivity : ComponentActivity() {
 
     private val host = AndroidHost()
-    private val roms = AndroidRoms()
+    private val roms = AndroidRoms { applicationContext }
     private val loadRom = registerForActivityResult(LoadRomContract(), roms)
 
     private val time = AndroidTime()

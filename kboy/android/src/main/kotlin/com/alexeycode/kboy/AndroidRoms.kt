@@ -12,7 +12,7 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 
 class AndroidRoms(
-    private val applicationContext: Context
+    private val applicationContextProvider: () -> Context
 ) : Roms, ActivityResultCallback<Uri?> {
 
     private val romUris = MutableSharedFlow<RomFile>(0, 1, BufferOverflow.DROP_OLDEST)
@@ -32,7 +32,7 @@ class AndroidRoms(
 
     override fun onActivityResult(result: Uri?) {
         if (result != null) {
-            romUris.tryEmit(AndroidRomFile(applicationContext.contentResolver, result))
+            romUris.tryEmit(AndroidRomFile(applicationContextProvider().contentResolver, result))
         }
     }
 }
