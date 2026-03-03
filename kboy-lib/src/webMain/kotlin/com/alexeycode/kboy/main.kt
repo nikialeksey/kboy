@@ -7,9 +7,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.window.ComposeViewport
+import com.alexeycode.kboy.host.SimpleRoms
 import com.alexeycode.kboy.host.WebHost
 import com.alexeycode.kboy.host.WebRomFile
-import com.alexeycode.kboy.host.WebRoms
 import com.alexeycode.kboy.host.WebTime
 import com.alexeycode.kboy.host.io.WebController
 import com.alexeycode.kboy.ui.FileDialog
@@ -21,7 +21,7 @@ fun main() {
     val body = document.body!!
 
     val host = WebHost()
-    val roms = WebRoms()
+    val roms = SimpleRoms()
     val time = WebTime(window.performance)
     val controller = WebController()
     body.onkeydown = { controller.onKeyEvent(it, true) }
@@ -44,9 +44,14 @@ fun main() {
         )
 
         if (isSelectRom) {
-            FileDialog { file ->
-                roms.selectedRom(WebRomFile(file))
-            }
+            FileDialog(
+                onFilePicked = { file ->
+                    roms.selectedRom(WebRomFile(file))
+                },
+                onCompleted = {
+                    isSelectRom = false
+                }
+            )
         }
     }
 }

@@ -11,7 +11,8 @@ import org.w3c.files.File
 
 @Composable
 fun FileDialog(
-    onFilePicked: (File) -> Unit
+    onFilePicked: (File) -> Unit,
+    onCompleted: () -> Unit
 ) {
     val input = remember {
         document.createElement("input") as HTMLInputElement
@@ -33,10 +34,12 @@ fun FileDialog(
                 }
             } finally {
                 document.body?.removeChild(input)
+                onCompleted()
             }
         }
         input.oncancel = {
             document.body?.removeChild(input)
+            onCompleted()
         }
         document.body?.appendChild(input)
 

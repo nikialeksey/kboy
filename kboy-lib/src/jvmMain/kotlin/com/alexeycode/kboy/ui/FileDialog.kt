@@ -8,7 +8,8 @@ import java.nio.file.Paths
 
 @Composable
 fun FileDialog(
-    onCloseRequest: (result: String?) -> Unit
+    onFilePicked: (path: String) -> Unit,
+    onCompleted: () -> Unit,
 ) = AwtWindow(
     create = {
         val parent: Frame? = null
@@ -16,8 +17,9 @@ fun FileDialog(
             override fun setVisible(value: Boolean) {
                 super.setVisible(value)
                 if (value) {
-                    onCloseRequest(Paths.get(directory, file).toFile().absolutePath)
+                    onFilePicked(Paths.get(directory, file).toFile().absolutePath)
                 }
+                onCompleted()
             }
         }
     },
