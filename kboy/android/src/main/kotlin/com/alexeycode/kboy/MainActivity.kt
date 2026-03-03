@@ -15,6 +15,7 @@ import androidx.lifecycle.lifecycleScope
 import com.alexeycode.kboy.host.AndroidHost
 import com.alexeycode.kboy.host.AndroidTime
 import com.alexeycode.kboy.host.AndroidVibrator
+import com.alexeycode.kboy.host.SimpleRoms
 import com.alexeycode.kboy.host.io.Controller
 import com.alexeycode.kboy.ui.DarkColors
 import kotlinx.coroutines.launch
@@ -23,8 +24,11 @@ import kotlinx.coroutines.launch
 class MainActivity : ComponentActivity() {
 
     private val host = AndroidHost()
-    private val roms = AndroidRoms { applicationContext }
-    private val loadRom = registerForActivityResult(LoadRomContract(), roms)
+    private val roms = SimpleRoms()
+    private val loadRom = registerForActivityResult(
+        LoadRomContract(),
+        LoadRomResult({ applicationContext }, roms)
+    )
 
     private val time = AndroidTime()
 
@@ -32,7 +36,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         prepareActivityWindow()
         lifecycleScope.launch {
-            roms.startRomSelection().collect {
+            roms.selectRomEvents().collect {
                 loadRom.launch(Unit)
             }
         }
