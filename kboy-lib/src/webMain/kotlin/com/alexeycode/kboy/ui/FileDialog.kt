@@ -2,7 +2,6 @@ package com.alexeycode.kboy.ui
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import kotlinx.browser.document
 import org.w3c.dom.HTMLInputElement
@@ -18,7 +17,7 @@ fun FileDialog(
         document.createElement("input") as HTMLInputElement
     }
 
-    LaunchedEffect(Unit) {
+    DisposableEffect(Unit) {
         input.style.display = "none"
         input.type = "file"
         input.multiple = false
@@ -33,22 +32,20 @@ fun FileDialog(
                     onFilePicked(files.first())
                 }
             } finally {
-                document.body?.removeChild(input)
+                input.remove()
                 onCompleted()
             }
         }
         input.oncancel = {
-            document.body?.removeChild(input)
+            input.remove()
             onCompleted()
         }
         document.body?.appendChild(input)
 
         input.click()
-    }
 
-    DisposableEffect(Unit) {
         onDispose {
-            document.body?.removeChild(input)
+            input.remove()
         }
     }
 }
