@@ -1,3 +1,4 @@
+import com.android.build.api.dsl.MinSdkVersion
 import io.gitlab.arturbosch.detekt.Detekt
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
@@ -28,11 +29,13 @@ kotlin {
                 )
             )
         }
-    }
-    androidLibrary {
         namespace = "com.alexeycode.kboy.library"
-        minSdk = libs.versions.android.minSdk.get().toInt()
-        compileSdk = libs.versions.android.compileSdk.get().toInt()
+        minSdk {
+            version = release(libs.versions.android.minSdk.get().toInt())
+        }
+        compileSdk {
+            version = release(libs.versions.android.compileSdk.get().toInt())
+        }
     }
     
     listOf(
@@ -128,10 +131,6 @@ kotlin {
     }
 }
 
-dependencies {
-    detektPlugins(libs.detekt.formatting)
-}
-
 compose {
     resources {
         packageOfResClass = "com.alexeycode.kboy.lib"
@@ -157,4 +156,8 @@ detekt {
 
 tasks.withType<Detekt>().configureEach {
     exclude { it.file.path.contains("build/generated") }
+}
+
+dependencies {
+    detektPlugins(libs.detekt.formatting)
 }

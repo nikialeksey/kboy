@@ -10,20 +10,19 @@ import io.ktor.server.routing.routing
 import io.ktor.server.websocket.WebSockets
 import io.ktor.server.websocket.webSocket
 import io.ktor.websocket.Frame
-import io.ktor.websocket.readBytes
+import io.ktor.websocket.readText
 import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.runBlocking
 import kotlinx.io.IOException
-import java.net.InetAddress
 import javax.jmdns.JmDNS
 import javax.jmdns.ServiceInfo
 
 class DesktopMultiplayerNetwork : MultiplayerNetwork {
 
-    private val hosts = MutableSharedFlow<List<Host>>(0, 1, BufferOverflow.DROP_OLDEST)
+    private val hosts = MutableSharedFlow<Set<Host>>(1, 0, BufferOverflow.DROP_OLDEST)
     private lateinit var jmDns: JmDNS
     private val jmDnsServiceType = "_kboy._tcp.local."
     private lateinit var jmDnsServiceInfo: ServiceInfo
@@ -31,7 +30,7 @@ class DesktopMultiplayerNetwork : MultiplayerNetwork {
     private var server: EmbeddedServer<CIOApplicationEngine, CIOApplicationEngine.Configuration>? = null
 
     override fun start() {
-        jmDns = JmDNS.create(InetAddress.getByName("0.0.0.0"))
+        jmDns = JmDNS.create()
 
         try {
             val server = embeddedServer(CIO, port = 0) {
@@ -39,8 +38,11 @@ class DesktopMultiplayerNetwork : MultiplayerNetwork {
 
                 routing {
                     webSocket("/") {
+                        send(Frame.Text("Hey"))
                         for (frame in incoming) {
-                            val message = frame.readBytes().toString()
+                            frame as? Frame.Text ?: continue
+                            val message = frame.readText()
+                            println("!!!!!!!! incoming frame: $message")
                             send(Frame.Text("Hey, $message"))
                         }
                     }
@@ -58,7 +60,7 @@ class DesktopMultiplayerNetwork : MultiplayerNetwork {
         }
     }
 
-    override fun hosts(): Flow<List<Host>> {
+    override fun hosts(): Flow<Set<Host>> {
         return hosts.asSharedFlow()
     }
 

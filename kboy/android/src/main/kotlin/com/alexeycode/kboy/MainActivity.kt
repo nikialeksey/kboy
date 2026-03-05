@@ -1,6 +1,7 @@
 package com.alexeycode.kboy
 
 import android.content.pm.ActivityInfo
+import android.net.nsd.NsdManager
 import android.os.Build
 import android.os.Bundle
 import android.os.Vibrator
@@ -17,7 +18,11 @@ import com.alexeycode.kboy.host.AndroidTime
 import com.alexeycode.kboy.host.AndroidVibrator
 import com.alexeycode.kboy.host.SimpleRoms
 import com.alexeycode.kboy.host.io.Controller
+import com.alexeycode.kboy.host.network.AndroidMultiplayerNetwork
 import com.alexeycode.kboy.ui.DarkColors
+import io.ktor.client.HttpClient
+import io.ktor.client.engine.cio.CIO
+import io.ktor.client.plugins.websocket.WebSockets
 import kotlinx.coroutines.launch
 
 
@@ -35,17 +40,20 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         prepareActivityWindow()
+
+        val client = HttpClient(CIO) {
+            install(WebSockets) {
+                pingIntervalMillis = 20_000
+            }
+        }
+        val nsdManager = getSystemService(NSD_SERVICE) as NsdManager
+        val multiplayerNetwork = AndroidMultiplayerNetwork(nsdManager, client)
+
         lifecycleScope.launch {
             roms.selectRomEvents().collect {
                 loadRom.launch(Unit)
             }
         }
-
-//        val multicastLock = (getSystemService(WIFI_SERVICE) as WifiManager)
-//            .createMulticastLock("multicastLock")
-//        multicastLock.setReferenceCounted(true)
-//        multicastLock.acquire()
-//        val multiplayerNetwork = AndroidMultiplayerNetwork(getSystemService(NSD_SERVICE) as NsdManager)
 
         setContent {
             val context = LocalContext.current

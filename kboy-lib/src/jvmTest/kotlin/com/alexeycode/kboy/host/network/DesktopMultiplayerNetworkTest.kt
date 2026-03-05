@@ -15,8 +15,8 @@ class DesktopMultiplayerNetworkTest {
         val host1 = DesktopMultiplayerNetwork()
         val host2 = DesktopMultiplayerNetwork()
 
-        var host1Hosts = listOf<Host>()
-        var host2Hosts = listOf<Host>()
+        var host1Hosts = setOf<Host>()
+        var host2Hosts = setOf<Host>()
         launch { host1.hosts().collect { hosts -> host1Hosts = hosts } }
         launch { host2.hosts().collect { hosts -> host2Hosts = hosts } }
 

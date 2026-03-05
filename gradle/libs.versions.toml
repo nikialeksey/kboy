@@ -2,7 +2,7 @@
 ansi-color = "5.5.1"
 agp = "9.1.0"
 android-compileSdk = "36"
-android-minSdk = "24"
+android-minSdk = "34"
 android-targetSdk = "36"
 androidx-activityCompose = "1.12.4"
 androidx-lifecycle = "2.9.6"
