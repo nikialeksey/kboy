@@ -30,33 +30,31 @@ class DesktopMultiplayerNetwork : MultiplayerNetwork {
     private var server: EmbeddedServer<CIOApplicationEngine, CIOApplicationEngine.Configuration>? = null
 
     override fun start() {
-        jmDns = JmDNS.create()
+        val server = embeddedServer(CIO, port = 0) {
+            install(WebSockets)
 
-        try {
-            val server = embeddedServer(CIO, port = 0) {
-                install(WebSockets)
-
-                routing {
-                    webSocket("/") {
-                        send(Frame.Text("Hey"))
-                        for (frame in incoming) {
-                            frame as? Frame.Text ?: continue
-                            val message = frame.readText()
-                            println("!!!!!!!! incoming frame: $message")
-                            send(Frame.Text("Hey, $message"))
-                        }
+            routing {
+                webSocket("/") {
+                    send(Frame.Text("Hey"))
+                    for (frame in incoming) {
+                        frame as? Frame.Text ?: continue
+                        val message = frame.readText()
+                        println("!!!!!!!! incoming frame: $message")
+                        send(Frame.Text("Hey, $message"))
                     }
                 }
-            }.start()
-            this.server?.stop()
-            this.server = server
+            }
+        }.start()
+        this.server?.stop()
+        this.server = server
+        val serverPort = runBlocking { server.engine.resolvedConnectors().first().port }
+        println("!!!!!!!!!!!!!!!!!!!!!! start webSocket on a port $serverPort")
 
-            val port = runBlocking { server.engine.resolvedConnectors().first().port }
-            println("!!!!!!!!!!!!!!!!!!!!!! start webSocket on a port $port")
-            jmDnsServiceInfo = ServiceInfo.create(jmDnsServiceType, "kboy", port, "")
+        jmDns = JmDNS.create()
+        try {
+            jmDnsServiceInfo = ServiceInfo.create(jmDnsServiceType, "kboy", serverPort, "")
             jmDns.registerService(jmDnsServiceInfo)
         } catch (ignored: IOException) {
-            // in this case we should disable multiplayer feature
         }
     }
 

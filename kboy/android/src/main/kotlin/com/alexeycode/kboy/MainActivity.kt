@@ -2,12 +2,14 @@ package com.alexeycode.kboy
 
 import android.content.pm.ActivityInfo
 import android.net.nsd.NsdManager
-import android.os.Build
 import android.os.Bundle
 import android.os.Vibrator
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.material3.dynamicDarkColorScheme
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalContext
 import androidx.core.view.WindowCompat
@@ -19,7 +21,8 @@ import com.alexeycode.kboy.host.AndroidVibrator
 import com.alexeycode.kboy.host.SimpleRoms
 import com.alexeycode.kboy.host.io.Controller
 import com.alexeycode.kboy.host.network.AndroidMultiplayerNetwork
-import com.alexeycode.kboy.ui.DarkColors
+import com.alexeycode.kboy.log.AndroidLog
+import com.alexeycode.kboy.log.Network
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.cio.CIO
 import io.ktor.client.plugins.websocket.WebSockets
@@ -28,6 +31,7 @@ import kotlinx.coroutines.launch
 
 class MainActivity : ComponentActivity() {
 
+    private val log = AndroidLog()
     private val host = AndroidHost()
     private val roms = SimpleRoms()
     private val loadRom = registerForActivityResult(
@@ -47,7 +51,8 @@ class MainActivity : ComponentActivity() {
             }
         }
         val nsdManager = getSystemService(NSD_SERVICE) as NsdManager
-        val multiplayerNetwork = AndroidMultiplayerNetwork(nsdManager, client)
+        val multiplayerNetwork = AndroidMultiplayerNetwork(nsdManager, log)
+        multiplayerNetwork.start()
 
         lifecycleScope.launch {
             roms.selectRomEvents().collect {
@@ -56,15 +61,14 @@ class MainActivity : ComponentActivity() {
         }
 
         setContent {
-            val context = LocalContext.current
-            val colors = when {
-                (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) -> {
-                    dynamicDarkColorScheme(context)
-                }
-                else -> {
-                    DarkColors
-                }
+            val hosts by multiplayerNetwork.hosts().collectAsState(emptySet())
+
+            LaunchedEffect(hosts) {
+                log.i(Network, "Hosts: %s", hosts)
             }
+
+            val context = LocalContext.current
+            val colors = dynamicDarkColorScheme(context)
             val vibrator = remember(context) {
                 AndroidVibrator(context.getSystemService(Vibrator::class.java))
             }

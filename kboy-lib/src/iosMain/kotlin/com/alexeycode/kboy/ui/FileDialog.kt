@@ -26,7 +26,9 @@ fun FileDialog(
                 controller: UIDocumentPickerViewController,
                 didPickDocumentAtURL: NSURL,
             ) {
-                onFilePicked(didPickDocumentAtURL)
+                if (didPickDocumentAtURL.startAccessingSecurityScopedResource()) {
+                    onFilePicked(didPickDocumentAtURL)
+                }
                 onCompleted()
             }
 
