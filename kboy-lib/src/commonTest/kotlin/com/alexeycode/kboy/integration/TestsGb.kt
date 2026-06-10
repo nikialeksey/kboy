@@ -11,6 +11,7 @@ import com.alexeycode.kboy.gb.joypad.GbJoypad
 import com.alexeycode.kboy.gb.mem.GbBus
 import com.alexeycode.kboy.gb.mem.GbDma
 import com.alexeycode.kboy.gb.mem.GbDmaTransfer
+import com.alexeycode.kboy.gb.mem.Memory
 import com.alexeycode.kboy.gb.ppu.GbBackground
 import com.alexeycode.kboy.gb.ppu.GbLcdControl
 import com.alexeycode.kboy.gb.ppu.GbLcdStatus
@@ -26,15 +27,14 @@ class TestsGb private constructor(
     constructor(
         cartridge: Cartridge,
         serial: Serial
-    ) : this(buildGb(cartridge, serial))
+    ) : this(buildGb(cartridge.memory(), serial))
 
     override fun run(cpuCycles: Int): Int {
         return origin.run(cpuCycles)
     }
 }
 
-private fun buildGb(cartridge: Cartridge, serial: Serial): Gb {
-    val memory = cartridge.memory()
+private fun buildGb(memory: Memory, serial: Serial = Serial.Dummy()): Gb {
     val interrupts = GbInterrupts()
     val timer = GbTimer(interrupts)
     val dma = GbDma()

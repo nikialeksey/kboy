@@ -1,4 +1,3 @@
-import com.android.build.api.dsl.MinSdkVersion
 import io.gitlab.arturbosch.detekt.Detekt
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
@@ -12,6 +11,7 @@ plugins {
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
     alias(libs.plugins.detekt)
+    alias(libs.plugins.benchmark)
 }
 
 kotlin {
@@ -39,7 +39,6 @@ kotlin {
     }
     
     listOf(
-        iosX64(),
         iosArm64(),
         iosSimulatorArm64()
     ).forEach { iosTarget ->
@@ -77,8 +76,8 @@ kotlin {
         commonMain {
             dependencies {
                 implementation(libs.kotlinx.coroutines.core)
-                implementation(libs.kotlin.io)
-                implementation(libs.kotlin.serialization.json)
+                implementation(libs.kotlinx.io)
+                implementation(libs.kotlinx.serialization.json)
                 implementation(libs.compose.runtime)
                 implementation(libs.compose.foundation)
                 implementation(libs.compose.material3)
@@ -93,6 +92,7 @@ kotlin {
                 implementation(libs.ktor.client.websockets)
                 implementation(libs.ktor.server.cio)
                 implementation(libs.ktor.server.websockets)
+                implementation(libs.kotlinx.benchmark)
             }
         }
         commonTest {
@@ -127,6 +127,22 @@ kotlin {
         }
         webMain {
             dependsOn(nonAndroid)
+        }
+    }
+}
+
+benchmark {
+    targets {
+        register("jvm")
+    }
+
+    configurations {
+        named("main") {
+            warmups = 2
+            iterations = 5
+            iterationTime = 3
+            iterationTimeUnit = "s"
+            reportFormat = "text"
         }
     }
 }
