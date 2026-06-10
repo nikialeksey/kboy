@@ -3,7 +3,8 @@ package com.alexeycode.kboy.gb.cpu
 import com.alexeycode.kboy.gb.cpu.interrupts.GbInterrupts
 import com.alexeycode.kboy.gb.cpu.registers.GbRegisters
 import com.alexeycode.kboy.gb.mem.SimpleMemory
-import com.alexeycode.kboy.lib.Res
+import com.goncalossilva.resources.Resource
+import com.goncalossilva.resources.ResourceReadException
 import kotlinx.coroutines.test.runTest
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonArray
@@ -12,7 +13,6 @@ import kotlinx.serialization.json.int
 import kotlinx.serialization.json.jsonArray
 import kotlinx.serialization.json.jsonObject
 import kotlinx.serialization.json.jsonPrimitive
-import org.jetbrains.compose.resources.MissingResourceException
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertIs
@@ -21,7 +21,7 @@ import kotlin.time.Duration.Companion.minutes
 /**
  * https://github.com/adtennant/GameboyCPUTests/
  */
-class GbCpuOpcodesTest {
+class GbCpuTest {
 
     @Test
     fun test() = runTest(timeout = 5.minutes) {
@@ -34,8 +34,8 @@ class GbCpuOpcodesTest {
         for (testCaseNumber in 0x00 .. 0xff) {
             val caseFileName = "${testCaseNumber.toHexString().takeLast(2)}.json"
             val caseBytes = try {
-                Res.readBytes("files/cpu-tests/$caseFileName")
-            } catch (ignored: MissingResourceException) {
+                Resource("files/cpu-tests/$caseFileName").readBytes()
+            } catch (ignored: ResourceReadException) {
                 continue
             }
             val caseVariants = Json.parseToJsonElement(caseBytes.decodeToString())

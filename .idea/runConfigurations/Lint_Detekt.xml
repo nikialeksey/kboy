@@ -18,6 +18,15 @@
           <option value=":kboy-lib:detektIosArm64Test" />
           <option value=":kboy-lib:detektWasmJsMain" />
           <option value=":kboy-lib:detektWasmJsTest" />
+
+          <option value=":kboy-shared:detekt" />
+          <option value=":kboy-shared:detektAndroidMain" />
+          <option value=":kboy-shared:detektJvmMain" />
+          <option value=":kboy-shared:detektJvmTest" />
+          <option value=":kboy-shared:detektIosArm64Main" />
+          <option value=":kboy-shared:detektIosArm64Test" />
+          <option value=":kboy-shared:detektWasmJsMain" />
+          <option value=":kboy-shared:detektWasmJsTest" />
         </list>
       </option>
       <option name="vmOptions" />

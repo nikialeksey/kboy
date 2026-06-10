@@ -4,9 +4,8 @@ import com.alexeycode.kboy.gb.cartridge.GbCartridge
 import com.alexeycode.kboy.gb.cartridge.GbCartridgeData
 import com.alexeycode.kboy.gb.serial.BufferSerial
 import com.alexeycode.kboy.integration.TestsGb
-import com.alexeycode.kboy.lib.Res
+import com.goncalossilva.resources.Resource
 import kotlinx.coroutines.test.runTest
-import org.jetbrains.compose.resources.ExperimentalResourceApi
 import kotlin.test.Ignore
 import kotlin.test.Test
 import kotlin.test.assertTrue
@@ -17,7 +16,6 @@ private val FAILURE_BYTES = byteArrayOf(42, 42, 42, 42, 42, 42)
 /**
  * Tests sources: https://github.com/Gekkio/mooneye-test-suite/
  */
-@OptIn(ExperimentalResourceApi::class)
 @Ignore
 class GbCpuGekkioPpuTest {
 
@@ -73,7 +71,7 @@ class GbCpuGekkioPpuTest {
     private suspend fun testGekkioCpuInstrsIndividual(gbFileName: String) {
         val cartridge = GbCartridge(
             GbCartridgeData(
-                Res.readBytes("files/test-roms/gekkio/acceptance/$gbFileName")
+                Resource("files/test-roms/gekkio/acceptance/$gbFileName").readBytes()
             )
         )
         val serial = BufferSerial()

@@ -70,11 +70,11 @@ android {
 }
 
 dependencies {
-    implementation(project(":kboy-lib"))
+    implementation(project(":kboy-shared"))
     implementation(libs.androidx.activity.compose)
     implementation(libs.compose.material3)
     implementation(libs.androidx.core.splashscreen)
     implementation(libs.ktor.client.core)
-    implementation(libs.ktor.client.cio)
+    implementation(libs.ktor.client.okhttp)
     implementation(libs.ktor.client.websockets)
 }

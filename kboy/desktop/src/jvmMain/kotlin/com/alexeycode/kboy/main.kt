@@ -13,8 +13,8 @@ import com.alexeycode.kboy.host.DesktopTime
 import com.alexeycode.kboy.host.SimpleRoms
 import com.alexeycode.kboy.host.io.DesktopController
 import com.alexeycode.kboy.host.network.DesktopMultiplayerNetwork
-import com.alexeycode.kboy.lib.Res
-import com.alexeycode.kboy.lib.ic_launcher
+import com.alexeycode.kboy.shared.Res
+import com.alexeycode.kboy.shared.ic_launcher
 import com.alexeycode.kboy.ui.FileDialog
 import org.jetbrains.compose.resources.painterResource
 

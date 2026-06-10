@@ -4,23 +4,17 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
-    alias(libs.plugins.detekt)
     alias(libs.plugins.testResources)
+    alias(libs.plugins.detekt)
+    alias(libs.plugins.benchmark)
 }
 
 kotlin {
     applyDefaultHierarchyTemplate()
 
-    listOf(
-        iosArm64(),
-        iosSimulatorArm64()
-    ).forEach { iosTarget ->
-        iosTarget.binaries.framework {
-            baseName = "KBoyLib"
-            isStatic = true
-        }
-    }
-    
+    iosArm64()
+    iosSimulatorArm64()
+
     jvm {
         compilerOptions {
             freeCompilerArgs.addAll(
@@ -36,24 +30,34 @@ kotlin {
     
     @OptIn(ExperimentalWasmDsl::class)
     wasmJs {
-        browser()
         nodejs()
     }
     
     sourceSets {
         commonMain {
             dependencies {
-                implementation(libs.kotlinx.coroutines.core)
-            }
-        }
-        commonTest {
-            dependencies {
+                implementation(project(":kboy-lib"))
                 implementation(libs.test.resources)
                 implementation(libs.kotlinx.coroutines.core)
-                implementation(libs.kotlinx.serialization.json)
-                implementation(libs.kotlin.test)
-                implementation(libs.kotlinx.coroutines.test)
+                implementation(libs.kotlinx.benchmark)
             }
+        }
+    }
+}
+
+benchmark {
+    targets {
+        register("jvm")
+        register("wasmJs")
+    }
+
+    configurations {
+        named("main") {
+            warmups = 2
+            iterations = 5
+            iterationTime = 3
+            iterationTimeUnit = "s"
+            reportFormat = "text"
         }
     }
 }

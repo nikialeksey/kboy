@@ -30,4 +30,8 @@ dependencyResolutionManagement {
 }
 
 include(":kboy-lib")
+include(":kboy-benchmark")
+include(":kboy-shared")
 include(":kboy:android")
+include(":kboy:desktop")
+include(":kboy:web")

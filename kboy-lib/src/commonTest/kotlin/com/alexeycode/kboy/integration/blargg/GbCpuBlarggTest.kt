@@ -4,9 +4,8 @@ import com.alexeycode.kboy.gb.cartridge.GbCartridge
 import com.alexeycode.kboy.gb.cartridge.GbCartridgeData
 import com.alexeycode.kboy.gb.serial.BufferSerial
 import com.alexeycode.kboy.integration.TestsGb
-import com.alexeycode.kboy.lib.Res
+import com.goncalossilva.resources.Resource
 import kotlinx.coroutines.test.runTest
-import org.jetbrains.compose.resources.ExperimentalResourceApi
 import kotlin.test.Ignore
 import kotlin.test.Test
 import kotlin.test.assertContains
@@ -14,7 +13,6 @@ import kotlin.test.assertContains
 /**
  * Tests source: https://github.com/L-P/blargg-test-roms
  */
-@OptIn(ExperimentalResourceApi::class)
 class GbCpuBlarggTest {
 
     @Test
@@ -98,7 +96,7 @@ class GbCpuBlarggTest {
     private suspend fun testBlarggCpuInstrsIndividual(gbFileName: String) {
         val cartridge = GbCartridge(
             GbCartridgeData(
-                Res.readBytes("files/test-roms/blargg/$gbFileName")
+                Resource("files/test-roms/blargg/$gbFileName").readBytes()
             )
         )
         val serial = BufferSerial()

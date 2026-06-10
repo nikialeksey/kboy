@@ -18,9 +18,8 @@ import com.alexeycode.kboy.gb.ppu.GbPalette
 import com.alexeycode.kboy.gb.ppu.GbPpu
 import com.alexeycode.kboy.gb.ppu.GbWindow
 import com.alexeycode.kboy.gb.serial.BufferSerial
-import com.alexeycode.kboy.lib.Res
+import com.goncalossilva.resources.Resource
 import kotlinx.coroutines.test.runTest
-import org.jetbrains.compose.resources.ExperimentalResourceApi
 import kotlin.test.Ignore
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -28,7 +27,6 @@ import kotlin.test.assertEquals
 /**
  * Tests source: https://github.com/aappleby/gbmicrotest
  */
-@OptIn(ExperimentalResourceApi::class)
 class GbCpuGbMicroTimerTest {
 
     @Test
@@ -233,7 +231,7 @@ class GbCpuGbMicroTimerTest {
 
         val cartridge = GbCartridge(
             GbCartridgeData(
-                Res.readBytes("files/test-roms/gbmicrotest/$gbFileName")
+                Resource("files/test-roms/gbmicrotest/$gbFileName").readBytes()
             )
         )
         val memory = cartridge.memory()

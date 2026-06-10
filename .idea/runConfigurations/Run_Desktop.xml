@@ -10,7 +10,7 @@
       </option>
       <option name="taskNames">
         <list>
-          <option value=":kboy-lib:run" />
+          <option value=":kboy:desktop:run" />
         </list>
       </option>
       <option name="vmOptions" />
