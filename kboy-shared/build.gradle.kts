@@ -106,6 +106,7 @@ kotlin {
             dependsOn(nonAndroid)
             dependencies {
                 implementation(compose.desktop.currentOs)
+                implementation(libs.ktor.server.cio)
                 implementation(libs.kotlinx.coroutines.swing)
                 implementation(libs.ansi.color)
                 implementation(libs.jmdns)
