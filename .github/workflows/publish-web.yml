@@ -21,12 +21,12 @@ jobs:
       - name: 'Setup Prerequisites'
         uses: ./.github/actions/setup-prerequisites
       - name: 'Build web'
-        run: ./gradlew :kboy-shared:wasmJsBrowserDistribution
+        run: ./gradlew :kboy:web:wasmJsBrowserDistribution
       - name: 'Configure GitHub Pages'
         uses: actions/configure-pages@v5
       - name: 'Upload artifact'
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./kboy-shared/build/dist/wasmJs/productionExecutable
+          path: ./kboy/web/build/dist/wasmJs/productionExecutable
       - name: 'Deploy'
         uses: actions/deploy-pages@v4
