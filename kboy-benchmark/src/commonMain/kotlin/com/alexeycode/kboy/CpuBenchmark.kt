@@ -19,7 +19,6 @@ import com.alexeycode.kboy.gb.ppu.GbPalette
 import com.alexeycode.kboy.gb.ppu.GbPpu
 import com.alexeycode.kboy.gb.ppu.GbWindow
 import com.alexeycode.kboy.gb.serial.BufferSerial
-import com.goncalossilva.resources.Resource
 import kotlinx.benchmark.Benchmark
 import kotlinx.benchmark.Scope
 import kotlinx.benchmark.Setup
@@ -33,7 +32,7 @@ open class CpuBenchmark {
 
     @Setup
     fun setup() {
-        val bytes: ByteArray = Resource("files/blargg/01-special.gb").readBytes()
+        val bytes = readBytes("files/blargg/cpu-instrs/01-special.gb")
         val cartridge = GbCartridge(GbCartridgeData(bytes))
 
         val memory = cartridge.memory()

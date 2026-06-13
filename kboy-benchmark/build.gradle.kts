@@ -4,7 +4,6 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
-    alias(libs.plugins.testResources)
     alias(libs.plugins.detekt)
     alias(libs.plugins.benchmark)
 }
@@ -37,7 +36,6 @@ kotlin {
         commonMain {
             dependencies {
                 implementation(project(":kboy-lib"))
-                implementation(libs.test.resources)
                 implementation(libs.kotlinx.coroutines.core)
                 implementation(libs.kotlinx.benchmark)
             }
@@ -61,6 +59,18 @@ benchmark {
         }
     }
 }
+
+tasks.register("copyResourcesForWasmJsBenchmark", Copy::class) {
+    from("${project.projectDir}/src/commonMain/resources/")
+    into("${rootProject.projectDir}/build/wasm/packages/${rootProject.name}-${project.name}-wasmJsBenchmark/src/commonMain/resources")
+}
+
+afterEvaluate {
+    tasks.named("wasmJsBenchmarkGenerate") {
+        dependsOn("copyResourcesForWasmJsBenchmark")
+    }
+}
+
 
 detekt {
     autoCorrect = true
