@@ -16,6 +16,8 @@ class StaticAnalysisPlugin : Plugin<Project> {
                 target.file("${target.rootProject.projectDir}/buildLogic/config/detekt/detekt.yml")
             )
             source = target.files(
+                "./src/main/",
+
                 "./src/commonMain/",
                 "./src/commonTest/",
 
@@ -36,17 +38,30 @@ class StaticAnalysisPlugin : Plugin<Project> {
         )
 
         target.tasks.register("staticAnalysis") {
-            dependsOn(
-                "detekt",
+            setDependsOn(
+                mutableListOf<String>()
+                    .apply {
+                        add("detekt")
 
-                "detektJvmMain",
-                "detektJvmTest",
+                        if (target.tasks.findByName("detektJvmMain") != null) {
+                            add("detektJvmMain")
+                            add("detektJvmTest")
+                        }
 
-                "detektIosArm64Main",
-                "detektIosArm64Test",
+                        if (target.tasks.findByName("detektMain") != null) {
+                            add("detektMain")
+                        }
 
-                "detektWasmJsMain",
-                "detektWasmJsTest"
+                        if (target.tasks.findByName("detektIosArm64Main") != null) {
+                            add("detektIosArm64Main")
+                            add("detektIosArm64Test")
+                        }
+
+                        if (target.tasks.findByName("detektWasmJsMain") != null) {
+                            add("detektWasmJsMain")
+                            add("detektWasmJsTest")
+                        }
+                    }
             )
         }
     }

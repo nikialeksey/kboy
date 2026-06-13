@@ -7,6 +7,7 @@ plugins {
     id("com.alexeycode.buildnumber")
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
+    id("com.alexeycode.staticanalysis")
 }
 
 val keystoreDebugPropertiesFile = rootProject.file("deploy/keystore/android/keystore-debug.properties")

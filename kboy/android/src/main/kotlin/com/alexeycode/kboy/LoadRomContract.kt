@@ -22,5 +22,4 @@ class LoadRomContract : ActivityResultContract<Unit, Uri?>() {
     override fun parseResult(resultCode: Int, intent: Intent?): Uri? {
         return intent.takeIf { resultCode == Activity.RESULT_OK }?.data
     }
-
 }

@@ -1,4 +1,3 @@
-import io.gitlab.arturbosch.detekt.Detekt
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
@@ -7,7 +6,7 @@ plugins {
     alias(libs.plugins.kotlinSerialization)
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
-    alias(libs.plugins.detekt)
+    id("com.alexeycode.staticanalysis")
 }
 
 kotlin {
@@ -59,17 +58,4 @@ compose {
             }
         }
     }
-}
-
-detekt {
-    autoCorrect = true
-    config.setFrom(file("${rootProject.projectDir}/buildLogic/config/detekt/detekt.yml"))
-}
-
-tasks.withType<Detekt>().configureEach {
-    exclude { it.file.path.contains("build/generated") }
-}
-
-dependencies {
-    detektPlugins(libs.detekt.formatting)
 }

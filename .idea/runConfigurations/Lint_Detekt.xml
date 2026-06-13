@@ -13,6 +13,9 @@
           <option value=":kboy-lib:staticAnalysis" />
           <option value=":kboy-benchmark:staticAnalysis" />
           <option value=":kboy-shared:staticAnalysis" />
+          <option value=":kboy:android:staticAnalysis" />
+          <option value=":kboy:desktop:staticAnalysis" />
+          <option value=":kboy:web:staticAnalysis" />
         </list>
       </option>
       <option name="vmOptions" />

@@ -23,11 +23,7 @@ import com.alexeycode.kboy.host.io.Controller
 import com.alexeycode.kboy.host.network.AndroidMultiplayerNetwork
 import com.alexeycode.kboy.log.AndroidLog
 import com.alexeycode.kboy.log.Network
-import io.ktor.client.HttpClient
-import io.ktor.client.engine.cio.CIO
-import io.ktor.client.plugins.websocket.WebSockets
 import kotlinx.coroutines.launch
-
 
 class MainActivity : ComponentActivity() {
 
@@ -45,11 +41,11 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         prepareActivityWindow()
 
-        val client = HttpClient(CIO) {
-            install(WebSockets) {
-                pingIntervalMillis = 20_000
-            }
-        }
+//        val client = HttpClient(CIO) {
+//            install(WebSockets) {
+//                pingIntervalMillis = 20_000
+//            }
+//        }
         val nsdManager = getSystemService(NSD_SERVICE) as NsdManager
         val multiplayerNetwork = AndroidMultiplayerNetwork(nsdManager, log)
         multiplayerNetwork.start()

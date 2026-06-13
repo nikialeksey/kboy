@@ -1,4 +1,3 @@
-import io.gitlab.arturbosch.detekt.Detekt
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
@@ -127,17 +126,4 @@ compose {
         packageOfResClass = "com.alexeycode.kboy.shared"
         publicResClass = true
     }
-}
-
-detekt {
-    autoCorrect = true
-    config.setFrom(file("${rootProject.projectDir}/buildLogic/config/detekt/detekt.yml"))
-}
-
-tasks.withType<Detekt>().configureEach {
-    exclude { it.file.path.contains("build/generated") }
-}
-
-dependencies {
-    detektPlugins(libs.detekt.formatting)
 }
