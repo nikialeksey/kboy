@@ -18,9 +18,9 @@ jobs:
       - name: 'Run detekt'
         shell: bash
         run: |
-          ./gradlew --no-daemon --stacktrace :kboy-lib:detekt :kboy-lib:detektJvmMain :kboy-lib:detektJvmTest :kboy-lib:detektIosArm64Main :kboy-lib:detektIosArm64Test :kboy-lib:detektWasmJsMain :kboy-lib:detektWasmJsTest
+          ./gradlew --no-daemon :kboy-lib:staticAnalysis
 
       - name: 'Run tests'
         shell: bash
         run: |
-          ./gradlew --no-daemon --stacktrace :kboy-lib:jvmTest
+          ./gradlew --no-daemon :kboy-lib:jvmTest

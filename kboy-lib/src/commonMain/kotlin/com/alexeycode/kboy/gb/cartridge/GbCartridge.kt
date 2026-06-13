@@ -33,5 +33,4 @@ class GbCartridge(
     override fun vram(): Memory {
         TODO()
     }
-
 }

@@ -8,6 +8,7 @@ class GbScreen(
 ) : Screen {
 
     private val screenPixels = ByteArray(width * height * 4)
+
     @Volatile
     private var hash = 0
 
@@ -43,6 +44,7 @@ class GbScreen(
         return hash
     }
 
+    @Suppress("EqualsAlwaysReturnsTrueOrFalse") // made for purpose to run compose update every tick
     override fun equals(other: Any?): Boolean {
         return false
     }

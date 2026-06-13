@@ -42,6 +42,7 @@ compose-components-uiToolingPreview = { module = "org.jetbrains.compose.ui:ui-to
 
 ansi-color = { module = "com.diogonunes:JColor", version.ref = "ansi-color"}
 detekt-formatting = { module = "io.gitlab.arturbosch.detekt:detekt-formatting", version.ref = "detekt" }
+detekt-gradle-plugin = { module = "io.gitlab.arturbosch.detekt:detekt-gradle-plugin", version.ref = "detekt" }
 jmdns = { module = "org.jmdns:jmdns", version.ref = "jmdns"}
 ktor-client-core = { module = "io.ktor:ktor-client-core", version.ref = "ktor" }
 ktor-client-okhttp = { module = "io.ktor:ktor-client-okhttp", version.ref = "ktor" }

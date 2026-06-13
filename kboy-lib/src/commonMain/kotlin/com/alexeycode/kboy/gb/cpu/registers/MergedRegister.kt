@@ -1,5 +1,7 @@
 package com.alexeycode.kboy.gb.cpu.registers
 
+import com.alexeycode.kboy.gb.mem.toHexWord
+
 class MergedRegister : Register {
 
     private val left: Register
@@ -24,6 +26,6 @@ class MergedRegister : Register {
     }
 
     override fun toString(): String {
-        return get().toString(16).uppercase().padStart(4, padChar = '0')
+        return get().toHexWord()
     }
 }

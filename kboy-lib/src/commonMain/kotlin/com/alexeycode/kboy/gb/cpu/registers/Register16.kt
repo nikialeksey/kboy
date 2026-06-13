@@ -1,5 +1,7 @@
 package com.alexeycode.kboy.gb.cpu.registers
 
+import com.alexeycode.kboy.gb.mem.toHexWord
+
 class Register16 : Register {
     private var v: Int
 
@@ -22,6 +24,6 @@ class Register16 : Register {
     }
 
     override fun toString(): String {
-        return v.toString(16).uppercase().padStart(4, padChar = '0')
+        return v.toHexWord()
     }
 }

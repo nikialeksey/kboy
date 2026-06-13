@@ -1,11 +1,11 @@
 package com.alexeycode.kboy.gb.cartridge
 
-//import com.badlogic.gdx.graphics.Pixmap
-//import com.badlogic.gdx.graphics.Texture
+// import com.badlogic.gdx.graphics.Pixmap
+// import com.badlogic.gdx.graphics.Texture
 //
-//class GbLogo(
+// class GbLogo(
 //    private val data: IntArray
-//) : Logo {
+// ) : Logo {
 //
 //    private val pixmap: Pixmap by lazy {
 //        Pixmap(96, 16, Pixmap.Format.RGB888).apply {
@@ -47,4 +47,4 @@ package com.alexeycode.kboy.gb.cartridge
 //            image.drawPixel(x * 2 + 1, y * 2 + 1)
 //        }
 //    }
-//}
+// }

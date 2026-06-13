@@ -10,6 +10,7 @@ import com.alexeycode.kboy.gb.ppu.Palette
 import com.alexeycode.kboy.gb.ppu.Window
 import com.alexeycode.kboy.gb.serial.Serial
 
+@Suppress("MagicNumber") // it's okay to have magic numbers here
 class GbBus(
     private val origin: Memory,
     private val interrupts: Interrupts,
@@ -87,7 +88,7 @@ class GbBus(
         } else if (address >= 0x8000 && address <= 0x9FFF) {
             // vram
 //            if (!lcdStatus.isDrawing()) {
-                origin.write8(address, value)
+            origin.write8(address, value)
 //            }
         } else if (address >= 0xA000 && address <= 0xBFFF) {
             // ERAM

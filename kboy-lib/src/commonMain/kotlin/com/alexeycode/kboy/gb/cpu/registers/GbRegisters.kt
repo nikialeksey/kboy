@@ -156,45 +156,4 @@ class GbRegisters : Registers {
     override fun flag(): FlagRegister {
         return this.flag
     }
-
-    override fun byName(name: String): Register {
-        val n = name
-        return if (n.length == 1) {
-            if (n[0] == 'A') {
-                a
-            } else if (n[0] == 'F') {
-                f
-            } else if (n[0] == 'B') {
-                b
-            } else if (n[0] == 'C') {
-                c
-            } else if (n[0] == 'D') {
-                d
-            } else if (n[0] == 'E') {
-                e
-            } else if (n[0] == 'H') {
-                h
-            } else if (n[0] == 'L') {
-                l
-            } else {
-                throw IllegalArgumentException("Unknown register with name '$name'")
-            }
-        } else {
-            if (n[0] == 'A'/*"AF"*/) {
-                af
-            } else if (n[0] == 'B'/*"BC"*/) {
-                bc
-            } else if (n[0] == 'D'/*"DE"*/) {
-                de
-            } else if (n[0] == 'H'/*"HL"*/) {
-                hl
-            } else if (n[0] == 'S'/*"SP"*/) {
-                sp
-            } else if (n[0] == 'P'/*"PC"*/) {
-                pc
-            } else {
-                throw IllegalArgumentException("Unknown register with name '$name'")
-            }
-        }
-    }
 }

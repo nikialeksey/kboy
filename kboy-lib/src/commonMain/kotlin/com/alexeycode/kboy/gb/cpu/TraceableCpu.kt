@@ -2,6 +2,7 @@ package com.alexeycode.kboy.gb.cpu
 
 import com.alexeycode.kboy.gb.cpu.registers.Registers
 import com.alexeycode.kboy.gb.mem.Memory
+import com.alexeycode.kboy.gb.mem.toHexByte
 
 class TraceableCpu(
     private val origin: Cpu,
@@ -16,22 +17,22 @@ class TraceableCpu(
         val currentPc = registers.pc().get()
 
         val registerPart = "A:${registers.a()} " +
-                "F:${registers.f()} " +
-                "B:${registers.b()} " +
-                "C:${registers.c()} " +
-                "D:${registers.d()} " +
-                "E:${registers.e()} " +
-                "H:${registers.h()} " +
-                "L:${registers.l()} " +
-                "SP:${registers.sp()} " +
-                "PC:${registers.pc()} "
+            "F:${registers.f()} " +
+            "B:${registers.b()} " +
+            "C:${registers.c()} " +
+            "D:${registers.d()} " +
+            "E:${registers.e()} " +
+            "H:${registers.h()} " +
+            "L:${registers.l()} " +
+            "SP:${registers.sp()} " +
+            "PC:${registers.pc()} "
 
         val trace = registerPart +
-                "PCMEM:" +
-                "${memory.read8(currentPc).hex()}," +
-                "${memory.read8(currentPc + 1).hex()}," +
-                "${memory.read8(currentPc + 2).hex()}," +
-                "${memory.read8(currentPc + 3).hex()}"
+            "PCMEM:" +
+            "${memory.read8(currentPc).hex()}," +
+            "${memory.read8(currentPc + 1).hex()}," +
+            "${memory.read8(currentPc + 2).hex()}," +
+            "${memory.read8(currentPc + 3).hex()}"
 
         pushTrace(trace)
 
@@ -44,12 +45,12 @@ class TraceableCpu(
 
     private fun pushTrace(trace: String) {
         for (i in 0 until traceSize - 1) {
-            traces[i] = traces[i+1]
+            traces[i] = traces[i + 1]
         }
         traces[traceSize - 1] = trace
     }
 
     private fun Int.hex(): String {
-        return this.toString(16).uppercase().padStart(2, padChar = '0')
+        return this.toHexByte()
     }
 }

@@ -13,12 +13,12 @@ class CallsInstruction(
         return when (opcode) {
             // Calls
             0xCD -> {
-                call({ mem.readNext16(r) /* a16 */ })
+                call({ mem.readNext16(r) })
             }
-            0xC4 -> conditionCall({ !r.flag().z().isEnabled() }, { mem.readNext16(r) /* a16 */ })
-            0xCC -> conditionCall({ r.flag().z().isEnabled() }, { mem.readNext16(r) /* a16 */ })
-            0xD4 -> conditionCall({ !r.flag().c().isEnabled() }, { mem.readNext16(r) /* a16 */ })
-            0xDC -> conditionCall({ r.flag().c().isEnabled() }, { mem.readNext16(r) /* a16 */ })
+            0xC4 -> conditionCall({ !r.flag().z().isEnabled() }, { mem.readNext16(r) })
+            0xCC -> conditionCall({ r.flag().z().isEnabled() }, { mem.readNext16(r) })
+            0xD4 -> conditionCall({ !r.flag().c().isEnabled() }, { mem.readNext16(r) })
+            0xDC -> conditionCall({ r.flag().c().isEnabled() }, { mem.readNext16(r) })
 
             else -> {
                 0

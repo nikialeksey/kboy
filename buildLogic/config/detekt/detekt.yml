@@ -121,6 +121,9 @@ complexity:
       - 'run'
       - 'use'
       - 'with'
+    excludes: [
+      '**/gb/**'
+    ]
   LabeledExpression:
     active: false
     ignoredLabels: []
@@ -130,6 +133,9 @@ complexity:
   LongMethod:
     active: true
     threshold: 60
+    excludes: [
+      '**/gb/**'
+    ]
   LongParameterList:
     active: true
     functionThreshold: 6
@@ -137,6 +143,9 @@ complexity:
     ignoreDefaultParameters: false
     ignoreDataClasses: true
     ignoreAnnotatedParameter: []
+    excludes: [
+      '**/gb/**'
+    ]
   MethodOverloading:
     active: false
     threshold: 6
@@ -147,6 +156,9 @@ complexity:
   NestedBlockDepth:
     active: true
     threshold: 4
+    excludes: [
+      '**/gb/**',
+    ]
   NestedScopeFunctions:
     active: false
     threshold: 1
@@ -167,7 +179,18 @@ complexity:
     ignoreStringsRegex: '$^'
   TooManyFunctions:
     active: true
-    excludes: ['**/test/**', '**/androidTest/**', '**/commonTest/**', '**/jvmTest/**', '**/androidUnitTest/**', '**/androidInstrumentedTest/**', '**/jsTest/**', '**/iosTest/**']
+    excludes: [
+      '**/gb/**',
+
+      '**/test/**',
+      '**/androidTest/**',
+      '**/commonTest/**',
+      '**/jvmTest/**',
+      '**/androidUnitTest/**',
+      '**/androidInstrumentedTest/**',
+      '**/jsTest/**',
+      '**/iosTest/**'
+    ]
     thresholdInFiles: 11
     thresholdInClasses: 11
     thresholdInInterfaces: 11
@@ -623,7 +646,19 @@ style:
     maxJumpCount: 1
   MagicNumber:
     active: true
-    excludes: ['**/test/**', '**/androidTest/**', '**/commonTest/**', '**/jvmTest/**', '**/androidUnitTest/**', '**/androidInstrumentedTest/**', '**/jsTest/**', '**/iosTest/**', '**/*.kts']
+    excludes: [
+      '**/gb/**',
+
+      '**/test/**',
+      '**/androidTest/**',
+      '**/commonTest/**',
+      '**/jvmTest/**',
+      '**/androidUnitTest/**',
+      '**/androidInstrumentedTest/**',
+      '**/jsTest/**',
+      '**/iosTest/**',
+      '**/*.kts'
+    ]
     ignoreNumbers:
       - '-1'
       - '0'

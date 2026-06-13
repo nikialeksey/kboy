@@ -22,5 +22,4 @@ class GbDma(
     override fun transferFinished() {
         isInProgress = false
     }
-
 }

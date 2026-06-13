@@ -23,5 +23,4 @@ class GbHeader(
     override fun name(): String {
         return name
     }
-
 }

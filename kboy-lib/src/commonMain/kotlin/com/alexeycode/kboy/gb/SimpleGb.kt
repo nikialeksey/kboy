@@ -11,6 +11,7 @@ class SimpleGb(
     private val dma: DmaTransfer,
     private val ppu: Ppu
 ) : Gb {
+    @Suppress("UnusedPrivateProperty")
     override fun run(cpuCycles: Int): Int {
         var clockCyclesSpent = 0
         for (cycle in 0 until cpuCycles) {

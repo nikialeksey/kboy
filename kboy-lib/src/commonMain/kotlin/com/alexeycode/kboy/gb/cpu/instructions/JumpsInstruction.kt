@@ -13,19 +13,19 @@ class JumpsInstruction(
     override fun execute(opcode: Int): Int {
         return when (opcode) {
             // Jumps
-            0x18 -> jumpStep({ mem.readNextSigned8(r) /* e8 */ })
-            0x20 -> conditionalJumpStep({ !r.flag().z().isEnabled() }, { mem.readNextSigned8(r) /* e8 */ })
-            0x28 -> conditionalJumpStep({ r.flag().z().isEnabled() }, { mem.readNextSigned8(r) /* e8 */ })
-            0x30 -> conditionalJumpStep({ !r.flag().c().isEnabled() }, { mem.readNextSigned8(r) /* e8 */ })
-            0x38 -> conditionalJumpStep({ r.flag().c().isEnabled() }, { mem.readNextSigned8(r) /* e8 */ })
+            0x18 -> jumpStep({ mem.readNextSigned8(r) })
+            0x20 -> conditionalJumpStep({ !r.flag().z().isEnabled() }, { mem.readNextSigned8(r) })
+            0x28 -> conditionalJumpStep({ r.flag().z().isEnabled() }, { mem.readNextSigned8(r) })
+            0x30 -> conditionalJumpStep({ !r.flag().c().isEnabled() }, { mem.readNextSigned8(r) })
+            0x38 -> conditionalJumpStep({ r.flag().c().isEnabled() }, { mem.readNextSigned8(r) })
             0xC3 -> {
-                r.pc().set(mem.readNext16(r) /* a16 */)
+                r.pc().set(mem.readNext16(r))
                 16
             }
-            0xC2 -> conditionalJumpTo({ !r.flag().z().isEnabled() }, { mem.readNext16(r) /* a16 */ })
-            0xCA -> conditionalJumpTo({ r.flag().z().isEnabled() }, { mem.readNext16(r) /* a16 */ })
-            0xD2 -> conditionalJumpTo({ !r.flag().c().isEnabled() }, { mem.readNext16(r) /* a16 */ })
-            0xDA -> conditionalJumpTo({ r.flag().c().isEnabled() }, { mem.readNext16(r) /* a16 */ })
+            0xC2 -> conditionalJumpTo({ !r.flag().z().isEnabled() }, { mem.readNext16(r) })
+            0xCA -> conditionalJumpTo({ r.flag().z().isEnabled() }, { mem.readNext16(r) })
+            0xD2 -> conditionalJumpTo({ !r.flag().c().isEnabled() }, { mem.readNext16(r) })
+            0xDA -> conditionalJumpTo({ r.flag().c().isEnabled() }, { mem.readNext16(r) })
             0xE9 -> {
                 r.pc().set(r.hl().get())
                 4

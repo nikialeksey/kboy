@@ -299,5 +299,4 @@ class GbPpu(
     override fun screen(): SharedFlow<Screen> {
         return screen
     }
-
 }

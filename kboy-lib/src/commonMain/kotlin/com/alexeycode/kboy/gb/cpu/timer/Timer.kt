@@ -14,5 +14,4 @@ interface Timer {
 
     fun tac(): Int
     fun updateTac(tac: Int)
-
 }

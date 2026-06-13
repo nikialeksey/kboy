@@ -19,6 +19,7 @@ tasks.withType<KotlinJvmCompile>().configureEach {
 
 dependencies {
     compileOnly(libs.android.gradle.plugin)
+    compileOnly(libs.detekt.gradle.plugin)
 }
 
 gradlePlugin {
@@ -26,6 +27,10 @@ gradlePlugin {
         register("buildNumber") {
             id = "com.alexeycode.buildnumber"
             implementationClass = "BuildNumberPlugin"
+        }
+        register("staticAnalysis") {
+            id = "com.alexeycode.staticanalysis"
+            implementationClass = "StaticAnalysisPlugin"
         }
     }
 }

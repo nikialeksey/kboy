@@ -88,7 +88,7 @@ class GbTimer(
                     0b10 -> {
                         64
                     }
-                    else -> /*if (tacBits == 0b11)*/ {
+                    else -> { // if (tacBits == 0b11)
                         256
                     }
                 }

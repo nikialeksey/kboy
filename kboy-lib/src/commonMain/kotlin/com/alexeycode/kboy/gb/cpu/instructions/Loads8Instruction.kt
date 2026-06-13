@@ -75,13 +75,13 @@ class Loads8Instruction(
             0x6D -> load({ r.l().get() }, { r.l().set(it) }, 4)
             0x6E -> load({ mem.read8(r.hl().get()) }, { r.l().set(it) }, 8)
             0x6F -> load({ r.a().get() }, { r.l().set(it) }, 4)
-            0x70 -> load({ r.b().get() }, { mem.write8(r.hl().get(), it)}, 8)
-            0x71 -> load({ r.c().get() }, { mem.write8(r.hl().get(), it)}, 8)
-            0x72 -> load({ r.d().get() }, { mem.write8(r.hl().get(), it)}, 8)
-            0x73 -> load({ r.e().get() }, { mem.write8(r.hl().get(), it)}, 8)
-            0x74 -> load({ r.h().get() }, { mem.write8(r.hl().get(), it)}, 8)
-            0x75 -> load({ r.l().get() }, { mem.write8(r.hl().get(), it)}, 8)
-            0x77 -> load({ r.a().get() }, { mem.write8(r.hl().get(), it)}, 8)
+            0x70 -> load({ r.b().get() }, { mem.write8(r.hl().get(), it) }, 8)
+            0x71 -> load({ r.c().get() }, { mem.write8(r.hl().get(), it) }, 8)
+            0x72 -> load({ r.d().get() }, { mem.write8(r.hl().get(), it) }, 8)
+            0x73 -> load({ r.e().get() }, { mem.write8(r.hl().get(), it) }, 8)
+            0x74 -> load({ r.h().get() }, { mem.write8(r.hl().get(), it) }, 8)
+            0x75 -> load({ r.l().get() }, { mem.write8(r.hl().get(), it) }, 8)
+            0x77 -> load({ r.a().get() }, { mem.write8(r.hl().get(), it) }, 8)
             0x78 -> load({ r.b().get() }, { r.a().set(it) }, 4)
             0x79 -> load({ r.c().get() }, { r.a().set(it) }, 4)
             0x7A -> load({ r.d().get() }, { r.a().set(it) }, 4)
@@ -100,8 +100,14 @@ class Loads8Instruction(
             0xE2 -> load({ r.a().get() }, { mem.write8(0xFF00 + r.c().get(), it) }, 8)
             0xF2 -> load({ mem.read8(0xFF00 + r.c().get()) }, { r.a().set(it) }, 8)
 
-            0x22 -> load({ r.a().get() }, { mem.write8(r.hl().get(), it); r.hl().set(r.hl().get() + 1) }, 8)
-            0x32 -> load({ r.a().get() }, { mem.write8(r.hl().get(), it); r.hl().set(r.hl().get() - 1) }, 8)
+            0x22 -> load({ r.a().get() }, {
+                mem.write8(r.hl().get(), it)
+                r.hl().set(r.hl().get() + 1)
+            }, 8)
+            0x32 -> load({ r.a().get() }, {
+                mem.write8(r.hl().get(), it)
+                r.hl().set(r.hl().get() - 1)
+            }, 8)
             0x2A -> load(
                 {
                     val result = mem.read8(r.hl().get())

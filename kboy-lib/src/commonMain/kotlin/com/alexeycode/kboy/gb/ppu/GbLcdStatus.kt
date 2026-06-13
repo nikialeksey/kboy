@@ -31,6 +31,7 @@ class GbLcdStatus : LcdStatus {
         lyEqualsLyc = equals
     }
 
+    @Suppress("UnusedPrivateProperty")
     override fun stat(): Int {
         val mode = if (hBlankStarted) {
             0b00
@@ -38,7 +39,7 @@ class GbLcdStatus : LcdStatus {
             0b01
         } else if (oamScanStarted) {
             0b10
-        } else /* if (drawingStarted) */ {
+        } else { // if (drawingStarted)
             0b11
         }
         val lyLyc = if (lyEqualsLyc) {
@@ -46,7 +47,7 @@ class GbLcdStatus : LcdStatus {
         } else {
             0
         }
-        return 0b1000_0000 or stat or lyLyc// or mode
+        return 0b1000_0000 or stat or lyLyc // or mode
     }
 
     override fun updateStat(value: Int) {

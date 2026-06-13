@@ -18,5 +18,4 @@ interface Registers {
     fun sp(): Register
     fun pc(): Register
     fun flag(): FlagRegister
-    fun byName(name: String): Register
 }

@@ -1,11 +1,13 @@
 package com.alexeycode.kboy.gb.cpu.instructions.address
 
+import com.alexeycode.kboy.gb.mem.toHexWord
+
 class SimpleAddress(
     private val address: Int
 ) : Address {
 
     private val hex by lazy(mode = LazyThreadSafetyMode.NONE) {
-        address.toString(16).uppercase().padStart(4, padChar = '0')
+        address.toHexWord()
     }
 
     override fun asInt(): Int {
@@ -53,7 +55,7 @@ class SimpleAddress(
         } else if (address in (0xFF80..0xFFFE)) {
             "HRAM"
         } else {
-            throw IllegalArgumentException("Unknown address: $hex (decimal: $address)")
+            "Unknown address: $hex (decimal: $address)"
         }
         return "$prefix:$hex"
     }

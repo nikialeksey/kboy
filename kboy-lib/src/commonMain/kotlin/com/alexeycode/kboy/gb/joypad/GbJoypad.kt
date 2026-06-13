@@ -64,6 +64,4 @@ class GbJoypad(
     override fun start(): Button {
         return start
     }
-
-
 }

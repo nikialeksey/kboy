@@ -1,11 +1,12 @@
 import io.gitlab.arturbosch.detekt.Detekt
+import io.gitlab.arturbosch.detekt.extensions.DetektExtension
 import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
-    alias(libs.plugins.detekt)
     alias(libs.plugins.testResources)
+    id("com.alexeycode.staticanalysis")
 }
 
 kotlin {
@@ -55,17 +56,4 @@ kotlin {
             }
         }
     }
-}
-
-detekt {
-    autoCorrect = true
-    config.setFrom(file("${rootProject.projectDir}/buildLogic/config/detekt/detekt.yml"))
-}
-
-tasks.withType<Detekt>().configureEach {
-    exclude { it.file.path.contains("build/generated") }
-}
-
-dependencies {
-    detektPlugins(libs.detekt.formatting)
 }

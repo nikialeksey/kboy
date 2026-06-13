@@ -33,7 +33,7 @@ class Alu16Instruction(
 
             0xE8 -> {
                 val a = r.sp().get()
-                val n = mem.readNextSigned8(r) /* e8 */
+                val n = mem.readNextSigned8(r)
                 val result = (a + n).and(0xFFFF)
                 r.sp().set(result)
 
