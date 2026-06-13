@@ -1,4 +1,4 @@
-import com.alexeycode.kboy.build.libs
+import com.alexeycode.kboy.libs
 import io.gitlab.arturbosch.detekt.Detekt
 import io.gitlab.arturbosch.detekt.extensions.DetektExtension
 import org.gradle.api.Plugin
