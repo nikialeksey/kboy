@@ -28,6 +28,7 @@ import kotlin.test.assertEquals
  * Tests source: https://github.com/aappleby/gbmicrotest
  */
 @Ignore
+@Suppress("LargeClass")
 class GbCpuGbMicroTest {
 
     @Test

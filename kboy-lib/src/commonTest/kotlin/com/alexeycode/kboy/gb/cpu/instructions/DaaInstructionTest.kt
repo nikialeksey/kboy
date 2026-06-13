@@ -4,8 +4,8 @@ import com.alexeycode.kboy.gb.cpu.interrupts.GbInterrupts
 import com.alexeycode.kboy.gb.cpu.registers.GbRegisters
 import com.alexeycode.kboy.gb.cpu.timer.GbTimer
 import com.alexeycode.kboy.gb.joypad.GbJoypad
-import com.alexeycode.kboy.gb.mem.GbDma
 import com.alexeycode.kboy.gb.mem.GbBus
+import com.alexeycode.kboy.gb.mem.GbDma
 import com.alexeycode.kboy.gb.mem.SimpleMemory
 import com.alexeycode.kboy.gb.ppu.GbBackground
 import com.alexeycode.kboy.gb.ppu.GbLcdControl

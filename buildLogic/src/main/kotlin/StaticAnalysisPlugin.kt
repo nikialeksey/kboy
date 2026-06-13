@@ -16,7 +16,8 @@ class StaticAnalysisPlugin : Plugin<Project> {
                 target.file("${target.rootProject.projectDir}/buildLogic/config/detekt/detekt.yml")
             )
             source = target.files(
-                "./src/commonMain/"
+                "./src/commonMain/",
+                "./src/commonTest/"
             )
         }
 

@@ -31,7 +31,7 @@ class GbCpuTest {
         val interrupts = GbInterrupts()
         val cpu = GbCpu(r, mem, interrupts)
 
-        for (testCaseNumber in 0x00 .. 0xff) {
+        for (testCaseNumber in 0x00..0xff) {
             val caseFileName = "${testCaseNumber.toHexString().takeLast(2)}.json"
             val caseBytes = try {
                 Resource("files/cpu-tests/$caseFileName").readBytes()

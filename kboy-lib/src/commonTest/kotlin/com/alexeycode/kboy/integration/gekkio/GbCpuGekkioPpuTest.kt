@@ -5,7 +5,6 @@ import com.alexeycode.kboy.gb.cartridge.GbCartridgeData
 import com.alexeycode.kboy.gb.serial.BufferSerial
 import com.alexeycode.kboy.integration.TestsGb
 import com.goncalossilva.resources.Resource
-import kotlinx.coroutines.test.runTest
 import kotlin.test.Ignore
 import kotlin.test.Test
 import kotlin.test.assertTrue
@@ -20,55 +19,66 @@ private val FAILURE_BYTES = byteArrayOf(42, 42, 42, 42, 42, 42)
 class GbCpuGekkioPpuTest {
 
     @Test
-    fun `hblank_ly_scx_timing-GS`() = runTest {
+    fun `hblank_ly_scx_timing-GS`() {
         testGekkioCpuInstrsIndividual("ppu/hblank_ly_scx_timing-GS.gb")
     }
+
     @Test
-    fun `intr_1_2_timing-GS`() = runTest {
+    fun `intr_1_2_timing-GS`() {
         testGekkioCpuInstrsIndividual("ppu/intr_1_2_timing-GS.gb")
     }
+
     @Test
-    fun `intr_2_0_timing`() = runTest {
+    fun `intr_2_0_timing`() {
         testGekkioCpuInstrsIndividual("ppu/intr_2_0_timing.gb")
     }
+
     @Test
-    fun `intr_2_mode0_timing`() = runTest {
+    fun `intr_2_mode0_timing`() {
         testGekkioCpuInstrsIndividual("ppu/intr_2_mode0_timing.gb")
     }
+
     @Test
-    fun `intr_2_mode0_timing_sprites`() = runTest {
+    fun `intr_2_mode0_timing_sprites`() {
         testGekkioCpuInstrsIndividual("ppu/intr_2_mode0_timing_sprites.gb")
     }
+
     @Test
-    fun `intr_2_mode3_timing`() = runTest {
+    fun `intr_2_mode3_timing`() {
         testGekkioCpuInstrsIndividual("ppu/intr_2_mode3_timing.gb")
     }
+
     @Test
-    fun `intr_2_oam_ok_timing`() = runTest {
+    fun `intr_2_oam_ok_timing`() {
         testGekkioCpuInstrsIndividual("ppu/intr_2_oam_ok_timing.gb")
     }
+
     @Test
-    fun `lcdon_timing-GS`() = runTest {
+    fun `lcdon_timing-GS`() {
         testGekkioCpuInstrsIndividual("ppu/lcdon_timing-GS.gb")
     }
+
     @Test
-    fun `lcdon_write_timing-GS`() = runTest {
+    fun `lcdon_write_timing-GS`() {
         testGekkioCpuInstrsIndividual("ppu/lcdon_write_timing-GS.gb")
     }
+
     @Test
-    fun `stat_irq_blocking`() = runTest {
+    fun `stat_irq_blocking`() {
         testGekkioCpuInstrsIndividual("ppu/stat_irq_blocking.gb")
     }
+
     @Test
-    fun `stat_lyc_onoff`() = runTest {
+    fun `stat_lyc_onoff`() {
         testGekkioCpuInstrsIndividual("ppu/stat_lyc_onoff.gb")
     }
+
     @Test
-    fun `vblank_stat_intr-GS`() = runTest {
+    fun `vblank_stat_intr-GS`() {
         testGekkioCpuInstrsIndividual("ppu/vblank_stat_intr-GS.gb")
     }
 
-    private suspend fun testGekkioCpuInstrsIndividual(gbFileName: String) {
+    private fun testGekkioCpuInstrsIndividual(gbFileName: String) {
         val cartridge = GbCartridge(
             GbCartridgeData(
                 Resource("files/test-roms/gekkio/acceptance/$gbFileName").readBytes()
@@ -76,7 +86,8 @@ class GbCpuGekkioPpuTest {
         )
         val serial = BufferSerial()
         val gb = TestsGb(cartridge, serial)
-        for (i in 0 .. 100) {
+        @Suppress("UnusedPrivateProperty")
+        for (iteration in 0..100) {
             gb.run(100_000)
             if (isFinish(serial)) {
                 break

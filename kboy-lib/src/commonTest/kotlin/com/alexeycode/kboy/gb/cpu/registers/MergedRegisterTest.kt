@@ -1,7 +1,5 @@
-package pro.devdesign.gameboy.cpu.registers
+package com.alexeycode.kboy.gb.cpu.registers
 
-import com.alexeycode.kboy.gb.cpu.registers.MergedRegister
-import com.alexeycode.kboy.gb.cpu.registers.Register8
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
