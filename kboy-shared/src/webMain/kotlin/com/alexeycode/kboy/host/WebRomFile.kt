@@ -10,6 +10,7 @@ import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
 import kotlin.coroutines.suspendCoroutine
 
+@Suppress("TooGenericExceptionCaught")
 class WebRomFile(
     private val file: File
 ) : RomFile {
@@ -40,5 +41,4 @@ class WebRomFile(
             reader.readAsArrayBuffer(file)
         }
     }
-
 }

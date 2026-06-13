@@ -39,12 +39,8 @@ import com.alexeycode.kboy.screens.main.components.StartSelect
 import com.alexeycode.kboy.ui.gl.RenderScreen
 import kotlinx.coroutines.flow.Flow
 
-data class MainState(
-    val touchControllerEnabled: Boolean = false,
-    val isGameRunning: Boolean = false
-)
-
 @Composable
+@Suppress("LongParameterList") // waiting for DI
 fun Main(
     host: Host,
     roms: Roms,
@@ -116,8 +112,8 @@ fun MainScreen(
     }
 }
 
-
 @Composable
+@Suppress("LongMethod") // screen with three columns - dpad, screen+start/select, a/b
 fun GbScreenWithController(
     modifier: Modifier,
     isGameRunning: Boolean,
@@ -162,7 +158,7 @@ fun GbScreenWithController(
             ) {
                 GbScreen(
                     modifier = Modifier
-                        .aspectRatio(SCREEN_WIDTH.toFloat()/SCREEN_HEIGHT.toFloat()),
+                        .aspectRatio(SCREEN_WIDTH.toFloat() / SCREEN_HEIGHT.toFloat()),
                     isGameRunning = isGameRunning,
                     screen = screen,
                     onSelectRomClicked = onSelectRomClicked

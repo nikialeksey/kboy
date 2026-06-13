@@ -1,5 +1,7 @@
 package com.alexeycode.kboy.gb.ppu
 
+const val BYTES_IN_PX = 4
+
 interface Screen {
     fun width(): Int
     fun height(): Int

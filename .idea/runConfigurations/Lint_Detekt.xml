@@ -12,15 +12,7 @@
         <list>
           <option value=":kboy-lib:staticAnalysis" />
           <option value=":kboy-benchmark:staticAnalysis" />
-
-          <option value=":kboy-shared:detekt" />
-          <option value=":kboy-shared:detektAndroidMain" />
-          <option value=":kboy-shared:detektJvmMain" />
-          <option value=":kboy-shared:detektJvmTest" />
-          <option value=":kboy-shared:detektIosArm64Main" />
-          <option value=":kboy-shared:detektIosArm64Test" />
-          <option value=":kboy-shared:detektWasmJsMain" />
-          <option value=":kboy-shared:detektWasmJsTest" />
+          <option value=":kboy-shared:staticAnalysis" />
         </list>
       </option>
       <option name="vmOptions" />

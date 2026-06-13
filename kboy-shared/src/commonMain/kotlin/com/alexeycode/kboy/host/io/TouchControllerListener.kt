@@ -1,5 +1,6 @@
 package com.alexeycode.kboy.host.io
 
+@Suppress("TooManyFunctions")
 interface TouchControllerListener {
     fun rightPressed()
     fun rightReleased()
@@ -19,6 +20,7 @@ interface TouchControllerListener {
     fun startPressed()
     fun startReleased()
 
+    @Suppress("TooManyFunctions")
     class Dummy : TouchControllerListener {
         override fun rightPressed() = Unit
         override fun rightReleased() = Unit

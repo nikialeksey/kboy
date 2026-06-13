@@ -69,5 +69,9 @@ class MainViewModel(
     fun onSelectRomClicked() {
         roms.selectRom()
     }
-
 }
+
+data class MainState(
+    val touchControllerEnabled: Boolean = false,
+    val isGameRunning: Boolean = false
+)

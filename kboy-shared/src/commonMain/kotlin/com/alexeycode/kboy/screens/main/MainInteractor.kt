@@ -35,7 +35,12 @@ class MainInteractor(
     private val time: Time,
 ) {
 
-    suspend fun prepareGb(scope: CoroutineScope, file: RomFile, controller: Controller): Flow<Screen> {
+    @Suppress("LongMethod") // simple preparation logic. Might be better after DI
+    suspend fun prepareGb(
+        scope: CoroutineScope,
+        file: RomFile,
+        controller: Controller
+    ): Flow<Screen> {
         val interrupts = GbInterrupts()
         val timer = GbTimer(interrupts)
         val dma = GbDma()
@@ -70,14 +75,46 @@ class MainInteractor(
         val gb = SimpleGb(timer, cpu, dmaTransfer, ppu)
 
         scope.launch {
-            launch { controller.a().collect { pressed -> if (pressed) joypad.a().press() else joypad.a().release() } }
-            launch { controller.b().collect { pressed -> if (pressed) joypad.b().press() else joypad.b().release() } }
-            launch { controller.select().collect { pressed -> if (pressed) joypad.select().press() else joypad.select().release() } }
-            launch { controller.start().collect { pressed -> if (pressed) joypad.start().press() else joypad.start().release() } }
-            launch { controller.right().collect { pressed -> if (pressed) joypad.right().press() else joypad.right().release() } }
-            launch { controller.left().collect { pressed -> if (pressed) joypad.left().press() else joypad.left().release() } }
-            launch { controller.up().collect { pressed -> if (pressed) joypad.up().press() else joypad.up().release() } }
-            launch { controller.down().collect { pressed -> if (pressed) joypad.down().press() else joypad.down().release() } }
+            launch {
+                controller.a().collect { pressed ->
+                    if (pressed) joypad.a().press() else joypad.a().release()
+                }
+            }
+            launch {
+                controller.b().collect { pressed ->
+                    if (pressed) joypad.b().press() else joypad.b().release()
+                }
+            }
+            launch {
+                controller.select().collect { pressed ->
+                    if (pressed) joypad.select().press() else joypad.select().release()
+                }
+            }
+            launch {
+                controller.start().collect { pressed ->
+                    if (pressed) joypad.start().press() else joypad.start().release()
+                }
+            }
+            launch {
+                controller.right().collect { pressed ->
+                    if (pressed) joypad.right().press() else joypad.right().release()
+                }
+            }
+            launch {
+                controller.left().collect { pressed ->
+                    if (pressed) joypad.left().press() else joypad.left().release()
+                }
+            }
+            launch {
+                controller.up().collect { pressed ->
+                    if (pressed) joypad.up().press() else joypad.up().release()
+                }
+            }
+            launch {
+                controller.down().collect { pressed ->
+                    if (pressed) joypad.down().press() else joypad.down().release()
+                }
+            }
             withContext(Dispatchers.Default) {
                 var clockCyclesSinceLastFrame = 0
                 var timeSinceLastFrame = time.currentTimeMs()

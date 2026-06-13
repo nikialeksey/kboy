@@ -12,7 +12,6 @@ import platform.UIKit.UIWindowScene
 import platform.UniformTypeIdentifiers.UTTypeItem
 import platform.darwin.NSObject
 
-
 @Composable
 fun FileDialog(
     onFilePicked: (NSURL) -> Unit,
@@ -57,4 +56,3 @@ private fun UIApplication.topMostViewController(): UIViewController? {
 
     return topController
 }
-

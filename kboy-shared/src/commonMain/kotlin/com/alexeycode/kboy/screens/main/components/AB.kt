@@ -19,7 +19,6 @@ fun AB(
     onBPressed: () -> Unit,
     onBReleased: () -> Unit,
 ) {
-
     val aInteractionSource = remember { MutableInteractionSource() }
     val isAPressed by aInteractionSource.collectIsPressedAsState()
     if (isAPressed) { onAPressed() } else { onAReleased() }

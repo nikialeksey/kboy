@@ -22,6 +22,7 @@ class StaticAnalysisPlugin : Plugin<Project> {
                 "./src/iosMain",
                 "./src/jvmMain",
                 "./src/webMain",
+                "./src/nonAndroid",
             )
         }
 

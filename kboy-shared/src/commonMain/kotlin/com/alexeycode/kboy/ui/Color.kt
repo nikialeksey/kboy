@@ -1,3 +1,5 @@
+@file:Suppress("MagicNumber") // colors
+
 package com.alexeycode.kboy.ui
 
 import androidx.compose.ui.graphics.Color

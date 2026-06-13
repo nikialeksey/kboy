@@ -20,6 +20,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 
 @Composable
+@Suppress("LongParameterList", "LongMethod") // just component with many buttons
 fun DPad(
     buttonSize: Dp = 40.dp,
     onRightPressed: () -> Unit,

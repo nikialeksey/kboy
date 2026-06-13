@@ -3,13 +3,10 @@ package com.alexeycode.kboy.host
 interface Time {
     fun currentTimeMs(): Long
 
-    class ProgressiveTime : Time {
-
-        private var timeMs = 0L
+    class Dummy : Time {
 
         override fun currentTimeMs(): Long {
-            timeMs += 100
-            return timeMs
+            return 0
         }
     }
 }

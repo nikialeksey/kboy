@@ -11,7 +11,7 @@ import com.alexeycode.kboy.host.IosTime
 import com.alexeycode.kboy.host.SimpleRoms
 import com.alexeycode.kboy.ui.FileDialog
 
-fun MainViewController() = ComposeUIViewController {
+fun mainViewController() = ComposeUIViewController {
     val time = remember { IosTime() }
     val roms = remember { SimpleRoms() }
     var isSelectRom by remember { mutableStateOf(false) }

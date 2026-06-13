@@ -648,6 +648,7 @@ style:
     active: true
     excludes: [
       '**/gb/**',
+      '**/screens/**',
 
       '**/test/**',
       '**/androidTest/**',

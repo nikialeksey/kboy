@@ -4,6 +4,7 @@ import com.alexeycode.kboy.host.Vibrator
 import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.MutableSharedFlow
 
+@Suppress("TooManyFunctions")
 class TouchController(
     private val vibrator: Vibrator
 ) : Controller, TouchControllerListener {
@@ -98,6 +99,4 @@ class TouchController(
     override fun startReleased() {
         buttonStart.tryEmit(false)
     }
-
-
 }

@@ -11,6 +11,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.drawscope.drawIntoCanvas
 import androidx.compose.ui.graphics.nativeCanvas
+import com.alexeycode.kboy.gb.ppu.BYTES_IN_PX
 import com.alexeycode.kboy.gb.ppu.Screen
 import org.jetbrains.skia.Bitmap
 import org.jetbrains.skia.ColorAlphaType
@@ -45,12 +46,13 @@ actual fun RenderScreen(image: Screen) {
         bitmap.installPixels(
             bitmap.imageInfo,
             image.pixels(),
-            image.width() * 4
+            image.width() * BYTES_IN_PX
         )
     }
 
     Canvas(Modifier.fillMaxSize()) {
         drawIntoCanvas {
+            @Suppress("UnusedPrivateProperty") // made for purpose, to trigger composition
             val workaround = localImage.width()
             it.nativeCanvas.drawImageRect(
                 Image.makeFromBitmap(bitmap),

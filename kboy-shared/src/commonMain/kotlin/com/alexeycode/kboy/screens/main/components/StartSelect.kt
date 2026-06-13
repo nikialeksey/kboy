@@ -37,13 +37,13 @@ fun StartSelect(
     ) {
         OutlinedButton(
             interactionSource = selectInteractionSource,
-            onClick = {  },
+            onClick = { },
         ) {
             Text("Select")
         }
         OutlinedButton(
             interactionSource = startInteractionSource,
-            onClick = {  },
+            onClick = { },
         ) {
             Text("Start")
         }

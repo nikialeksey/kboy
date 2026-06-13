@@ -14,11 +14,12 @@ import com.alexeycode.kboy.ui.DarkColors
 
 @Composable
 @Preview
+@Suppress("LongParameterList") // waiting for DI
 fun App(
     host: Host = Host.Dummy(),
     roms: Roms = Roms.Dummy(),
     vibrator: Vibrator = Vibrator.Dummy(),
-    time: Time = Time.ProgressiveTime(),
+    time: Time = Time.Dummy(),
     extController: Controller = Controller.Dummy(),
     colorScheme: ColorScheme = DarkColors
 ) {
