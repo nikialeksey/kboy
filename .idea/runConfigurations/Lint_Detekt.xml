@@ -11,6 +11,7 @@
       <option name="taskNames">
         <list>
           <option value=":kboy-lib:staticAnalysis" />
+          <option value=":kboy-benchmark:staticAnalysis" />
 
           <option value=":kboy-shared:detekt" />
           <option value=":kboy-shared:detektAndroidMain" />

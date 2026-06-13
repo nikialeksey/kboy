@@ -1,11 +1,10 @@
-import io.gitlab.arturbosch.detekt.Detekt
 import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
-    alias(libs.plugins.detekt)
     alias(libs.plugins.benchmark)
+    id("com.alexeycode.staticanalysis")
 }
 
 kotlin {
@@ -69,18 +68,4 @@ afterEvaluate {
     tasks.named("wasmJsBenchmarkGenerate") {
         dependsOn("copyResourcesForWasmJsBenchmark")
     }
-}
-
-
-detekt {
-    autoCorrect = true
-    config.setFrom(file("${rootProject.projectDir}/buildLogic/config/detekt/detekt.yml"))
-}
-
-tasks.withType<Detekt>().configureEach {
-    exclude { it.file.path.contains("build/generated") }
-}
-
-dependencies {
-    detektPlugins(libs.detekt.formatting)
 }

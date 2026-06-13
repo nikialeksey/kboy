@@ -17,7 +17,11 @@ class StaticAnalysisPlugin : Plugin<Project> {
             )
             source = target.files(
                 "./src/commonMain/",
-                "./src/commonTest/"
+                "./src/commonTest/",
+
+                "./src/iosMain",
+                "./src/jvmMain",
+                "./src/webMain",
             )
         }
 

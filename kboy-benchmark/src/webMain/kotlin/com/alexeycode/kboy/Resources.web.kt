@@ -3,6 +3,7 @@ package com.alexeycode.kboy
 @OptIn(ExperimentalWasmJsInterop::class)
 @JsModule("node:fs")
 external object Fs {
+    @Suppress("UnusedParameter")
     fun readFileSync(path: String): JsBuffer
 }
 

@@ -24,6 +24,8 @@ import kotlinx.benchmark.Scope
 import kotlinx.benchmark.Setup
 import kotlinx.benchmark.State
 
+private const val ITER_COUNT = 100_000
+
 @State(Scope.Benchmark)
 open class CpuBenchmark {
 
@@ -82,12 +84,11 @@ open class CpuBenchmark {
     @Benchmark
     fun benchmark() {
         while (true) {
-            gb.run(100_000)
+            gb.run(ITER_COUNT)
             val outputMessage = serial.asByteArray().decodeToString()
             if (outputMessage.contains("Passed") || outputMessage.contains("Failed")) {
                 break
             }
         }
     }
-
 }

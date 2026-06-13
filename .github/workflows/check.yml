@@ -15,10 +15,10 @@ jobs:
       - name: 'Setup Prerequisites'
         uses: ./.github/actions/setup-prerequisites
 
-      - name: 'Run detekt'
+      - name: 'Run static analysis'
         shell: bash
         run: |
-          ./gradlew --no-daemon :kboy-lib:staticAnalysis
+          ./gradlew --no-daemon :kboy-lib:staticAnalysis :kboy-benchmark:staticAnalysis
 
       - name: 'Run tests'
         shell: bash
