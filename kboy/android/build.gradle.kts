@@ -8,6 +8,7 @@ plugins {
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
     id("com.alexeycode.kotlinconfiguration")
+    id("com.alexeycode.androidconfiguration")
     id("com.alexeycode.staticanalysis")
 }
 
@@ -25,7 +26,6 @@ try {
 
 android {
     namespace = "com.alexeycode.kboy"
-    compileSdk = libs.versions.android.compileSdk.get().toInt()
 
     signingConfigs {
         create("appDebug") {
@@ -44,8 +44,6 @@ android {
 
     defaultConfig {
         applicationId = "com.alexeycode.kboy"
-        minSdk = libs.versions.android.minSdk.get().toInt()
-        targetSdk = libs.versions.android.targetSdk.get().toInt()
         versionName = "0.0.3"
     }
     packaging {

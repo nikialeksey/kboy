@@ -10,16 +10,9 @@ plugins {
 kotlin {
     applyDefaultHierarchyTemplate()
 
-    listOf(
-        iosArm64(),
-        iosSimulatorArm64()
-    ).forEach { iosTarget ->
-        iosTarget.binaries.framework {
-            baseName = "KBoyLib"
-            isStatic = true
-        }
-    }
-    
+    iosArm64()
+    iosSimulatorArm64()
+
     jvm {
         compilerOptions {
             freeCompilerArgs.addAll(

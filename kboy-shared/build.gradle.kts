@@ -7,6 +7,7 @@ plugins {
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
     id("com.alexeycode.kotlinconfiguration")
+    id("com.alexeycode.androidconfiguration")
     id("com.alexeycode.staticanalysis")
 }
 
@@ -14,12 +15,6 @@ kotlin {
     applyDefaultHierarchyTemplate()
     android {
         namespace = "com.alexeycode.kboy.shared"
-        minSdk {
-            version = release(libs.versions.android.minSdk.get().toInt())
-        }
-        compileSdk {
-            version = release(libs.versions.android.compileSdk.get().toInt())
-        }
     }
     
     listOf(

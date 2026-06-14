@@ -40,5 +40,9 @@ gradlePlugin {
             id = "com.alexeycode.kotlinconfiguration"
             implementationClass = "KotlinConfigurationPlugin"
         }
+        register("androidConfiguration") {
+            id = "com.alexeycode.androidconfiguration"
+            implementationClass = "AndroidConfigurationPlugin"
+        }
     }
 }
