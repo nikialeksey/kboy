@@ -1,9 +1,9 @@
 import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
-import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.benchmark)
+    id("com.alexeycode.kotlinconfiguration")
     id("com.alexeycode.staticanalysis")
 }
 
@@ -13,18 +13,7 @@ kotlin {
     iosArm64()
     iosSimulatorArm64()
 
-    jvm {
-        compilerOptions {
-            freeCompilerArgs.addAll(
-                listOf(
-                    "-Xno-param-assertions",
-                    "-Xno-receiver-assertions",
-                    "-Xno-call-assertions"
-                )
-            )
-            jvmTarget = JvmTarget.JVM_17
-        }
-    }
+    jvm()
     
     @OptIn(ExperimentalWasmDsl::class)
     wasmJs {

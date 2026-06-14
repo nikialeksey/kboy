@@ -1,9 +1,9 @@
 import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
-import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.testResources)
+    id("com.alexeycode.kotlinconfiguration")
     id("com.alexeycode.staticanalysis")
 }
 
@@ -29,7 +29,6 @@ kotlin {
                     "-Xno-call-assertions"
                 )
             )
-            jvmTarget = JvmTarget.JVM_17
         }
     }
     

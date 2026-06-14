@@ -1,6 +1,4 @@
-import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
-import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
@@ -8,24 +6,13 @@ plugins {
     alias(libs.plugins.androidMultiplatformLibrary)
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
+    id("com.alexeycode.kotlinconfiguration")
     id("com.alexeycode.staticanalysis")
 }
 
 kotlin {
     applyDefaultHierarchyTemplate()
     android {
-        @OptIn(ExperimentalKotlinGradlePluginApi::class)
-        compilerOptions {
-            jvmTarget.set(JvmTarget.JVM_17)
-
-            freeCompilerArgs.addAll(
-                listOf(
-                    "-Xno-param-assertions",
-                    "-Xno-receiver-assertions",
-                    "-Xno-call-assertions"
-                )
-            )
-        }
         namespace = "com.alexeycode.kboy.shared"
         minSdk {
             version = release(libs.versions.android.minSdk.get().toInt())
@@ -45,18 +32,7 @@ kotlin {
         }
     }
     
-    jvm {
-        compilerOptions {
-            freeCompilerArgs.addAll(
-                listOf(
-                    "-Xno-param-assertions",
-                    "-Xno-receiver-assertions",
-                    "-Xno-call-assertions"
-                )
-            )
-            jvmTarget = JvmTarget.JVM_17
-        }
-    }
+    jvm()
     
     @OptIn(ExperimentalWasmDsl::class)
     wasmJs {

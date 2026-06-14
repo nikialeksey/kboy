@@ -1,29 +1,18 @@
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat
-import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.kotlinSerialization)
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
+    id("com.alexeycode.kotlinconfiguration")
     id("com.alexeycode.staticanalysis")
 }
 
 kotlin {
     applyDefaultHierarchyTemplate()
 
-    jvm {
-        compilerOptions {
-            freeCompilerArgs.addAll(
-                listOf(
-                    "-Xno-param-assertions",
-                    "-Xno-receiver-assertions",
-                    "-Xno-call-assertions"
-                )
-            )
-            jvmTarget = JvmTarget.JVM_17
-        }
-    }
+    jvm()
     
     sourceSets {
         jvmMain {

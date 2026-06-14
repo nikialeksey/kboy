@@ -7,6 +7,7 @@ plugins {
     id("com.alexeycode.buildnumber")
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
+    id("com.alexeycode.kotlinconfiguration")
     id("com.alexeycode.staticanalysis")
 }
 
@@ -58,15 +59,12 @@ android {
         }
         getByName("release") {
             isMinifyEnabled = true
+            isShrinkResources = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt")
             )
             signingConfig = signingConfigs["appRelease"]
         }
-    }
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
     }
 }
 
