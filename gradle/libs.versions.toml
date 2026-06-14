@@ -1,6 +1,6 @@
 [versions]
 ansi-color = "5.5.1"
-agp = "9.1.1"
+agp = "9.2.1"
 android-compileSdk = "36"
 android-minSdk = "34"
 android-targetSdk = "36"
