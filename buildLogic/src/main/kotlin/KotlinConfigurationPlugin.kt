@@ -9,8 +9,8 @@ import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
 import org.jetbrains.kotlin.gradle.dsl.KotlinVersion
 import org.jetbrains.kotlin.gradle.targets.jvm.KotlinJvmTarget
 
-private val JVM_TARGET = JvmTarget.JVM_25
-private val JAVA_VERSION = JavaVersion.VERSION_25
+private val JVM_TARGET = JvmTarget.JVM_21
+private val JAVA_VERSION = JavaVersion.VERSION_21
 private val KOTLIN_VERSION = KotlinVersion.KOTLIN_2_4
 
 class KotlinConfigurationPlugin : Plugin<Project> {
