@@ -29,7 +29,7 @@ private const val ITER_COUNT = 100_000
 @State(Scope.Benchmark)
 open class CpuBenchmark {
 
-    private val serial = BufferSerial()
+    private lateinit var serial: BufferSerial
     private lateinit var gb: Gb
 
     @Setup
@@ -39,6 +39,7 @@ open class CpuBenchmark {
 
         val memory = cartridge.memory()
         val interrupts = GbInterrupts()
+        serial = BufferSerial(interrupts)
         val timer = GbTimer(interrupts)
         val dma = GbDma()
         val joypad = GbJoypad(interrupts)
@@ -77,7 +78,8 @@ open class CpuBenchmark {
                 palette,
                 background,
                 window
-            )
+            ),
+            serial = serial,
         )
     }
 

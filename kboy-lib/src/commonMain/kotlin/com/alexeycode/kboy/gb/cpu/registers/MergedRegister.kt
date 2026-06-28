@@ -12,10 +12,6 @@ class MergedRegister : Register {
         this.right = right
     }
 
-    override fun bytes(): Int {
-        return left.bytes() + right.bytes()
-    }
-
     override fun set(v: Int) {
         left.set(v.and(0xFFFF).shr(8))
         right.set(v.and(0xFF))

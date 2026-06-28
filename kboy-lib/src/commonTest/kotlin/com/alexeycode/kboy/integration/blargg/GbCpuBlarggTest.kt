@@ -2,7 +2,6 @@ package com.alexeycode.kboy.integration.blargg
 
 import com.alexeycode.kboy.gb.cartridge.GbCartridge
 import com.alexeycode.kboy.gb.cartridge.GbCartridgeData
-import com.alexeycode.kboy.gb.serial.BufferSerial
 import com.alexeycode.kboy.integration.TestsGb
 import com.goncalossilva.resources.Resource
 import kotlinx.coroutines.test.runTest
@@ -93,23 +92,22 @@ class GbCpuBlarggTest {
         testBlarggCpuInstrsIndividual("mem-timing/03-modify_timing.gb")
     }
 
-    private suspend fun testBlarggCpuInstrsIndividual(gbFileName: String) {
+    private fun testBlarggCpuInstrsIndividual(gbFileName: String) {
         val cartridge = GbCartridge(
             GbCartridgeData(
                 Resource("files/test-roms/blargg/$gbFileName").readBytes()
             )
         )
-        val serial = BufferSerial()
-        val gb = TestsGb(cartridge, serial)
+        val gb = TestsGb(cartridge)
         while (true) {
             gb.run(100_000)
-            val outputMessage = serial.asByteArray().decodeToString()
+            val outputMessage = gb.serialData().decodeToString()
             if (outputMessage.contains("Passed") || outputMessage.contains("Failed")) {
                 break
             }
         }
 
-        val outputMessage = serial.asByteArray().decodeToString()
+        val outputMessage = gb.serialData().decodeToString()
         assertContains(
             outputMessage,
             "Passed",

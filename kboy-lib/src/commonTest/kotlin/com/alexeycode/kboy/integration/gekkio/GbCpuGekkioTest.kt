@@ -2,7 +2,6 @@ package com.alexeycode.kboy.integration.gekkio
 
 import com.alexeycode.kboy.gb.cartridge.GbCartridge
 import com.alexeycode.kboy.gb.cartridge.GbCartridgeData
-import com.alexeycode.kboy.gb.serial.BufferSerial
 import com.alexeycode.kboy.integration.TestsGb
 import com.goncalossilva.resources.Resource
 import kotlinx.coroutines.test.runTest
@@ -125,20 +124,19 @@ class GbCpuGekkioTest {
                 Resource("files/test-roms/gekkio/acceptance/$gbFileName").readBytes()
             )
         )
-        val serial = BufferSerial()
-        val gb = TestsGb(cartridge, serial)
+        val gb = TestsGb(cartridge)
         while (true) {
             gb.run(100_000)
-            if (isFinish(serial)) {
+            if (isFinish(gb)) {
                 break
             }
         }
 
-        assertTrue(isSuccess(serial.asByteArray()))
+        assertTrue(isSuccess(gb.serialData()))
     }
 
-    private fun isFinish(serial: BufferSerial): Boolean {
-        val serialBytes = serial.asByteArray()
+    private fun isFinish(gb: TestsGb): Boolean {
+        val serialBytes = gb.serialData()
         val success = isSuccess(serialBytes)
         val fail = isFailure(serialBytes)
         return success || fail

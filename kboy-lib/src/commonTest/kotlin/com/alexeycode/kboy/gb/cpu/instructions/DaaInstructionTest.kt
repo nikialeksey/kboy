@@ -172,7 +172,7 @@ class DaaInstructionTest {
         val interrupts = GbInterrupts()
         val timer = GbTimer(interrupts)
         val dma = GbDma()
-        val serial = BufferSerial()
+        val serial = BufferSerial(interrupts)
         val joypad = GbJoypad(interrupts)
         val lcdStatus = GbLcdStatus()
         val lcdControl = GbLcdControl()

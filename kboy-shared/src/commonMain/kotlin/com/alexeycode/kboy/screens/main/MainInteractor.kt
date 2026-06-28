@@ -44,7 +44,7 @@ class MainInteractor(
         val interrupts = GbInterrupts()
         val timer = GbTimer(interrupts)
         val dma = GbDma()
-        val serial = BufferSerial()
+        val serial = BufferSerial(interrupts)
         val joypad = GbJoypad(interrupts)
         val lcdStatus = GbLcdStatus()
         val lcdControl = GbLcdControl()
@@ -72,7 +72,7 @@ class MainInteractor(
         val registers = GbRegisters()
         val cpu = GbCpu(registers, bus, interrupts)
         val ppu = GbPpu(interrupts, memory, lcdStatus, lcdControl, palette, background, window)
-        val gb = SimpleGb(timer, cpu, dmaTransfer, ppu)
+        val gb = SimpleGb(timer, cpu, dmaTransfer, ppu, serial)
 
         scope.launch {
             launch {
@@ -125,7 +125,6 @@ class MainInteractor(
                     // and CPU tick is about 70_224 / 4 fps
                     // so if we will do 1000 CPU ticks we can be sure
                     // that this cycle block will be executed less than one frame
-                    // TODO think about serial transfers
                     // TODO think about audio unit
                     val clockCycles = gb.run(1000)
                     clockCyclesSinceLastFrame += clockCycles

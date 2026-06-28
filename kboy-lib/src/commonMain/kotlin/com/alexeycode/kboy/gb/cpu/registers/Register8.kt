@@ -12,10 +12,6 @@ class Register8 : Register {
         this.v = v
     }
 
-    override fun bytes(): Int {
-        return 1
-    }
-
     override fun set(v: Int) {
         this.v = v.and(0xFF)
     }

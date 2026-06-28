@@ -2,13 +2,11 @@ package com.alexeycode.kboy.gb.cpu
 
 import com.alexeycode.kboy.gb.cpu.instructions.ExtInstruction
 import com.alexeycode.kboy.gb.cpu.instructions.Instruction
-import com.alexeycode.kboy.gb.cpu.instructions.InstructionException
 import com.alexeycode.kboy.gb.cpu.instructions.SimpleInstruction
 import com.alexeycode.kboy.gb.cpu.interrupts.Interrupts
 import com.alexeycode.kboy.gb.cpu.registers.Registers
 import com.alexeycode.kboy.gb.mem.Memory
 import com.alexeycode.kboy.gb.mem.readNext8
-import com.alexeycode.kboy.gb.mem.toHexWord
 
 class GbCpu(
     private val r: Registers,
@@ -31,7 +29,6 @@ class GbCpu(
             val clockCyclesSpentOnInterrupts = runInterrupts()
 
             if (clockCyclesSpentOnInterrupts == 0) {
-                val oldPc = r.pc().get()
                 val code = mem.readNext8(r)
                 val isExt = code == 0xCB
                 val opcode = if (isExt) {
@@ -40,17 +37,10 @@ class GbCpu(
                     code
                 }
 
-                val clockCyclesSpent = try {
-                    if (isExt) {
-                        extInstruction.execute(opcode)
-                    } else {
-                        instruction.execute(opcode)
-                    }
-                } catch (e: IllegalArgumentException) {
-                    throw InstructionException(
-                        "CPU can not execute instruction at address 0x${oldPc.toHexWord()}",
-                        e
-                    )
+                val clockCyclesSpent = if (isExt) {
+                    extInstruction.execute(opcode)
+                } else {
+                    instruction.execute(opcode)
                 }
 
                 if (!isExt && opcode == 0x76) {

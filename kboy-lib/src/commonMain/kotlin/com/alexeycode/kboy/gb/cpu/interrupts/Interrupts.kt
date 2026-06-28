@@ -14,6 +14,7 @@ interface Interrupts {
     fun requestLcd()
     fun requestTimer()
     fun requestJoypad()
+    fun requestSerial()
 
     fun tryRun(): Int
 }

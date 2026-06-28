@@ -45,6 +45,10 @@ class GbInterrupts(
         ifFlag = ifFlag.or(1.shl(2))
     }
 
+    override fun requestSerial() {
+        ifFlag = ifFlag.or(1.shl(3))
+    }
+
     override fun requestJoypad() {
         ifFlag = ifFlag.or(1.shl(4))
     }

@@ -10,7 +10,6 @@ import com.alexeycode.kboy.gb.ppu.Palette
 import com.alexeycode.kboy.gb.ppu.Window
 import com.alexeycode.kboy.gb.serial.Serial
 
-@Suppress("MagicNumber") // it's okay to have magic numbers here
 class GbBus(
     private val origin: Memory,
     private val interrupts: Interrupts,
@@ -58,6 +57,8 @@ class GbBus(
         } else {
             when (address) {
                 0xFF00 -> joypad.get()
+                0xFF01 -> serial.get()
+                0xFF02 -> serial.getControl()
                 0xFF04 -> timer.div()
                 0xFF05 -> timer.tima()
                 0xFF06 -> timer.tma()
@@ -109,7 +110,8 @@ class GbBus(
         } else if (address >= 0xFF00) {
             when (address) {
                 0xFF00 -> joypad.update(value)
-                0xFF01 -> serial.put(value)
+                0xFF01 -> serial.send(value)
+                0xFF02 -> serial.updateControl(value)
                 0xFF04 -> timer.resetDiv()
                 0xFF05 -> timer.updateTima(value)
                 0xFF06 -> timer.updateTma(value)

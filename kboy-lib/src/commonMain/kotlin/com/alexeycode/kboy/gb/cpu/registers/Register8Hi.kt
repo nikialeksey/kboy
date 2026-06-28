@@ -3,9 +3,6 @@ package com.alexeycode.kboy.gb.cpu.registers
 class Register8Hi(
     private val origin: Register
 ) : Register {
-    override fun bytes(): Int {
-        return origin.bytes()
-    }
 
     override fun set(v: Int) {
         origin.set(v and 0xF0)

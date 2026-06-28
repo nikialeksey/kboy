@@ -268,7 +268,7 @@ class GbPpu(
         spriteCount = 0
         val oamAddress = 0xFE00
 
-        for (i in 0 until 40) {
+        for (i in 0 until spritesSize) {
             val y = memory.read8(oamAddress + 4 * i)
             val x = memory.read8(oamAddress + 4 * i + 1)
             val index = memory.read8(oamAddress + 4 * i + 2)

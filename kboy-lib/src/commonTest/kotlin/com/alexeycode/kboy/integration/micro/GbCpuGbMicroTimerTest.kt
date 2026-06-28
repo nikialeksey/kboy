@@ -221,7 +221,7 @@ class GbCpuGbMicroTimerTest {
         val interrupts = GbInterrupts()
         val timer = GbTimer(interrupts)
         val dma = GbDma()
-        val serial = BufferSerial()
+        val serial = BufferSerial(interrupts)
         val joypad = GbJoypad(interrupts)
         val lcdStatus = GbLcdStatus()
         val lcdControl = GbLcdControl()
@@ -268,7 +268,8 @@ class GbCpuGbMicroTimerTest {
                 palette,
                 background,
                 window
-            )
+            ),
+            serial = serial,
         )
         gb.run(ticksCount)
 
