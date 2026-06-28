@@ -18,7 +18,9 @@ import com.alexeycode.kboy.gb.ppu.GbLcdStatus
 import com.alexeycode.kboy.gb.ppu.GbPalette
 import com.alexeycode.kboy.gb.ppu.GbPpu
 import com.alexeycode.kboy.gb.ppu.GbWindow
-import com.alexeycode.kboy.gb.serial.BufferSerial
+import com.alexeycode.kboy.gb.serial.GbSerial
+import com.alexeycode.kboy.gb.serial.InputWire
+import com.alexeycode.kboy.gb.serial.OutputWireBuffer
 import kotlinx.benchmark.Benchmark
 import kotlinx.benchmark.Scope
 import kotlinx.benchmark.Setup
@@ -29,7 +31,7 @@ private const val ITER_COUNT = 100_000
 @State(Scope.Benchmark)
 open class CpuBenchmark {
 
-    private lateinit var serial: BufferSerial
+    private val outputWire = OutputWireBuffer()
     private lateinit var gb: Gb
 
     @Setup
@@ -39,7 +41,7 @@ open class CpuBenchmark {
 
         val memory = cartridge.memory()
         val interrupts = GbInterrupts()
-        serial = BufferSerial(interrupts)
+        val serial = GbSerial(interrupts, outputWire, InputWire.Dummy())
         val timer = GbTimer(interrupts)
         val dma = GbDma()
         val joypad = GbJoypad(interrupts)
@@ -87,7 +89,7 @@ open class CpuBenchmark {
     fun benchmark() {
         while (true) {
             gb.run(ITER_COUNT)
-            val outputMessage = serial.asByteArray().decodeToString()
+            val outputMessage = outputWire.outputData().decodeToString()
             if (outputMessage.contains("Passed") || outputMessage.contains("Failed")) {
                 break
             }

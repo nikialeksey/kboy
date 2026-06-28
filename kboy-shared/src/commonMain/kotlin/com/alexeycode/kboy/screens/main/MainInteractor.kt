@@ -19,7 +19,9 @@ import com.alexeycode.kboy.gb.ppu.GbPpu
 import com.alexeycode.kboy.gb.ppu.GbWindow
 import com.alexeycode.kboy.gb.ppu.RENDER_CYCLES
 import com.alexeycode.kboy.gb.ppu.Screen
-import com.alexeycode.kboy.gb.serial.BufferSerial
+import com.alexeycode.kboy.gb.serial.GbSerial
+import com.alexeycode.kboy.gb.serial.InputWire
+import com.alexeycode.kboy.gb.serial.OutputWireBuffer
 import com.alexeycode.kboy.host.RomFile
 import com.alexeycode.kboy.host.Time
 import com.alexeycode.kboy.host.io.Controller
@@ -44,7 +46,7 @@ class MainInteractor(
         val interrupts = GbInterrupts()
         val timer = GbTimer(interrupts)
         val dma = GbDma()
-        val serial = BufferSerial(interrupts)
+        val serial = GbSerial(interrupts, OutputWireBuffer(), InputWire.Dummy())
         val joypad = GbJoypad(interrupts)
         val lcdStatus = GbLcdStatus()
         val lcdControl = GbLcdControl()

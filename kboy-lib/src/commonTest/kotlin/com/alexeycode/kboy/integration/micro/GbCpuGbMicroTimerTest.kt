@@ -17,7 +17,9 @@ import com.alexeycode.kboy.gb.ppu.GbLcdStatus
 import com.alexeycode.kboy.gb.ppu.GbPalette
 import com.alexeycode.kboy.gb.ppu.GbPpu
 import com.alexeycode.kboy.gb.ppu.GbWindow
-import com.alexeycode.kboy.gb.serial.BufferSerial
+import com.alexeycode.kboy.gb.serial.GbSerial
+import com.alexeycode.kboy.gb.serial.InputWire
+import com.alexeycode.kboy.gb.serial.OutputWireBuffer
 import com.goncalossilva.resources.Resource
 import kotlinx.coroutines.test.runTest
 import kotlin.test.Ignore
@@ -221,7 +223,7 @@ class GbCpuGbMicroTimerTest {
         val interrupts = GbInterrupts()
         val timer = GbTimer(interrupts)
         val dma = GbDma()
-        val serial = BufferSerial(interrupts)
+        val serial = GbSerial(interrupts, OutputWireBuffer(), InputWire.Dummy())
         val joypad = GbJoypad(interrupts)
         val lcdStatus = GbLcdStatus()
         val lcdControl = GbLcdControl()

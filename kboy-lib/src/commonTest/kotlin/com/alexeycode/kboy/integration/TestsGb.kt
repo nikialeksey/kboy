@@ -19,26 +19,29 @@ import com.alexeycode.kboy.gb.ppu.GbLcdStatus
 import com.alexeycode.kboy.gb.ppu.GbPalette
 import com.alexeycode.kboy.gb.ppu.GbPpu
 import com.alexeycode.kboy.gb.ppu.GbWindow
-import com.alexeycode.kboy.gb.serial.BufferSerial
+import com.alexeycode.kboy.gb.serial.GbSerial
+import com.alexeycode.kboy.gb.serial.InputWire
+import com.alexeycode.kboy.gb.serial.OutputWireBuffer
 import com.alexeycode.kboy.gb.serial.Serial
 
 class TestsGb private constructor(
     private val origin: Gb,
-    private val serial: BufferSerial
+    private val outputWire: OutputWireBuffer
 ) : Gb {
 
     constructor(
         cartridge: Cartridge,
         interrupts: Interrupts = GbInterrupts(),
-        serial: BufferSerial = BufferSerial(interrupts)
-    ) : this(buildGb(cartridge.memory(), interrupts, serial), serial)
+        outputWire: OutputWireBuffer = OutputWireBuffer(),
+        serial: GbSerial = GbSerial(interrupts, outputWire, InputWire.Dummy())
+    ) : this(buildGb(cartridge.memory(), interrupts, serial), outputWire)
 
     override fun run(cpuCycles: Int): Int {
         return origin.run(cpuCycles)
     }
 
     fun serialData(): ByteArray {
-        return serial.asByteArray()
+        return outputWire.outputData()
     }
 }
 

@@ -12,7 +12,9 @@ import com.alexeycode.kboy.gb.ppu.GbLcdControl
 import com.alexeycode.kboy.gb.ppu.GbLcdStatus
 import com.alexeycode.kboy.gb.ppu.GbPalette
 import com.alexeycode.kboy.gb.ppu.GbWindow
-import com.alexeycode.kboy.gb.serial.BufferSerial
+import com.alexeycode.kboy.gb.serial.GbSerial
+import com.alexeycode.kboy.gb.serial.InputWire
+import com.alexeycode.kboy.gb.serial.OutputWireBuffer
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
@@ -172,7 +174,8 @@ class DaaInstructionTest {
         val interrupts = GbInterrupts()
         val timer = GbTimer(interrupts)
         val dma = GbDma()
-        val serial = BufferSerial(interrupts)
+        val outputWire = OutputWireBuffer()
+        val serial = GbSerial(interrupts, outputWire, InputWire.Dummy())
         val joypad = GbJoypad(interrupts)
         val lcdStatus = GbLcdStatus()
         val lcdControl = GbLcdControl()
