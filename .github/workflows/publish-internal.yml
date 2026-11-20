@@ -22,4 +22,4 @@ jobs:
         
     - name: Run Fastlane
       working-directory: ./kboy/android
-      run: fastlane internal_testing
+      run: fastlane internal_testing --fastfile ../../deploy/fastlane/Fastfile
