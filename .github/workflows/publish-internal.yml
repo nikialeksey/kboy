@@ -21,7 +21,13 @@ jobs:
         echo "$ANDROID_RELEASE_KEYSTORE_PROPERTIES_FILE" >> ./deploy/keystore/android/keystore.properties
 
     - name: Debug
-      run: echo "echo \"$(echo "Seceret1: "${{ secrets.ANDROID_RELEASE_KEYSTORE_PROPERTIES_FILE }} | base64)\" | base64 -d"
+      env:
+        MY_VAL: ${{ secrets.ANDROID_RELEASE_KEYSTORE_PROPERTIES_FILE }}
+      run: |
+        import os
+        for q in (os.getenv("MY_VAL")):
+          print(q)
+      shell: python
 
     - name: Setup Ruby
       uses: ruby/setup-ruby@v1
