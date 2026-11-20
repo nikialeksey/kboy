@@ -1,9 +1,9 @@
 [versions]
 ansi-color = "5.5.1"
 agp = "9.2.1"
-android-compileSdk = "36"
+android-compileSdk = "37"
 android-minSdk = "34"
-android-targetSdk = "36"
+android-targetSdk = "37"
 androidx-activityCompose = "1.13.0"
 androidx-lifecycle = "2.11.0"
 androidx-core-splashscreen = "1.2.0"
