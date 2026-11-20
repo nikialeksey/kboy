@@ -14,7 +14,6 @@
 # update_fastlane
 
 ROOT_DIR = File.expand_path("../..", __dir__)
-ANDROID_PROJECT_DIR = File.join(ROOT_DIR, "kboy/android")
 GRADLEW_PATH = File.join(ROOT_DIR, "gradlew")
 
 default_platform(:android)
@@ -23,8 +22,8 @@ platform :android do
   desc "Runs all the tests"
   lane :test do
     gradle(
-      task: "test",
-      project_dir: ANDROID_PROJECT_DIR,
+      task: ":kboy:android:test",
+      project_dir: ROOT_DIR,
       gradle_path: GRADLEW_PATH
     )
   end
@@ -32,9 +31,9 @@ platform :android do
   desc "Submit a new Build to Google Play Internal Testing"
   lane :internal_testing do
     gradle(
-      task: 'assemble',
+      task: ':kboy:android:assemble',
       build_type: 'Release',
-      project_dir: ANDROID_PROJECT_DIR,
+      project_dir: ROOT_DIR,
       gradle_path:GRADLEW_PATH
     )
     upload_to_play_store(
@@ -46,8 +45,8 @@ platform :android do
   desc "Deploy a new version to the Google Play"
   lane :deploy do
     gradle(
-      task: "clean assembleRelease",
-      project_dir: ANDROID_PROJECT_DIR,
+      task: ":kboy:android:clean :kboy:android:assembleRelease",
+      project_dir: ROOT_DIR,
       gradle_path: GRADLEW_PATH
     )
     upload_to_play_store
