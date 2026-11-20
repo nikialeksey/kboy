@@ -15,16 +15,18 @@ class StaticAnalysisPlugin : Plugin<Project> {
             config.setFrom(
                 target.file("${target.rootProject.projectDir}/buildLogic/config/detekt/detekt.yml")
             )
-            source = target.files(
-                "./src/main/",
+            source.setFrom(
+                target.files(
+                    "./src/main/",
 
-                "./src/commonMain/",
-                "./src/commonTest/",
+                    "./src/commonMain/",
+                    "./src/commonTest/",
 
-                "./src/iosMain",
-                "./src/jvmMain",
-                "./src/webMain",
-                "./src/nonAndroid",
+                    "./src/iosMain",
+                    "./src/jvmMain",
+                    "./src/webMain",
+                    "./src/nonAndroid",
+                )
             )
         }
 
