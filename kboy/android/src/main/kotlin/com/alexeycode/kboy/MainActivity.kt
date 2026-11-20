@@ -46,9 +46,9 @@ class MainActivity : ComponentActivity() {
 //                pingIntervalMillis = 20_000
 //            }
 //        }
-        val nsdManager = getSystemService(NSD_SERVICE) as NsdManager
-        val multiplayerNetwork = AndroidMultiplayerNetwork(nsdManager, log)
-        multiplayerNetwork.start()
+//        val nsdManager = getSystemService(NSD_SERVICE) as NsdManager
+//        val multiplayerNetwork = AndroidMultiplayerNetwork(nsdManager, log)
+//        multiplayerNetwork.start()
 
         lifecycleScope.launch {
             roms.selectRomEvents().collect {
@@ -57,11 +57,11 @@ class MainActivity : ComponentActivity() {
         }
 
         setContent {
-            val hosts by multiplayerNetwork.hosts().collectAsState(emptySet())
-
-            LaunchedEffect(hosts) {
-                log.i(Network, "Hosts: %s", hosts)
-            }
+//            val hosts by multiplayerNetwork.hosts().collectAsState(emptySet())
+//
+//            LaunchedEffect(hosts) {
+//                log.i(Network, "Hosts: %s", hosts)
+//            }
 
             val context = LocalContext.current
             val colors = dynamicDarkColorScheme(context)

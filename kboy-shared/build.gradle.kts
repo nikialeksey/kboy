@@ -15,6 +15,7 @@ kotlin {
     applyDefaultHierarchyTemplate()
     android {
         namespace = "com.alexeycode.kboy.shared"
+        withHostTest {}
     }
     
     listOf(
@@ -68,25 +69,34 @@ kotlin {
 
         androidMain {
             dependencies {
+                implementation(libs.ktor.client.okhttp)
+                implementation(libs.ktor.server.cio)
             }
         }
         jvmMain {
             dependsOn(nonAndroid)
             dependencies {
                 implementation(compose.desktop.currentOs)
-                implementation(libs.ktor.server.cio)
                 implementation(libs.kotlinx.coroutines.swing)
                 implementation(libs.ansi.color)
                 implementation(libs.jmdns)
+                implementation(libs.ktor.client.okhttp)
+                implementation(libs.ktor.server.netty)
             }
         }
         iosMain {
             dependsOn(nonAndroid)
             dependencies {
+                implementation(libs.ktor.client.darwin)
+                implementation(libs.ktor.server.cio)
             }
         }
         webMain {
             dependsOn(nonAndroid)
+            dependencies {
+                implementation(libs.ktor.client.cio)
+                implementation(libs.ktor.server.cio)
+            }
         }
     }
 }

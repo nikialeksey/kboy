@@ -2,10 +2,10 @@ package com.alexeycode.kboy.host.network
 
 import com.alexeycode.kboy.host.network.multiplayer.Host
 import io.ktor.server.application.install
-import io.ktor.server.cio.CIO
-import io.ktor.server.cio.CIOApplicationEngine
+import io.ktor.server.engine.ApplicationEngine
 import io.ktor.server.engine.EmbeddedServer
 import io.ktor.server.engine.embeddedServer
+import io.ktor.server.netty.Netty
 import io.ktor.server.routing.routing
 import io.ktor.server.websocket.WebSockets
 import io.ktor.server.websocket.webSocket
@@ -27,21 +27,15 @@ class DesktopMultiplayerNetwork : MultiplayerNetwork {
     private val jmDnsServiceType = "_kboy._tcp.local."
     private lateinit var jmDnsServiceInfo: ServiceInfo
 
-    private var server: EmbeddedServer<CIOApplicationEngine, CIOApplicationEngine.Configuration>? = null
+    private var server: EmbeddedServer<out ApplicationEngine, out ApplicationEngine.Configuration>? = null
 
     override fun start() {
-        val server = embeddedServer(CIO, port = 0) {
+        val server = embeddedServer(Netty, port = 0) {
             install(WebSockets)
 
             routing {
                 webSocket("/") {
-                    send(Frame.Text("Hey"))
-                    for (frame in incoming) {
-                        frame as? Frame.Text ?: continue
-                        val message = frame.readText()
-                        println("!!!!!!!! incoming frame: $message")
-                        send(Frame.Text("Hey, $message"))
-                    }
+
                 }
             }
         }.start()
