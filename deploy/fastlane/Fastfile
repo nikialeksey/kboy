@@ -31,7 +31,7 @@ platform :android do
   desc "Submit a new Build to Google Play Internal Testing"
   lane :internal_testing do
     gradle(
-      task: ':kboy:android:assemble',
+      task: ':kboy:android:bundle',
       build_type: 'Release',
       project_dir: ROOT_DIR,
       gradle_path: GRADLEW_PATH
@@ -45,7 +45,7 @@ platform :android do
   desc "Deploy a new version to the Google Play"
   lane :deploy do
     gradle(
-      task: ":kboy:android:clean :kboy:android:assembleRelease",
+      task: ":kboy:android:clean :kboy:android:bundleRelease",
       project_dir: ROOT_DIR,
       gradle_path: GRADLEW_PATH
     )
