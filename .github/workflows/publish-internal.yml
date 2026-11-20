@@ -20,15 +20,6 @@ jobs:
         echo "$FASTLANE_GOOGLE_PLAY_KEY_FILE" >> ./deploy/keystore/android/fastlane-google-play-key.json
         echo "$ANDROID_RELEASE_KEYSTORE_PROPERTIES_FILE" >> ./deploy/keystore/android/keystore.properties
 
-    - name: Debug
-      env:
-        MY_VAL: ${{ secrets.ANDROID_RELEASE_KEYSTORE_PROPERTIES_FILE }}
-      run: |
-        import os
-        for q in (os.getenv("MY_VAL")):
-          print(q)
-      shell: python
-
     - name: Setup Ruby
       uses: ruby/setup-ruby@v1
       with:

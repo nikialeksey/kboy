@@ -37,7 +37,7 @@ android {
         create("appRelease") {
             keyAlias = (keystoreProperties["keyAlias"] as String?) ?: (keystoreDebugProperties["keyAlias"] as String)
             keyPassword = (keystoreProperties["keyPassword"] as String?) ?: (keystoreDebugProperties["keyPassword"] as String)
-            storeFile = file((keystoreProperties["storeFile"] as String?) ?: (keystoreDebugProperties["storeFile"] as String))
+            storeFile = rootProject.file((keystoreProperties["storeFile"] as String?) ?: (keystoreDebugProperties["storeFile"] as String))
             storePassword = (keystoreProperties["storePassword"] as String?) ?: (keystoreDebugProperties["storePassword"] as String)
         }
     }
