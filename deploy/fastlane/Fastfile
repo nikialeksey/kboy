@@ -15,6 +15,7 @@
 
 ROOT_DIR = File.expand_path("../..", __dir__)
 ANDROID_PROJECT_DIR = File.join(ROOT_DIR, "kboy/android")
+GRADLEW_PATH = File.join(ROOT_DIR, "gradlew")
 
 default_platform(:android)
 
@@ -23,7 +24,8 @@ platform :android do
   lane :test do
     gradle(
       task: "test",
-      project_dir: ANDROID_PROJECT_DIR
+      project_dir: ANDROID_PROJECT_DIR,
+      gradle_path: GRADLEW_PATH
     )
   end
 
@@ -32,7 +34,8 @@ platform :android do
     gradle(
       task: 'assemble',
       build_type: 'Release',
-      project_dir: ANDROID_PROJECT_DIR
+      project_dir: ANDROID_PROJECT_DIR,
+      gradle_path:GRADLEW_PATH
     )
     upload_to_play_store(
       track: 'internal',
@@ -44,7 +47,8 @@ platform :android do
   lane :deploy do
     gradle(
       task: "clean assembleRelease",
-      project_dir: ANDROID_PROJECT_DIR
+      project_dir: ANDROID_PROJECT_DIR,
+      gradle_path: GRADLEW_PATH
     )
     upload_to_play_store
   end
