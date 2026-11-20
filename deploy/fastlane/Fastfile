@@ -13,6 +13,9 @@
 # Uncomment the line if you want fastlane to automatically update itself
 # update_fastlane
 
+ROOT_DIR = File.expand_path("../..", __dir__)
+ANDROID_PROJECT_DIR = File.join(ROOT_DIR, "kboy/android")
+
 default_platform(:android)
 
 platform :android do
@@ -20,7 +23,7 @@ platform :android do
   lane :test do
     gradle(
       task: "test",
-      gradle_path: "../gradlew"
+      project_dir: ANDROID_PROJECT_DIR
     )
   end
 
@@ -29,7 +32,7 @@ platform :android do
     gradle(
       task: 'assemble',
       build_type: 'Release',
-      gradle_path: "../gradlew"
+      project_dir: ANDROID_PROJECT_DIR
     )
     upload_to_play_store(
       track: 'internal',
@@ -41,7 +44,7 @@ platform :android do
   lane :deploy do
     gradle(
       task: "clean assembleRelease",
-      gradle_path: "../gradlew"
+      project_dir: ANDROID_PROJECT_DIR
     )
     upload_to_play_store
   end

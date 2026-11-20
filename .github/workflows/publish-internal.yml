@@ -27,10 +27,7 @@ jobs:
         bundler: '2.6.4'
 
     - name: Run Fastlane
-      env:
-        BUNDLE_GEMFILE: ../../deploy/fastlane/Gemfile
-        FASTLANE_FILE: ../../deploy/fastlane/Fastfile
-      working-directory: ./kboy/android
+      working-directory: ./deploy/fastlane
       run: |
         bundle install
         bundle exec fastlane internal_testing
