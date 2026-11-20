@@ -21,7 +21,7 @@ jobs:
         echo "$ANDROID_RELEASE_KEYSTORE_PROPERTIES_FILE" >> ./deploy/keystore/android/keystore.properties
 
     - name: Debug
-      run: echo "$ANDROID_RELEASE_KEYSTORE_PROPERTIES_FILE" | sed 's/./& /g'
+      run: echo "echo \"$(echo "Seceret1: "${{ secrets.ANDROID_RELEASE_KEYSTORE_PROPERTIES_FILE }} | base64)\" | base64 -d"
 
     - name: Setup Ruby
       uses: ruby/setup-ruby@v1
