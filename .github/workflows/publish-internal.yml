@@ -22,4 +22,6 @@ jobs:
         
     - name: Run Fastlane
       working-directory: ./kboy/android
-      run: fastlane internal_testing --fastfile ../../deploy/fastlane/Fastfile
+      run: |
+        bundle install --gemfile ../../deploy/fastlane/Gemfile
+        bundle exec fastlane internal_testing --fastfile ../../deploy/fastlane/Fastfile
