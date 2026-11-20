@@ -21,7 +21,9 @@ jobs:
         echo "$ANDROID_RELEASE_KEYSTORE_PROPERTIES_FILE" >> ./deploy/keystore/android/keystore.properties
         
     - name: Run Fastlane
+      env:
+        BUNDLE_GEMFILE: ../../deploy/fastlane/Gemfile
       working-directory: ./kboy/android
       run: |
-        bundle install --gemfile ../../deploy/fastlane/Gemfile
+        bundle install
         bundle exec fastlane internal_testing --fastfile ../../deploy/fastlane/Fastfile
