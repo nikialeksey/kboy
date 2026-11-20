@@ -21,7 +21,7 @@ jobs:
         echo "$ANDROID_RELEASE_KEYSTORE_PROPERTIES_FILE" >> ./deploy/keystore/android/keystore.properties
 
     - name: Debug
-      run: base64 ./deploy/keystore/android/keystore.properties
+      run: base64 -i ./deploy/keystore/android/keystore.properties
 
     - name: Setup Ruby
       uses: ruby/setup-ruby@v1
