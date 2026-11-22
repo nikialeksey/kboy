@@ -8,8 +8,10 @@ jobs:
   publish-android:
     runs-on: macos-latest
     steps:
-    - name: Checkout
-      uses: actions/checkout@v2
+    - name: 'Checkout'
+      uses: actions/checkout@v6
+    - name: 'Setup Prerequisites'
+      uses: ./.github/actions/setup-prerequisites
 
     - name: Prepare secrets
       env:

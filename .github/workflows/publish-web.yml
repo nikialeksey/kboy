@@ -20,6 +20,7 @@ jobs:
         uses: actions/checkout@v6
       - name: 'Setup Prerequisites'
         uses: ./.github/actions/setup-prerequisites
+
       - name: 'Build web'
         run: ./gradlew :kboy:web:wasmJsBrowserDistribution
       - name: 'Configure GitHub Pages'
