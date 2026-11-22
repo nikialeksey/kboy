@@ -1,14 +1,11 @@
 package com.alexeycode.kboy
 
 import android.content.pm.ActivityInfo
-import android.net.nsd.NsdManager
 import android.os.Bundle
 import android.os.Vibrator
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.material3.dynamicDarkColorScheme
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalContext
@@ -20,9 +17,8 @@ import com.alexeycode.kboy.host.AndroidTime
 import com.alexeycode.kboy.host.AndroidVibrator
 import com.alexeycode.kboy.host.SimpleRoms
 import com.alexeycode.kboy.host.io.Controller
-import com.alexeycode.kboy.host.network.AndroidMultiplayerNetwork
 import com.alexeycode.kboy.log.AndroidLog
-import com.alexeycode.kboy.log.Network
+import com.alexeycode.kboy.log.App
 import kotlinx.coroutines.launch
 
 class MainActivity : ComponentActivity() {
@@ -32,7 +28,7 @@ class MainActivity : ComponentActivity() {
     private val roms = SimpleRoms()
     private val loadRom = registerForActivityResult(
         LoadRomContract(),
-        LoadRomResult({ applicationContext }, roms)
+        LoadRomResult({ applicationContext }, roms),
     )
 
     private val time = AndroidTime()
@@ -40,6 +36,8 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         prepareActivityWindow()
+
+        log.d(App, "App started")
 
 //        val client = HttpClient(CIO) {
 //            install(WebSockets) {
@@ -75,7 +73,7 @@ class MainActivity : ComponentActivity() {
                 time = time,
                 vibrator = vibrator,
                 extController = Controller.Dummy(),
-                colorScheme = colors
+                colorScheme = colors,
             )
         }
     }

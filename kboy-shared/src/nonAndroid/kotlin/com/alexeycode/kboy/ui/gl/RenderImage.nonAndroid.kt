@@ -32,11 +32,11 @@ actual fun RenderScreen(image: Screen) {
                     ColorInfo(
                         ColorType.RGBA_8888,
                         ColorAlphaType.OPAQUE,
-                        ColorSpace.sRGB
+                        ColorSpace.sRGB,
                     ),
                     image.width(),
-                    image.height()
-                )
+                    image.height(),
+                ),
             )
         }
     }
@@ -46,7 +46,7 @@ actual fun RenderScreen(image: Screen) {
         bitmap.installPixels(
             bitmap.imageInfo,
             image.pixels(),
-            image.width() * BYTES_IN_PX
+            image.width() * BYTES_IN_PX,
         )
     }
 
@@ -56,7 +56,7 @@ actual fun RenderScreen(image: Screen) {
             val workaround = localImage.width()
             it.nativeCanvas.drawImageRect(
                 Image.makeFromBitmap(bitmap),
-                Rect.makeWH(size.width, size.height)
+                Rect.makeWH(size.width, size.height),
             )
         }
     }

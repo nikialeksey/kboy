@@ -49,7 +49,7 @@ class SimpleSocketSession(
     }
 
     override fun stop() {
-
+        // ignored
     }
 
     override fun buffer(): SocketInputSession.Buffer {

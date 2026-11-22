@@ -4,7 +4,9 @@ import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import org.w3c.dom.events.KeyboardEvent
 
-class WebController : Controller, KeyListener {
+class WebController :
+    Controller,
+    KeyListener {
 
     private val buttonRight = MutableSharedFlow<Boolean>(0, 1, BufferOverflow.DROP_OLDEST)
     private val buttonLeft = MutableSharedFlow<Boolean>(0, 1, BufferOverflow.DROP_OLDEST)

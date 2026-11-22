@@ -4,7 +4,7 @@ import java.nio.file.Files
 import java.nio.file.Path
 
 class DesktopRomFile(
-    private val uri: String
+    private val uri: String,
 ) : RomFile {
 
     override suspend fun read(): ByteArray {

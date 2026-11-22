@@ -31,7 +31,7 @@ class GbRegisters : Registers {
         h = Register8(0x01),
         l = Register8(0x4D),
         sp = Register16(0xFFFE),
-        pc = Register16(0x0100)
+        pc = Register16(0x0100),
     )
 
     constructor(
@@ -60,7 +60,7 @@ class GbRegisters : Registers {
         hl = MergedRegister(h, l),
         sp = sp,
         pc = pc,
-        flag = SimpleFlagRegister(f)
+        flag = SimpleFlagRegister(f),
     )
 
     constructor(
@@ -78,7 +78,7 @@ class GbRegisters : Registers {
         hl: Register,
         sp: Register,
         pc: Register,
-        flag: FlagRegister
+        flag: FlagRegister,
     ) {
         this.a = a
         this.f = f

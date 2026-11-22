@@ -4,8 +4,9 @@ import java.io.Closeable
 import java.io.PrintWriter
 
 class DoctorGbCpu(
-    private val origin: TraceableCpu
-) : Cpu, Closeable {
+    private val origin: TraceableCpu,
+) : Cpu,
+    Closeable {
 
     private val logFile = PrintWriter("cpu_instrs.log")
 

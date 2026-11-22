@@ -3,7 +3,7 @@ package com.alexeycode.kboy.gb.cpu.interrupts
 class GbInterrupts(
     private var ime: Boolean = false,
     private var ieFlag: Int = 0x00,
-    private var ifFlag: Int = 0xE1
+    private var ifFlag: Int = 0xE1,
 ) : Interrupts {
 
     private var imeEnableCountDown = 0
@@ -97,7 +97,7 @@ class GbInterrupts(
     private fun isNeededToExec(
         interruptIndex: Int,
         ieFlag: Int,
-        ifFlag: Int
+        ifFlag: Int,
     ): Boolean {
         val interruptBit = 1.shl(interruptIndex)
         val enabled = ieFlag.and(interruptBit) != 0

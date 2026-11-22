@@ -8,7 +8,7 @@ class MergedRegisterTest {
     fun checkMergedRegisterGet() {
         assertEquals(
             0xA123,
-            MergedRegister(Register8(0xA1), Register8(0x23)).get()
+            MergedRegister(Register8(0xA1), Register8(0x23)).get(),
         )
     }
 
@@ -21,11 +21,11 @@ class MergedRegisterTest {
 
         assertEquals(
             0x12,
-            a.get()
+            a.get(),
         )
         assertEquals(
             0x34,
-            b.get()
+            b.get(),
         )
     }
 }

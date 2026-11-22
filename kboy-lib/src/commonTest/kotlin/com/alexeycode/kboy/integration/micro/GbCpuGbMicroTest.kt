@@ -37,23 +37,19 @@ class GbCpuGbMicroTest {
     fun `000-oam_lock`() = runTest { testGbMicrotest("000-oam_lock.gb") }
 
     @Test
-    fun `000-write_to_x8000`() =
-        runTest { testGbMicrotest("000-write_to_x8000.gb") }
+    fun `000-write_to_x8000`() = runTest { testGbMicrotest("000-write_to_x8000.gb") }
 
     @Test
-    fun `001-vram_unlocked`() =
-        runTest { testGbMicrotest("001-vram_unlocked.gb") }
+    fun `001-vram_unlocked`() = runTest { testGbMicrotest("001-vram_unlocked.gb") }
 
     @Test
     fun `002-vram_locked`() = runTest { testGbMicrotest("002-vram_locked.gb") }
 
     @Test
-    fun `004-tima_boot_phase`() =
-        runTest { testGbMicrotest("004-tima_boot_phase.gb") }
+    fun `004-tima_boot_phase`() = runTest { testGbMicrotest("004-tima_boot_phase.gb") }
 
     @Test
-    fun `004-tima_cycle_timer`() =
-        runTest { testGbMicrotest("004-tima_cycle_timer.gb") }
+    fun `004-tima_cycle_timer`() = runTest { testGbMicrotest("004-tima_cycle_timer.gb") }
 
     @Test
     fun `007-lcd_on_stat`() = runTest { testGbMicrotest("007-lcd_on_stat.gb") }
@@ -65,20 +61,16 @@ class GbCpuGbMicroTest {
     fun `500-scx-timing`() = runTest { testGbMicrotest("500-scx-timing.gb") }
 
     @Test
-    fun `800-ppu-latch-scx`() =
-        runTest { testGbMicrotest("800-ppu-latch-scx.gb") }
+    fun `800-ppu-latch-scx`() = runTest { testGbMicrotest("800-ppu-latch-scx.gb") }
 
     @Test
-    fun `801-ppu-latch-scy`() =
-        runTest { testGbMicrotest("801-ppu-latch-scy.gb") }
+    fun `801-ppu-latch-scy`() = runTest { testGbMicrotest("801-ppu-latch-scy.gb") }
 
     @Test
-    fun `802-ppu-latch-tileselect`() =
-        runTest { testGbMicrotest("802-ppu-latch-tileselect.gb") }
+    fun `802-ppu-latch-tileselect`() = runTest { testGbMicrotest("802-ppu-latch-tileselect.gb") }
 
     @Test
-    fun `803-ppu-latch-bgdisplay`() =
-        runTest { testGbMicrotest("803-ppu-latch-bgdisplay.gb") }
+    fun `803-ppu-latch-bgdisplay`() = runTest { testGbMicrotest("803-ppu-latch-bgdisplay.gb") }
 
     @Test
     fun `audio_testbench`() = runTest { testGbMicrotest("audio_testbench.gb") }
@@ -87,12 +79,10 @@ class GbCpuGbMicroTest {
     fun `cpu_bus_1`() = runTest { testGbMicrotest("cpu_bus_1.gb") }
 
     @Test
-    fun `div_inc_timing_a`() =
-        runTest { testGbMicrotest("div_inc_timing_a.gb") }
+    fun `div_inc_timing_a`() = runTest { testGbMicrotest("div_inc_timing_a.gb") }
 
     @Test
-    fun `div_inc_timing_b`() =
-        runTest { testGbMicrotest("div_inc_timing_b.gb") }
+    fun `div_inc_timing_b`() = runTest { testGbMicrotest("div_inc_timing_b.gb") }
 
     @Test
     fun `dma_0x1000`() = runTest { testGbMicrotest("dma_0x1000.gb") }
@@ -125,16 +115,13 @@ class GbCpuGbMicroTest {
     fun `halt_op_dupe`() = runTest { testGbMicrotest("halt_op_dupe.gb") }
 
     @Test
-    fun `halt_op_dupe_delay`() =
-        runTest { testGbMicrotest("halt_op_dupe_delay.gb") }
+    fun `halt_op_dupe_delay`() = runTest { testGbMicrotest("halt_op_dupe_delay.gb") }
 
     @Test
-    fun `hblank_int_di_timing_a`() =
-        runTest { testGbMicrotest("hblank_int_di_timing_a.gb") }
+    fun `hblank_int_di_timing_a`() = runTest { testGbMicrotest("hblank_int_di_timing_a.gb") }
 
     @Test
-    fun `hblank_int_di_timing_b`() =
-        runTest { testGbMicrotest("hblank_int_di_timing_b.gb") }
+    fun `hblank_int_di_timing_b`() = runTest { testGbMicrotest("hblank_int_di_timing_b.gb") }
 
     @Test
     fun `hblank_int_if_a`() = runTest { testGbMicrotest("hblank_int_if_a.gb") }
@@ -155,341 +142,262 @@ class GbCpuGbMicroTest {
     fun `hblank_int_scx0`() = runTest { testGbMicrotest("hblank_int_scx0.gb") }
 
     @Test
-    fun `hblank_int_scx0_if_a`() =
-        runTest { testGbMicrotest("hblank_int_scx0_if_a.gb") }
+    fun `hblank_int_scx0_if_a`() = runTest { testGbMicrotest("hblank_int_scx0_if_a.gb") }
 
     @Test
-    fun `hblank_int_scx0_if_b`() =
-        runTest { testGbMicrotest("hblank_int_scx0_if_b.gb") }
+    fun `hblank_int_scx0_if_b`() = runTest { testGbMicrotest("hblank_int_scx0_if_b.gb") }
 
     @Test
-    fun `hblank_int_scx0_if_c`() =
-        runTest { testGbMicrotest("hblank_int_scx0_if_c.gb") }
+    fun `hblank_int_scx0_if_c`() = runTest { testGbMicrotest("hblank_int_scx0_if_c.gb") }
 
     @Test
-    fun `hblank_int_scx0_if_d`() =
-        runTest { testGbMicrotest("hblank_int_scx0_if_d.gb") }
+    fun `hblank_int_scx0_if_d`() = runTest { testGbMicrotest("hblank_int_scx0_if_d.gb") }
 
     @Test
     fun `hblank_int_scx1`() = runTest { testGbMicrotest("hblank_int_scx1.gb") }
 
     @Test
-    fun `hblank_int_scx1_if_a`() =
-        runTest { testGbMicrotest("hblank_int_scx1_if_a.gb") }
+    fun `hblank_int_scx1_if_a`() = runTest { testGbMicrotest("hblank_int_scx1_if_a.gb") }
 
     @Test
-    fun `hblank_int_scx1_if_b`() =
-        runTest { testGbMicrotest("hblank_int_scx1_if_b.gb") }
+    fun `hblank_int_scx1_if_b`() = runTest { testGbMicrotest("hblank_int_scx1_if_b.gb") }
 
     @Test
-    fun `hblank_int_scx1_if_c`() =
-        runTest { testGbMicrotest("hblank_int_scx1_if_c.gb") }
+    fun `hblank_int_scx1_if_c`() = runTest { testGbMicrotest("hblank_int_scx1_if_c.gb") }
 
     @Test
-    fun `hblank_int_scx1_if_d`() =
-        runTest { testGbMicrotest("hblank_int_scx1_if_d.gb") }
+    fun `hblank_int_scx1_if_d`() = runTest { testGbMicrotest("hblank_int_scx1_if_d.gb") }
 
     @Test
-    fun `hblank_int_scx1_nops_a`() =
-        runTest { testGbMicrotest("hblank_int_scx1_nops_a.gb") }
+    fun `hblank_int_scx1_nops_a`() = runTest { testGbMicrotest("hblank_int_scx1_nops_a.gb") }
 
     @Test
-    fun `hblank_int_scx1_nops_b`() =
-        runTest { testGbMicrotest("hblank_int_scx1_nops_b.gb") }
+    fun `hblank_int_scx1_nops_b`() = runTest { testGbMicrotest("hblank_int_scx1_nops_b.gb") }
 
     @Test
     fun `hblank_int_scx2`() = runTest { testGbMicrotest("hblank_int_scx2.gb") }
 
     @Test
-    fun `hblank_int_scx2_if_a`() =
-        runTest { testGbMicrotest("hblank_int_scx2_if_a.gb") }
+    fun `hblank_int_scx2_if_a`() = runTest { testGbMicrotest("hblank_int_scx2_if_a.gb") }
 
     @Test
-    fun `hblank_int_scx2_if_b`() =
-        runTest { testGbMicrotest("hblank_int_scx2_if_b.gb") }
+    fun `hblank_int_scx2_if_b`() = runTest { testGbMicrotest("hblank_int_scx2_if_b.gb") }
 
     @Test
-    fun `hblank_int_scx2_if_c`() =
-        runTest { testGbMicrotest("hblank_int_scx2_if_c.gb") }
+    fun `hblank_int_scx2_if_c`() = runTest { testGbMicrotest("hblank_int_scx2_if_c.gb") }
 
     @Test
-    fun `hblank_int_scx2_if_d`() =
-        runTest { testGbMicrotest("hblank_int_scx2_if_d.gb") }
+    fun `hblank_int_scx2_if_d`() = runTest { testGbMicrotest("hblank_int_scx2_if_d.gb") }
 
     @Test
-    fun `hblank_int_scx2_nops_a`() =
-        runTest { testGbMicrotest("hblank_int_scx2_nops_a.gb") }
+    fun `hblank_int_scx2_nops_a`() = runTest { testGbMicrotest("hblank_int_scx2_nops_a.gb") }
 
     @Test
-    fun `hblank_int_scx2_nops_b`() =
-        runTest { testGbMicrotest("hblank_int_scx2_nops_b.gb") }
+    fun `hblank_int_scx2_nops_b`() = runTest { testGbMicrotest("hblank_int_scx2_nops_b.gb") }
 
     @Test
     fun `hblank_int_scx3`() = runTest { testGbMicrotest("hblank_int_scx3.gb") }
 
     @Test
-    fun `hblank_int_scx3_if_a`() =
-        runTest { testGbMicrotest("hblank_int_scx3_if_a.gb") }
+    fun `hblank_int_scx3_if_a`() = runTest { testGbMicrotest("hblank_int_scx3_if_a.gb") }
 
     @Test
-    fun `hblank_int_scx3_if_b`() =
-        runTest { testGbMicrotest("hblank_int_scx3_if_b.gb") }
+    fun `hblank_int_scx3_if_b`() = runTest { testGbMicrotest("hblank_int_scx3_if_b.gb") }
 
     @Test
-    fun `hblank_int_scx3_if_c`() =
-        runTest { testGbMicrotest("hblank_int_scx3_if_c.gb") }
+    fun `hblank_int_scx3_if_c`() = runTest { testGbMicrotest("hblank_int_scx3_if_c.gb") }
 
     @Test
-    fun `hblank_int_scx3_if_d`() =
-        runTest { testGbMicrotest("hblank_int_scx3_if_d.gb") }
+    fun `hblank_int_scx3_if_d`() = runTest { testGbMicrotest("hblank_int_scx3_if_d.gb") }
 
     @Test
-    fun `hblank_int_scx3_nops_a`() =
-        runTest { testGbMicrotest("hblank_int_scx3_nops_a.gb") }
+    fun `hblank_int_scx3_nops_a`() = runTest { testGbMicrotest("hblank_int_scx3_nops_a.gb") }
 
     @Test
-    fun `hblank_int_scx3_nops_b`() =
-        runTest { testGbMicrotest("hblank_int_scx3_nops_b.gb") }
+    fun `hblank_int_scx3_nops_b`() = runTest { testGbMicrotest("hblank_int_scx3_nops_b.gb") }
 
     @Test
     fun `hblank_int_scx4`() = runTest { testGbMicrotest("hblank_int_scx4.gb") }
 
     @Test
-    fun `hblank_int_scx4_if_a`() =
-        runTest { testGbMicrotest("hblank_int_scx4_if_a.gb") }
+    fun `hblank_int_scx4_if_a`() = runTest { testGbMicrotest("hblank_int_scx4_if_a.gb") }
 
     @Test
-    fun `hblank_int_scx4_if_b`() =
-        runTest { testGbMicrotest("hblank_int_scx4_if_b.gb") }
+    fun `hblank_int_scx4_if_b`() = runTest { testGbMicrotest("hblank_int_scx4_if_b.gb") }
 
     @Test
-    fun `hblank_int_scx4_if_c`() =
-        runTest { testGbMicrotest("hblank_int_scx4_if_c.gb") }
+    fun `hblank_int_scx4_if_c`() = runTest { testGbMicrotest("hblank_int_scx4_if_c.gb") }
 
     @Test
-    fun `hblank_int_scx4_if_d`() =
-        runTest { testGbMicrotest("hblank_int_scx4_if_d.gb") }
+    fun `hblank_int_scx4_if_d`() = runTest { testGbMicrotest("hblank_int_scx4_if_d.gb") }
 
     @Test
-    fun `hblank_int_scx4_nops_a`() =
-        runTest { testGbMicrotest("hblank_int_scx4_nops_a.gb") }
+    fun `hblank_int_scx4_nops_a`() = runTest { testGbMicrotest("hblank_int_scx4_nops_a.gb") }
 
     @Test
-    fun `hblank_int_scx4_nops_b`() =
-        runTest { testGbMicrotest("hblank_int_scx4_nops_b.gb") }
+    fun `hblank_int_scx4_nops_b`() = runTest { testGbMicrotest("hblank_int_scx4_nops_b.gb") }
 
     @Test
     fun `hblank_int_scx5`() = runTest { testGbMicrotest("hblank_int_scx5.gb") }
 
     @Test
-    fun `hblank_int_scx5_if_a`() =
-        runTest { testGbMicrotest("hblank_int_scx5_if_a.gb") }
+    fun `hblank_int_scx5_if_a`() = runTest { testGbMicrotest("hblank_int_scx5_if_a.gb") }
 
     @Test
-    fun `hblank_int_scx5_if_b`() =
-        runTest { testGbMicrotest("hblank_int_scx5_if_b.gb") }
+    fun `hblank_int_scx5_if_b`() = runTest { testGbMicrotest("hblank_int_scx5_if_b.gb") }
 
     @Test
-    fun `hblank_int_scx5_if_c`() =
-        runTest { testGbMicrotest("hblank_int_scx5_if_c.gb") }
+    fun `hblank_int_scx5_if_c`() = runTest { testGbMicrotest("hblank_int_scx5_if_c.gb") }
 
     @Test
-    fun `hblank_int_scx5_if_d`() =
-        runTest { testGbMicrotest("hblank_int_scx5_if_d.gb") }
+    fun `hblank_int_scx5_if_d`() = runTest { testGbMicrotest("hblank_int_scx5_if_d.gb") }
 
     @Test
-    fun `hblank_int_scx5_nops_a`() =
-        runTest { testGbMicrotest("hblank_int_scx5_nops_a.gb") }
+    fun `hblank_int_scx5_nops_a`() = runTest { testGbMicrotest("hblank_int_scx5_nops_a.gb") }
 
     @Test
-    fun `hblank_int_scx5_nops_b`() =
-        runTest { testGbMicrotest("hblank_int_scx5_nops_b.gb") }
+    fun `hblank_int_scx5_nops_b`() = runTest { testGbMicrotest("hblank_int_scx5_nops_b.gb") }
 
     @Test
     fun `hblank_int_scx6`() = runTest { testGbMicrotest("hblank_int_scx6.gb") }
 
     @Test
-    fun `hblank_int_scx6_if_a`() =
-        runTest { testGbMicrotest("hblank_int_scx6_if_a.gb") }
+    fun `hblank_int_scx6_if_a`() = runTest { testGbMicrotest("hblank_int_scx6_if_a.gb") }
 
     @Test
-    fun `hblank_int_scx6_if_b`() =
-        runTest { testGbMicrotest("hblank_int_scx6_if_b.gb") }
+    fun `hblank_int_scx6_if_b`() = runTest { testGbMicrotest("hblank_int_scx6_if_b.gb") }
 
     @Test
-    fun `hblank_int_scx6_if_c`() =
-        runTest { testGbMicrotest("hblank_int_scx6_if_c.gb") }
+    fun `hblank_int_scx6_if_c`() = runTest { testGbMicrotest("hblank_int_scx6_if_c.gb") }
 
     @Test
-    fun `hblank_int_scx6_if_d`() =
-        runTest { testGbMicrotest("hblank_int_scx6_if_d.gb") }
+    fun `hblank_int_scx6_if_d`() = runTest { testGbMicrotest("hblank_int_scx6_if_d.gb") }
 
     @Test
-    fun `hblank_int_scx6_nops_a`() =
-        runTest { testGbMicrotest("hblank_int_scx6_nops_a.gb") }
+    fun `hblank_int_scx6_nops_a`() = runTest { testGbMicrotest("hblank_int_scx6_nops_a.gb") }
 
     @Test
-    fun `hblank_int_scx6_nops_b`() =
-        runTest { testGbMicrotest("hblank_int_scx6_nops_b.gb") }
+    fun `hblank_int_scx6_nops_b`() = runTest { testGbMicrotest("hblank_int_scx6_nops_b.gb") }
 
     @Test
     fun `hblank_int_scx7`() = runTest { testGbMicrotest("hblank_int_scx7.gb") }
 
     @Test
-    fun `hblank_int_scx7_if_a`() =
-        runTest { testGbMicrotest("hblank_int_scx7_if_a.gb") }
+    fun `hblank_int_scx7_if_a`() = runTest { testGbMicrotest("hblank_int_scx7_if_a.gb") }
 
     @Test
-    fun `hblank_int_scx7_if_b`() =
-        runTest { testGbMicrotest("hblank_int_scx7_if_b.gb") }
+    fun `hblank_int_scx7_if_b`() = runTest { testGbMicrotest("hblank_int_scx7_if_b.gb") }
 
     @Test
-    fun `hblank_int_scx7_if_c`() =
-        runTest { testGbMicrotest("hblank_int_scx7_if_c.gb") }
+    fun `hblank_int_scx7_if_c`() = runTest { testGbMicrotest("hblank_int_scx7_if_c.gb") }
 
     @Test
-    fun `hblank_int_scx7_if_d`() =
-        runTest { testGbMicrotest("hblank_int_scx7_if_d.gb") }
+    fun `hblank_int_scx7_if_d`() = runTest { testGbMicrotest("hblank_int_scx7_if_d.gb") }
 
     @Test
-    fun `hblank_int_scx7_nops_a`() =
-        runTest { testGbMicrotest("hblank_int_scx7_nops_a.gb") }
+    fun `hblank_int_scx7_nops_a`() = runTest { testGbMicrotest("hblank_int_scx7_nops_a.gb") }
 
     @Test
-    fun `hblank_int_scx7_nops_b`() =
-        runTest { testGbMicrotest("hblank_int_scx7_nops_b.gb") }
+    fun `hblank_int_scx7_nops_b`() = runTest { testGbMicrotest("hblank_int_scx7_nops_b.gb") }
 
     @Test
-    fun `hblank_scx2_if_a`() =
-        runTest { testGbMicrotest("hblank_scx2_if_a.gb") }
+    fun `hblank_scx2_if_a`() = runTest { testGbMicrotest("hblank_scx2_if_a.gb") }
 
     @Test
-    fun `hblank_scx3_if_a`() =
-        runTest { testGbMicrotest("hblank_scx3_if_a.gb") }
+    fun `hblank_scx3_if_a`() = runTest { testGbMicrotest("hblank_scx3_if_a.gb") }
 
     @Test
-    fun `hblank_scx3_if_b`() =
-        runTest { testGbMicrotest("hblank_scx3_if_b.gb") }
+    fun `hblank_scx3_if_b`() = runTest { testGbMicrotest("hblank_scx3_if_b.gb") }
 
     @Test
-    fun `hblank_scx3_if_c`() =
-        runTest { testGbMicrotest("hblank_scx3_if_c.gb") }
+    fun `hblank_scx3_if_c`() = runTest { testGbMicrotest("hblank_scx3_if_c.gb") }
 
     @Test
-    fun `hblank_scx3_if_d`() =
-        runTest { testGbMicrotest("hblank_scx3_if_d.gb") }
+    fun `hblank_scx3_if_d`() = runTest { testGbMicrotest("hblank_scx3_if_d.gb") }
 
     @Test
-    fun `hblank_scx3_int_a`() =
-        runTest { testGbMicrotest("hblank_scx3_int_a.gb") }
+    fun `hblank_scx3_int_a`() = runTest { testGbMicrotest("hblank_scx3_int_a.gb") }
 
     @Test
-    fun `hblank_scx3_int_b`() =
-        runTest { testGbMicrotest("hblank_scx3_int_b.gb") }
+    fun `hblank_scx3_int_b`() = runTest { testGbMicrotest("hblank_scx3_int_b.gb") }
 
     @Test
-    fun `int_hblank_halt_bug_a`() =
-        runTest { testGbMicrotest("int_hblank_halt_bug_a.gb") }
+    fun `int_hblank_halt_bug_a`() = runTest { testGbMicrotest("int_hblank_halt_bug_a.gb") }
 
     @Test
-    fun `int_hblank_halt_bug_b`() =
-        runTest { testGbMicrotest("int_hblank_halt_bug_b.gb") }
+    fun `int_hblank_halt_bug_b`() = runTest { testGbMicrotest("int_hblank_halt_bug_b.gb") }
 
     @Test
-    fun `int_hblank_halt_scx0`() =
-        runTest { testGbMicrotest("int_hblank_halt_scx0.gb") }
+    fun `int_hblank_halt_scx0`() = runTest { testGbMicrotest("int_hblank_halt_scx0.gb") }
 
     @Test
-    fun `int_hblank_halt_scx1`() =
-        runTest { testGbMicrotest("int_hblank_halt_scx1.gb") }
+    fun `int_hblank_halt_scx1`() = runTest { testGbMicrotest("int_hblank_halt_scx1.gb") }
 
     @Test
-    fun `int_hblank_halt_scx2`() =
-        runTest { testGbMicrotest("int_hblank_halt_scx2.gb") }
+    fun `int_hblank_halt_scx2`() = runTest { testGbMicrotest("int_hblank_halt_scx2.gb") }
 
     @Test
-    fun `int_hblank_halt_scx3`() =
-        runTest { testGbMicrotest("int_hblank_halt_scx3.gb") }
+    fun `int_hblank_halt_scx3`() = runTest { testGbMicrotest("int_hblank_halt_scx3.gb") }
 
     @Test
-    fun `int_hblank_halt_scx4`() =
-        runTest { testGbMicrotest("int_hblank_halt_scx4.gb") }
+    fun `int_hblank_halt_scx4`() = runTest { testGbMicrotest("int_hblank_halt_scx4.gb") }
 
     @Test
-    fun `int_hblank_halt_scx5`() =
-        runTest { testGbMicrotest("int_hblank_halt_scx5.gb") }
+    fun `int_hblank_halt_scx5`() = runTest { testGbMicrotest("int_hblank_halt_scx5.gb") }
 
     @Test
-    fun `int_hblank_halt_scx6`() =
-        runTest { testGbMicrotest("int_hblank_halt_scx6.gb") }
+    fun `int_hblank_halt_scx6`() = runTest { testGbMicrotest("int_hblank_halt_scx6.gb") }
 
     @Test
-    fun `int_hblank_halt_scx7`() =
-        runTest { testGbMicrotest("int_hblank_halt_scx7.gb") }
+    fun `int_hblank_halt_scx7`() = runTest { testGbMicrotest("int_hblank_halt_scx7.gb") }
 
     @Test
-    fun `int_hblank_incs_scx0`() =
-        runTest { testGbMicrotest("int_hblank_incs_scx0.gb") }
+    fun `int_hblank_incs_scx0`() = runTest { testGbMicrotest("int_hblank_incs_scx0.gb") }
 
     @Test
-    fun `int_hblank_incs_scx1`() =
-        runTest { testGbMicrotest("int_hblank_incs_scx1.gb") }
+    fun `int_hblank_incs_scx1`() = runTest { testGbMicrotest("int_hblank_incs_scx1.gb") }
 
     @Test
-    fun `int_hblank_incs_scx2`() =
-        runTest { testGbMicrotest("int_hblank_incs_scx2.gb") }
+    fun `int_hblank_incs_scx2`() = runTest { testGbMicrotest("int_hblank_incs_scx2.gb") }
 
     @Test
-    fun `int_hblank_incs_scx3`() =
-        runTest { testGbMicrotest("int_hblank_incs_scx3.gb") }
+    fun `int_hblank_incs_scx3`() = runTest { testGbMicrotest("int_hblank_incs_scx3.gb") }
 
     @Test
-    fun `int_hblank_incs_scx4`() =
-        runTest { testGbMicrotest("int_hblank_incs_scx4.gb") }
+    fun `int_hblank_incs_scx4`() = runTest { testGbMicrotest("int_hblank_incs_scx4.gb") }
 
     @Test
-    fun `int_hblank_incs_scx5`() =
-        runTest { testGbMicrotest("int_hblank_incs_scx5.gb") }
+    fun `int_hblank_incs_scx5`() = runTest { testGbMicrotest("int_hblank_incs_scx5.gb") }
 
     @Test
-    fun `int_hblank_incs_scx6`() =
-        runTest { testGbMicrotest("int_hblank_incs_scx6.gb") }
+    fun `int_hblank_incs_scx6`() = runTest { testGbMicrotest("int_hblank_incs_scx6.gb") }
 
     @Test
-    fun `int_hblank_incs_scx7`() =
-        runTest { testGbMicrotest("int_hblank_incs_scx7.gb") }
+    fun `int_hblank_incs_scx7`() = runTest { testGbMicrotest("int_hblank_incs_scx7.gb") }
 
     @Test
-    fun `int_hblank_nops_scx0`() =
-        runTest { testGbMicrotest("int_hblank_nops_scx0.gb") }
+    fun `int_hblank_nops_scx0`() = runTest { testGbMicrotest("int_hblank_nops_scx0.gb") }
 
     @Test
-    fun `int_hblank_nops_scx1`() =
-        runTest { testGbMicrotest("int_hblank_nops_scx1.gb") }
+    fun `int_hblank_nops_scx1`() = runTest { testGbMicrotest("int_hblank_nops_scx1.gb") }
 
     @Test
-    fun `int_hblank_nops_scx2`() =
-        runTest { testGbMicrotest("int_hblank_nops_scx2.gb") }
+    fun `int_hblank_nops_scx2`() = runTest { testGbMicrotest("int_hblank_nops_scx2.gb") }
 
     @Test
-    fun `int_hblank_nops_scx3`() =
-        runTest { testGbMicrotest("int_hblank_nops_scx3.gb") }
+    fun `int_hblank_nops_scx3`() = runTest { testGbMicrotest("int_hblank_nops_scx3.gb") }
 
     @Test
-    fun `int_hblank_nops_scx4`() =
-        runTest { testGbMicrotest("int_hblank_nops_scx4.gb") }
+    fun `int_hblank_nops_scx4`() = runTest { testGbMicrotest("int_hblank_nops_scx4.gb") }
 
     @Test
-    fun `int_hblank_nops_scx5`() =
-        runTest { testGbMicrotest("int_hblank_nops_scx5.gb") }
+    fun `int_hblank_nops_scx5`() = runTest { testGbMicrotest("int_hblank_nops_scx5.gb") }
 
     @Test
-    fun `int_hblank_nops_scx6`() =
-        runTest { testGbMicrotest("int_hblank_nops_scx6.gb") }
+    fun `int_hblank_nops_scx6`() = runTest { testGbMicrotest("int_hblank_nops_scx6.gb") }
 
     @Test
-    fun `int_hblank_nops_scx7`() =
-        runTest { testGbMicrotest("int_hblank_nops_scx7.gb") }
+    fun `int_hblank_nops_scx7`() = runTest { testGbMicrotest("int_hblank_nops_scx7.gb") }
 
     @Test
     fun `int_lyc_halt`() = runTest { testGbMicrotest("int_lyc_halt.gb") }
@@ -513,12 +421,10 @@ class GbCpuGbMicroTest {
     fun `int_timer_halt`() = runTest { testGbMicrotest("int_timer_halt.gb") }
 
     @Test
-    fun `int_timer_halt_div_a`() =
-        runTest { testGbMicrotest("int_timer_halt_div_a.gb") }
+    fun `int_timer_halt_div_a`() = runTest { testGbMicrotest("int_timer_halt_div_a.gb") }
 
     @Test
-    fun `int_timer_halt_div_b`() =
-        runTest { testGbMicrotest("int_timer_halt_div_b.gb") }
+    fun `int_timer_halt_div_b`() = runTest { testGbMicrotest("int_timer_halt_div_b.gb") }
 
     @Test
     fun `int_timer_incs`() = runTest { testGbMicrotest("int_timer_incs.gb") }
@@ -527,64 +433,49 @@ class GbCpuGbMicroTest {
     fun `int_timer_nops`() = runTest { testGbMicrotest("int_timer_nops.gb") }
 
     @Test
-    fun `int_timer_nops_div_a`() =
-        runTest { testGbMicrotest("int_timer_nops_div_a.gb") }
+    fun `int_timer_nops_div_a`() = runTest { testGbMicrotest("int_timer_nops_div_a.gb") }
 
     @Test
-    fun `int_timer_nops_div_b`() =
-        runTest { testGbMicrotest("int_timer_nops_div_b.gb") }
+    fun `int_timer_nops_div_b`() = runTest { testGbMicrotest("int_timer_nops_div_b.gb") }
 
     @Test
-    fun `int_vblank1_halt`() =
-        runTest { testGbMicrotest("int_vblank1_halt.gb") }
+    fun `int_vblank1_halt`() = runTest { testGbMicrotest("int_vblank1_halt.gb") }
 
     @Test
-    fun `int_vblank1_incs`() =
-        runTest { testGbMicrotest("int_vblank1_incs.gb") }
+    fun `int_vblank1_incs`() = runTest { testGbMicrotest("int_vblank1_incs.gb") }
 
     @Test
-    fun `int_vblank1_nops`() =
-        runTest { testGbMicrotest("int_vblank1_nops.gb") }
+    fun `int_vblank1_nops`() = runTest { testGbMicrotest("int_vblank1_nops.gb") }
 
     @Test
-    fun `int_vblank2_halt`() =
-        runTest { testGbMicrotest("int_vblank2_halt.gb") }
+    fun `int_vblank2_halt`() = runTest { testGbMicrotest("int_vblank2_halt.gb") }
 
     @Test
-    fun `int_vblank2_incs`() =
-        runTest { testGbMicrotest("int_vblank2_incs.gb") }
+    fun `int_vblank2_incs`() = runTest { testGbMicrotest("int_vblank2_incs.gb") }
 
     @Test
-    fun `int_vblank2_nops`() =
-        runTest { testGbMicrotest("int_vblank2_nops.gb") }
+    fun `int_vblank2_nops`() = runTest { testGbMicrotest("int_vblank2_nops.gb") }
 
     @Test
-    fun `is_if_set_during_ime0`() =
-        runTest { testGbMicrotest("is_if_set_during_ime0.gb") }
+    fun `is_if_set_during_ime0`() = runTest { testGbMicrotest("is_if_set_during_ime0.gb") }
 
     @Test
-    fun `lcdon_halt_to_vblank_int_a`() =
-        runTest { testGbMicrotest("lcdon_halt_to_vblank_int_a.gb") }
+    fun `lcdon_halt_to_vblank_int_a`() = runTest { testGbMicrotest("lcdon_halt_to_vblank_int_a.gb") }
 
     @Test
-    fun `lcdon_halt_to_vblank_int_b`() =
-        runTest { testGbMicrotest("lcdon_halt_to_vblank_int_b.gb") }
+    fun `lcdon_halt_to_vblank_int_b`() = runTest { testGbMicrotest("lcdon_halt_to_vblank_int_b.gb") }
 
     @Test
-    fun `lcdon_nops_to_vblank_int_a`() =
-        runTest { testGbMicrotest("lcdon_nops_to_vblank_int_a.gb") }
+    fun `lcdon_nops_to_vblank_int_a`() = runTest { testGbMicrotest("lcdon_nops_to_vblank_int_a.gb") }
 
     @Test
-    fun `lcdon_nops_to_vblank_int_b`() =
-        runTest { testGbMicrotest("lcdon_nops_to_vblank_int_b.gb") }
+    fun `lcdon_nops_to_vblank_int_b`() = runTest { testGbMicrotest("lcdon_nops_to_vblank_int_b.gb") }
 
     @Test
-    fun `lcdon_to_if_oam_a`() =
-        runTest { testGbMicrotest("lcdon_to_if_oam_a.gb") }
+    fun `lcdon_to_if_oam_a`() = runTest { testGbMicrotest("lcdon_to_if_oam_a.gb") }
 
     @Test
-    fun `lcdon_to_if_oam_b`() =
-        runTest { testGbMicrotest("lcdon_to_if_oam_b.gb") }
+    fun `lcdon_to_if_oam_b`() = runTest { testGbMicrotest("lcdon_to_if_oam_b.gb") }
 
     @Test
     fun `lcdon_to_ly1_a`() = runTest { testGbMicrotest("lcdon_to_ly1_a.gb") }
@@ -605,135 +496,103 @@ class GbCpuGbMicroTest {
     fun `lcdon_to_ly3_b`() = runTest { testGbMicrotest("lcdon_to_ly3_b.gb") }
 
     @Test
-    fun `lcdon_to_lyc1_int`() =
-        runTest { testGbMicrotest("lcdon_to_lyc1_int.gb") }
+    fun `lcdon_to_lyc1_int`() = runTest { testGbMicrotest("lcdon_to_lyc1_int.gb") }
 
     @Test
-    fun `lcdon_to_lyc2_int`() =
-        runTest { testGbMicrotest("lcdon_to_lyc2_int.gb") }
+    fun `lcdon_to_lyc2_int`() = runTest { testGbMicrotest("lcdon_to_lyc2_int.gb") }
 
     @Test
-    fun `lcdon_to_lyc3_int`() =
-        runTest { testGbMicrotest("lcdon_to_lyc3_int.gb") }
+    fun `lcdon_to_lyc3_int`() = runTest { testGbMicrotest("lcdon_to_lyc3_int.gb") }
 
     @Test
-    fun `lcdon_to_oam_int_l0`() =
-        runTest { testGbMicrotest("lcdon_to_oam_int_l0.gb") }
+    fun `lcdon_to_oam_int_l0`() = runTest { testGbMicrotest("lcdon_to_oam_int_l0.gb") }
 
     @Test
-    fun `lcdon_to_oam_int_l1`() =
-        runTest { testGbMicrotest("lcdon_to_oam_int_l1.gb") }
+    fun `lcdon_to_oam_int_l1`() = runTest { testGbMicrotest("lcdon_to_oam_int_l1.gb") }
 
     @Test
-    fun `lcdon_to_oam_int_l2`() =
-        runTest { testGbMicrotest("lcdon_to_oam_int_l2.gb") }
+    fun `lcdon_to_oam_int_l2`() = runTest { testGbMicrotest("lcdon_to_oam_int_l2.gb") }
 
     @Test
-    fun `lcdon_to_oam_unlock_a`() =
-        runTest { testGbMicrotest("lcdon_to_oam_unlock_a.gb") }
+    fun `lcdon_to_oam_unlock_a`() = runTest { testGbMicrotest("lcdon_to_oam_unlock_a.gb") }
 
     @Test
-    fun `lcdon_to_oam_unlock_b`() =
-        runTest { testGbMicrotest("lcdon_to_oam_unlock_b.gb") }
+    fun `lcdon_to_oam_unlock_b`() = runTest { testGbMicrotest("lcdon_to_oam_unlock_b.gb") }
 
     @Test
-    fun `lcdon_to_oam_unlock_c`() =
-        runTest { testGbMicrotest("lcdon_to_oam_unlock_c.gb") }
+    fun `lcdon_to_oam_unlock_c`() = runTest { testGbMicrotest("lcdon_to_oam_unlock_c.gb") }
 
     @Test
-    fun `lcdon_to_oam_unlock_d`() =
-        runTest { testGbMicrotest("lcdon_to_oam_unlock_d.gb") }
+    fun `lcdon_to_oam_unlock_d`() = runTest { testGbMicrotest("lcdon_to_oam_unlock_d.gb") }
 
     @Test
-    fun `lcdon_to_stat0_a`() =
-        runTest { testGbMicrotest("lcdon_to_stat0_a.gb") }
+    fun `lcdon_to_stat0_a`() = runTest { testGbMicrotest("lcdon_to_stat0_a.gb") }
 
     @Test
-    fun `lcdon_to_stat0_b`() =
-        runTest { testGbMicrotest("lcdon_to_stat0_b.gb") }
+    fun `lcdon_to_stat0_b`() = runTest { testGbMicrotest("lcdon_to_stat0_b.gb") }
 
     @Test
-    fun `lcdon_to_stat0_c`() =
-        runTest { testGbMicrotest("lcdon_to_stat0_c.gb") }
+    fun `lcdon_to_stat0_c`() = runTest { testGbMicrotest("lcdon_to_stat0_c.gb") }
 
     @Test
-    fun `lcdon_to_stat0_d`() =
-        runTest { testGbMicrotest("lcdon_to_stat0_d.gb") }
+    fun `lcdon_to_stat0_d`() = runTest { testGbMicrotest("lcdon_to_stat0_d.gb") }
 
     @Test
-    fun `lcdon_to_stat1_a`() =
-        runTest { testGbMicrotest("lcdon_to_stat1_a.gb") }
+    fun `lcdon_to_stat1_a`() = runTest { testGbMicrotest("lcdon_to_stat1_a.gb") }
 
     @Test
-    fun `lcdon_to_stat1_b`() =
-        runTest { testGbMicrotest("lcdon_to_stat1_b.gb") }
+    fun `lcdon_to_stat1_b`() = runTest { testGbMicrotest("lcdon_to_stat1_b.gb") }
 
     @Test
-    fun `lcdon_to_stat1_c`() =
-        runTest { testGbMicrotest("lcdon_to_stat1_c.gb") }
+    fun `lcdon_to_stat1_c`() = runTest { testGbMicrotest("lcdon_to_stat1_c.gb") }
 
     @Test
-    fun `lcdon_to_stat1_d`() =
-        runTest { testGbMicrotest("lcdon_to_stat1_d.gb") }
+    fun `lcdon_to_stat1_d`() = runTest { testGbMicrotest("lcdon_to_stat1_d.gb") }
 
     @Test
-    fun `lcdon_to_stat1_e`() =
-        runTest { testGbMicrotest("lcdon_to_stat1_e.gb") }
+    fun `lcdon_to_stat1_e`() = runTest { testGbMicrotest("lcdon_to_stat1_e.gb") }
 
     @Test
-    fun `lcdon_to_stat2_a`() =
-        runTest { testGbMicrotest("lcdon_to_stat2_a.gb") }
+    fun `lcdon_to_stat2_a`() = runTest { testGbMicrotest("lcdon_to_stat2_a.gb") }
 
     @Test
-    fun `lcdon_to_stat2_b`() =
-        runTest { testGbMicrotest("lcdon_to_stat2_b.gb") }
+    fun `lcdon_to_stat2_b`() = runTest { testGbMicrotest("lcdon_to_stat2_b.gb") }
 
     @Test
-    fun `lcdon_to_stat2_c`() =
-        runTest { testGbMicrotest("lcdon_to_stat2_c.gb") }
+    fun `lcdon_to_stat2_c`() = runTest { testGbMicrotest("lcdon_to_stat2_c.gb") }
 
     @Test
-    fun `lcdon_to_stat2_d`() =
-        runTest { testGbMicrotest("lcdon_to_stat2_d.gb") }
+    fun `lcdon_to_stat2_d`() = runTest { testGbMicrotest("lcdon_to_stat2_d.gb") }
 
     @Test
-    fun `lcdon_to_stat3_a`() =
-        runTest { testGbMicrotest("lcdon_to_stat3_a.gb") }
+    fun `lcdon_to_stat3_a`() = runTest { testGbMicrotest("lcdon_to_stat3_a.gb") }
 
     @Test
-    fun `lcdon_to_stat3_b`() =
-        runTest { testGbMicrotest("lcdon_to_stat3_b.gb") }
+    fun `lcdon_to_stat3_b`() = runTest { testGbMicrotest("lcdon_to_stat3_b.gb") }
 
     @Test
-    fun `lcdon_to_stat3_c`() =
-        runTest { testGbMicrotest("lcdon_to_stat3_c.gb") }
+    fun `lcdon_to_stat3_c`() = runTest { testGbMicrotest("lcdon_to_stat3_c.gb") }
 
     @Test
-    fun `lcdon_to_stat3_d`() =
-        runTest { testGbMicrotest("lcdon_to_stat3_d.gb") }
+    fun `lcdon_to_stat3_d`() = runTest { testGbMicrotest("lcdon_to_stat3_d.gb") }
 
     @Test
-    fun `lcdon_write_timing`() =
-        runTest { testGbMicrotest("lcdon_write_timing.gb") }
+    fun `lcdon_write_timing`() = runTest { testGbMicrotest("lcdon_write_timing.gb") }
 
     @Test
     fun `line_65_ly`() = runTest { testGbMicrotest("line_65_ly.gb") }
 
     @Test
-    fun `line_144_oam_int_a`() =
-        runTest { testGbMicrotest("line_144_oam_int_a.gb") }
+    fun `line_144_oam_int_a`() = runTest { testGbMicrotest("line_144_oam_int_a.gb") }
 
     @Test
-    fun `line_144_oam_int_b`() =
-        runTest { testGbMicrotest("line_144_oam_int_b.gb") }
+    fun `line_144_oam_int_b`() = runTest { testGbMicrotest("line_144_oam_int_b.gb") }
 
     @Test
-    fun `line_144_oam_int_c`() =
-        runTest { testGbMicrotest("line_144_oam_int_c.gb") }
+    fun `line_144_oam_int_c`() = runTest { testGbMicrotest("line_144_oam_int_c.gb") }
 
     @Test
-    fun `line_144_oam_int_d`() =
-        runTest { testGbMicrotest("line_144_oam_int_d.gb") }
+    fun `line_144_oam_int_d`() = runTest { testGbMicrotest("line_144_oam_int_d.gb") }
 
     @Test
     fun `line_153_ly_a`() = runTest { testGbMicrotest("line_153_ly_a.gb") }
@@ -754,88 +613,67 @@ class GbCpuGbMicroTest {
     fun `line_153_ly_f`() = runTest { testGbMicrotest("line_153_ly_f.gb") }
 
     @Test
-    fun `line_153_lyc0_int_inc_sled`() =
-        runTest { testGbMicrotest("line_153_lyc0_int_inc_sled.gb") }
+    fun `line_153_lyc0_int_inc_sled`() = runTest { testGbMicrotest("line_153_lyc0_int_inc_sled.gb") }
 
     @Test
-    fun `line_153_lyc0_stat_timing_a`() =
-        runTest { testGbMicrotest("line_153_lyc0_stat_timing_a.gb") }
+    fun `line_153_lyc0_stat_timing_a`() = runTest { testGbMicrotest("line_153_lyc0_stat_timing_a.gb") }
 
     @Test
-    fun `line_153_lyc0_stat_timing_b`() =
-        runTest { testGbMicrotest("line_153_lyc0_stat_timing_b.gb") }
+    fun `line_153_lyc0_stat_timing_b`() = runTest { testGbMicrotest("line_153_lyc0_stat_timing_b.gb") }
 
     @Test
-    fun `line_153_lyc0_stat_timing_c`() =
-        runTest { testGbMicrotest("line_153_lyc0_stat_timing_c.gb") }
+    fun `line_153_lyc0_stat_timing_c`() = runTest { testGbMicrotest("line_153_lyc0_stat_timing_c.gb") }
 
     @Test
-    fun `line_153_lyc0_stat_timing_d`() =
-        runTest { testGbMicrotest("line_153_lyc0_stat_timing_d.gb") }
+    fun `line_153_lyc0_stat_timing_d`() = runTest { testGbMicrotest("line_153_lyc0_stat_timing_d.gb") }
 
     @Test
-    fun `line_153_lyc0_stat_timing_e`() =
-        runTest { testGbMicrotest("line_153_lyc0_stat_timing_e.gb") }
+    fun `line_153_lyc0_stat_timing_e`() = runTest { testGbMicrotest("line_153_lyc0_stat_timing_e.gb") }
 
     @Test
-    fun `line_153_lyc0_stat_timing_f`() =
-        runTest { testGbMicrotest("line_153_lyc0_stat_timing_f.gb") }
+    fun `line_153_lyc0_stat_timing_f`() = runTest { testGbMicrotest("line_153_lyc0_stat_timing_f.gb") }
 
     @Test
-    fun `line_153_lyc0_stat_timing_g`() =
-        runTest { testGbMicrotest("line_153_lyc0_stat_timing_g.gb") }
+    fun `line_153_lyc0_stat_timing_g`() = runTest { testGbMicrotest("line_153_lyc0_stat_timing_g.gb") }
 
     @Test
-    fun `line_153_lyc0_stat_timing_h`() =
-        runTest { testGbMicrotest("line_153_lyc0_stat_timing_h.gb") }
+    fun `line_153_lyc0_stat_timing_h`() = runTest { testGbMicrotest("line_153_lyc0_stat_timing_h.gb") }
 
     @Test
-    fun `line_153_lyc0_stat_timing_i`() =
-        runTest { testGbMicrotest("line_153_lyc0_stat_timing_i.gb") }
+    fun `line_153_lyc0_stat_timing_i`() = runTest { testGbMicrotest("line_153_lyc0_stat_timing_i.gb") }
 
     @Test
-    fun `line_153_lyc0_stat_timing_j`() =
-        runTest { testGbMicrotest("line_153_lyc0_stat_timing_j.gb") }
+    fun `line_153_lyc0_stat_timing_j`() = runTest { testGbMicrotest("line_153_lyc0_stat_timing_j.gb") }
 
     @Test
-    fun `line_153_lyc0_stat_timing_k`() =
-        runTest { testGbMicrotest("line_153_lyc0_stat_timing_k.gb") }
+    fun `line_153_lyc0_stat_timing_k`() = runTest { testGbMicrotest("line_153_lyc0_stat_timing_k.gb") }
 
     @Test
-    fun `line_153_lyc0_stat_timing_l`() =
-        runTest { testGbMicrotest("line_153_lyc0_stat_timing_l.gb") }
+    fun `line_153_lyc0_stat_timing_l`() = runTest { testGbMicrotest("line_153_lyc0_stat_timing_l.gb") }
 
     @Test
-    fun `line_153_lyc0_stat_timing_m`() =
-        runTest { testGbMicrotest("line_153_lyc0_stat_timing_m.gb") }
+    fun `line_153_lyc0_stat_timing_m`() = runTest { testGbMicrotest("line_153_lyc0_stat_timing_m.gb") }
 
     @Test
-    fun `line_153_lyc0_stat_timing_n`() =
-        runTest { testGbMicrotest("line_153_lyc0_stat_timing_n.gb") }
+    fun `line_153_lyc0_stat_timing_n`() = runTest { testGbMicrotest("line_153_lyc0_stat_timing_n.gb") }
 
     @Test
-    fun `line_153_lyc153_stat_timing_a`() =
-        runTest { testGbMicrotest("line_153_lyc153_stat_timing_a.gb") }
+    fun `line_153_lyc153_stat_timing_a`() = runTest { testGbMicrotest("line_153_lyc153_stat_timing_a.gb") }
 
     @Test
-    fun `line_153_lyc153_stat_timing_b`() =
-        runTest { testGbMicrotest("line_153_lyc153_stat_timing_b.gb") }
+    fun `line_153_lyc153_stat_timing_b`() = runTest { testGbMicrotest("line_153_lyc153_stat_timing_b.gb") }
 
     @Test
-    fun `line_153_lyc153_stat_timing_c`() =
-        runTest { testGbMicrotest("line_153_lyc153_stat_timing_c.gb") }
+    fun `line_153_lyc153_stat_timing_c`() = runTest { testGbMicrotest("line_153_lyc153_stat_timing_c.gb") }
 
     @Test
-    fun `line_153_lyc153_stat_timing_d`() =
-        runTest { testGbMicrotest("line_153_lyc153_stat_timing_d.gb") }
+    fun `line_153_lyc153_stat_timing_d`() = runTest { testGbMicrotest("line_153_lyc153_stat_timing_d.gb") }
 
     @Test
-    fun `line_153_lyc153_stat_timing_e`() =
-        runTest { testGbMicrotest("line_153_lyc153_stat_timing_e.gb") }
+    fun `line_153_lyc153_stat_timing_e`() = runTest { testGbMicrotest("line_153_lyc153_stat_timing_e.gb") }
 
     @Test
-    fun `line_153_lyc153_stat_timing_f`() =
-        runTest { testGbMicrotest("line_153_lyc153_stat_timing_f.gb") }
+    fun `line_153_lyc153_stat_timing_f`() = runTest { testGbMicrotest("line_153_lyc153_stat_timing_f.gb") }
 
     @Test
     fun `line_153_lyc_a`() = runTest { testGbMicrotest("line_153_lyc_a.gb") }
@@ -847,16 +685,13 @@ class GbCpuGbMicroTest {
     fun `line_153_lyc_c`() = runTest { testGbMicrotest("line_153_lyc_c.gb") }
 
     @Test
-    fun `line_153_lyc_int_a`() =
-        runTest { testGbMicrotest("line_153_lyc_int_a.gb") }
+    fun `line_153_lyc_int_a`() = runTest { testGbMicrotest("line_153_lyc_int_a.gb") }
 
     @Test
-    fun `line_153_lyc_int_b`() =
-        runTest { testGbMicrotest("line_153_lyc_int_b.gb") }
+    fun `line_153_lyc_int_b`() = runTest { testGbMicrotest("line_153_lyc_int_b.gb") }
 
     @Test
-    fun `ly_while_lcd_off`() =
-        runTest { testGbMicrotest("ly_while_lcd_off.gb") }
+    fun `ly_while_lcd_off`() = runTest { testGbMicrotest("ly_while_lcd_off.gb") }
 
     @Test
     fun `lyc1_int_halt_a`() = runTest { testGbMicrotest("lyc1_int_halt_a.gb") }
@@ -865,20 +700,16 @@ class GbCpuGbMicroTest {
     fun `lyc1_int_halt_b`() = runTest { testGbMicrotest("lyc1_int_halt_b.gb") }
 
     @Test
-    fun `lyc1_int_if_edge_a`() =
-        runTest { testGbMicrotest("lyc1_int_if_edge_a.gb") }
+    fun `lyc1_int_if_edge_a`() = runTest { testGbMicrotest("lyc1_int_if_edge_a.gb") }
 
     @Test
-    fun `lyc1_int_if_edge_b`() =
-        runTest { testGbMicrotest("lyc1_int_if_edge_b.gb") }
+    fun `lyc1_int_if_edge_b`() = runTest { testGbMicrotest("lyc1_int_if_edge_b.gb") }
 
     @Test
-    fun `lyc1_int_if_edge_c`() =
-        runTest { testGbMicrotest("lyc1_int_if_edge_c.gb") }
+    fun `lyc1_int_if_edge_c`() = runTest { testGbMicrotest("lyc1_int_if_edge_c.gb") }
 
     @Test
-    fun `lyc1_int_if_edge_d`() =
-        runTest { testGbMicrotest("lyc1_int_if_edge_d.gb") }
+    fun `lyc1_int_if_edge_d`() = runTest { testGbMicrotest("lyc1_int_if_edge_d.gb") }
 
     @Test
     fun `lyc1_int_nops_a`() = runTest { testGbMicrotest("lyc1_int_nops_a.gb") }
@@ -887,20 +718,16 @@ class GbCpuGbMicroTest {
     fun `lyc1_int_nops_b`() = runTest { testGbMicrotest("lyc1_int_nops_b.gb") }
 
     @Test
-    fun `lyc1_write_timing_a`() =
-        runTest { testGbMicrotest("lyc1_write_timing_a.gb") }
+    fun `lyc1_write_timing_a`() = runTest { testGbMicrotest("lyc1_write_timing_a.gb") }
 
     @Test
-    fun `lyc1_write_timing_b`() =
-        runTest { testGbMicrotest("lyc1_write_timing_b.gb") }
+    fun `lyc1_write_timing_b`() = runTest { testGbMicrotest("lyc1_write_timing_b.gb") }
 
     @Test
-    fun `lyc1_write_timing_c`() =
-        runTest { testGbMicrotest("lyc1_write_timing_c.gb") }
+    fun `lyc1_write_timing_c`() = runTest { testGbMicrotest("lyc1_write_timing_c.gb") }
 
     @Test
-    fun `lyc1_write_timing_d`() =
-        runTest { testGbMicrotest("lyc1_write_timing_d.gb") }
+    fun `lyc1_write_timing_d`() = runTest { testGbMicrotest("lyc1_write_timing_d.gb") }
 
     @Test
     fun `lyc2_int_halt_a`() = runTest { testGbMicrotest("lyc2_int_halt_a.gb") }
@@ -924,8 +751,7 @@ class GbCpuGbMicroTest {
     fun `minimal`() = runTest { testGbMicrotest("minimal.gb") }
 
     @Test
-    fun `mode2_stat_int_to_oam_unlock`() =
-        runTest { testGbMicrotest("mode2_stat_int_to_oam_unlock.gb") }
+    fun `mode2_stat_int_to_oam_unlock`() = runTest { testGbMicrotest("mode2_stat_int_to_oam_unlock.gb") }
 
     @Test
     fun `oam_int_halt_a`() = runTest { testGbMicrotest("oam_int_halt_a.gb") }
@@ -934,32 +760,25 @@ class GbCpuGbMicroTest {
     fun `oam_int_halt_b`() = runTest { testGbMicrotest("oam_int_halt_b.gb") }
 
     @Test
-    fun `oam_int_if_edge_a`() =
-        runTest { testGbMicrotest("oam_int_if_edge_a.gb") }
+    fun `oam_int_if_edge_a`() = runTest { testGbMicrotest("oam_int_if_edge_a.gb") }
 
     @Test
-    fun `oam_int_if_edge_b`() =
-        runTest { testGbMicrotest("oam_int_if_edge_b.gb") }
+    fun `oam_int_if_edge_b`() = runTest { testGbMicrotest("oam_int_if_edge_b.gb") }
 
     @Test
-    fun `oam_int_if_edge_c`() =
-        runTest { testGbMicrotest("oam_int_if_edge_c.gb") }
+    fun `oam_int_if_edge_c`() = runTest { testGbMicrotest("oam_int_if_edge_c.gb") }
 
     @Test
-    fun `oam_int_if_edge_d`() =
-        runTest { testGbMicrotest("oam_int_if_edge_d.gb") }
+    fun `oam_int_if_edge_d`() = runTest { testGbMicrotest("oam_int_if_edge_d.gb") }
 
     @Test
-    fun `oam_int_if_level_c`() =
-        runTest { testGbMicrotest("oam_int_if_level_c.gb") }
+    fun `oam_int_if_level_c`() = runTest { testGbMicrotest("oam_int_if_level_c.gb") }
 
     @Test
-    fun `oam_int_if_level_d`() =
-        runTest { testGbMicrotest("oam_int_if_level_d.gb") }
+    fun `oam_int_if_level_d`() = runTest { testGbMicrotest("oam_int_if_level_d.gb") }
 
     @Test
-    fun `oam_int_inc_sled`() =
-        runTest { testGbMicrotest("oam_int_inc_sled.gb") }
+    fun `oam_int_inc_sled`() = runTest { testGbMicrotest("oam_int_inc_sled.gb") }
 
     @Test
     fun `oam_int_nops_a`() = runTest { testGbMicrotest("oam_int_nops_a.gb") }
@@ -998,8 +817,7 @@ class GbCpuGbMicroTest {
     fun `oam_read_l1_f`() = runTest { testGbMicrotest("oam_read_l1_f.gb") }
 
     @Test
-    fun `oam_sprite_trashing`() =
-        runTest { testGbMicrotest("oam_sprite_trashing.gb") }
+    fun `oam_sprite_trashing`() = runTest { testGbMicrotest("oam_sprite_trashing.gb") }
 
     @Test
     fun `oam_write_l0_a`() = runTest { testGbMicrotest("oam_write_l0_a.gb") }
@@ -1059,8 +877,7 @@ class GbCpuGbMicroTest {
     fun `poweron_joy_000`() = runTest { testGbMicrotest("poweron_joy_000.gb") }
 
     @Test
-    fun `poweron_lcdc_000`() =
-        runTest { testGbMicrotest("poweron_lcdc_000.gb") }
+    fun `poweron_lcdc_000`() = runTest { testGbMicrotest("poweron_lcdc_000.gb") }
 
     @Test
     fun `poweron_ly_000`() = runTest { testGbMicrotest("poweron_ly_000.gb") }
@@ -1120,12 +937,10 @@ class GbCpuGbMicroTest {
     fun `poweron_oam_235`() = runTest { testGbMicrotest("poweron_oam_235.gb") }
 
     @Test
-    fun `poweron_obp0_000`() =
-        runTest { testGbMicrotest("poweron_obp0_000.gb") }
+    fun `poweron_obp0_000`() = runTest { testGbMicrotest("poweron_obp0_000.gb") }
 
     @Test
-    fun `poweron_obp1_000`() =
-        runTest { testGbMicrotest("poweron_obp1_000.gb") }
+    fun `poweron_obp1_000`() = runTest { testGbMicrotest("poweron_obp1_000.gb") }
 
     @Test
     fun `poweron_sb_000`() = runTest { testGbMicrotest("poweron_sb_000.gb") }
@@ -1140,118 +955,91 @@ class GbCpuGbMicroTest {
     fun `poweron_scy_000`() = runTest { testGbMicrotest("poweron_scy_000.gb") }
 
     @Test
-    fun `poweron_stat_000`() =
-        runTest { testGbMicrotest("poweron_stat_000.gb") }
+    fun `poweron_stat_000`() = runTest { testGbMicrotest("poweron_stat_000.gb") }
 
     @Test
-    fun `poweron_stat_005`() =
-        runTest { testGbMicrotest("poweron_stat_005.gb") }
+    fun `poweron_stat_005`() = runTest { testGbMicrotest("poweron_stat_005.gb") }
 
     @Test
-    fun `poweron_stat_006`() =
-        runTest { testGbMicrotest("poweron_stat_006.gb") }
+    fun `poweron_stat_006`() = runTest { testGbMicrotest("poweron_stat_006.gb") }
 
     @Test
-    fun `poweron_stat_007`() =
-        runTest { testGbMicrotest("poweron_stat_007.gb") }
+    fun `poweron_stat_007`() = runTest { testGbMicrotest("poweron_stat_007.gb") }
 
     @Test
-    fun `poweron_stat_026`() =
-        runTest { testGbMicrotest("poweron_stat_026.gb") }
+    fun `poweron_stat_026`() = runTest { testGbMicrotest("poweron_stat_026.gb") }
 
     @Test
-    fun `poweron_stat_027`() =
-        runTest { testGbMicrotest("poweron_stat_027.gb") }
+    fun `poweron_stat_027`() = runTest { testGbMicrotest("poweron_stat_027.gb") }
 
     @Test
-    fun `poweron_stat_069`() =
-        runTest { testGbMicrotest("poweron_stat_069.gb") }
+    fun `poweron_stat_069`() = runTest { testGbMicrotest("poweron_stat_069.gb") }
 
     @Test
-    fun `poweron_stat_070`() =
-        runTest { testGbMicrotest("poweron_stat_070.gb") }
+    fun `poweron_stat_070`() = runTest { testGbMicrotest("poweron_stat_070.gb") }
 
     @Test
-    fun `poweron_stat_119`() =
-        runTest { testGbMicrotest("poweron_stat_119.gb") }
+    fun `poweron_stat_119`() = runTest { testGbMicrotest("poweron_stat_119.gb") }
 
     @Test
-    fun `poweron_stat_120`() =
-        runTest { testGbMicrotest("poweron_stat_120.gb") }
+    fun `poweron_stat_120`() = runTest { testGbMicrotest("poweron_stat_120.gb") }
 
     @Test
-    fun `poweron_stat_121`() =
-        runTest { testGbMicrotest("poweron_stat_121.gb") }
+    fun `poweron_stat_121`() = runTest { testGbMicrotest("poweron_stat_121.gb") }
 
     @Test
-    fun `poweron_stat_140`() =
-        runTest { testGbMicrotest("poweron_stat_140.gb") }
+    fun `poweron_stat_140`() = runTest { testGbMicrotest("poweron_stat_140.gb") }
 
     @Test
-    fun `poweron_stat_141`() =
-        runTest { testGbMicrotest("poweron_stat_141.gb") }
+    fun `poweron_stat_141`() = runTest { testGbMicrotest("poweron_stat_141.gb") }
 
     @Test
-    fun `poweron_stat_183`() =
-        runTest { testGbMicrotest("poweron_stat_183.gb") }
+    fun `poweron_stat_183`() = runTest { testGbMicrotest("poweron_stat_183.gb") }
 
     @Test
-    fun `poweron_stat_184`() =
-        runTest { testGbMicrotest("poweron_stat_184.gb") }
+    fun `poweron_stat_184`() = runTest { testGbMicrotest("poweron_stat_184.gb") }
 
     @Test
-    fun `poweron_stat_234`() =
-        runTest { testGbMicrotest("poweron_stat_234.gb") }
+    fun `poweron_stat_234`() = runTest { testGbMicrotest("poweron_stat_234.gb") }
 
     @Test
-    fun `poweron_stat_235`() =
-        runTest { testGbMicrotest("poweron_stat_235.gb") }
+    fun `poweron_stat_235`() = runTest { testGbMicrotest("poweron_stat_235.gb") }
 
     @Test
     fun `poweron_tac_000`() = runTest { testGbMicrotest("poweron_tac_000.gb") }
 
     @Test
-    fun `poweron_tima_000`() =
-        runTest { testGbMicrotest("poweron_tima_000.gb") }
+    fun `poweron_tima_000`() = runTest { testGbMicrotest("poweron_tima_000.gb") }
 
     @Test
     fun `poweron_tma_000`() = runTest { testGbMicrotest("poweron_tma_000.gb") }
 
     @Test
-    fun `poweron_vram_000`() =
-        runTest { testGbMicrotest("poweron_vram_000.gb") }
+    fun `poweron_vram_000`() = runTest { testGbMicrotest("poweron_vram_000.gb") }
 
     @Test
-    fun `poweron_vram_025`() =
-        runTest { testGbMicrotest("poweron_vram_025.gb") }
+    fun `poweron_vram_025`() = runTest { testGbMicrotest("poweron_vram_025.gb") }
 
     @Test
-    fun `poweron_vram_026`() =
-        runTest { testGbMicrotest("poweron_vram_026.gb") }
+    fun `poweron_vram_026`() = runTest { testGbMicrotest("poweron_vram_026.gb") }
 
     @Test
-    fun `poweron_vram_069`() =
-        runTest { testGbMicrotest("poweron_vram_069.gb") }
+    fun `poweron_vram_069`() = runTest { testGbMicrotest("poweron_vram_069.gb") }
 
     @Test
-    fun `poweron_vram_070`() =
-        runTest { testGbMicrotest("poweron_vram_070.gb") }
+    fun `poweron_vram_070`() = runTest { testGbMicrotest("poweron_vram_070.gb") }
 
     @Test
-    fun `poweron_vram_139`() =
-        runTest { testGbMicrotest("poweron_vram_139.gb") }
+    fun `poweron_vram_139`() = runTest { testGbMicrotest("poweron_vram_139.gb") }
 
     @Test
-    fun `poweron_vram_140`() =
-        runTest { testGbMicrotest("poweron_vram_140.gb") }
+    fun `poweron_vram_140`() = runTest { testGbMicrotest("poweron_vram_140.gb") }
 
     @Test
-    fun `poweron_vram_183`() =
-        runTest { testGbMicrotest("poweron_vram_183.gb") }
+    fun `poweron_vram_183`() = runTest { testGbMicrotest("poweron_vram_183.gb") }
 
     @Test
-    fun `poweron_vram_184`() =
-        runTest { testGbMicrotest("poweron_vram_184.gb") }
+    fun `poweron_vram_184`() = runTest { testGbMicrotest("poweron_vram_184.gb") }
 
     @Test
     fun `poweron_wx_000`() = runTest { testGbMicrotest("poweron_wx_000.gb") }
@@ -1263,76 +1051,58 @@ class GbCpuGbMicroTest {
     fun `ppu_scx_vs_bgp`() = runTest { testGbMicrotest("ppu_scx_vs_bgp.gb") }
 
     @Test
-    fun `ppu_sprite0_scx0_a`() =
-        runTest { testGbMicrotest("ppu_sprite0_scx0_a.gb") }
+    fun `ppu_sprite0_scx0_a`() = runTest { testGbMicrotest("ppu_sprite0_scx0_a.gb") }
 
     @Test
-    fun `ppu_sprite0_scx0_b`() =
-        runTest { testGbMicrotest("ppu_sprite0_scx0_b.gb") }
+    fun `ppu_sprite0_scx0_b`() = runTest { testGbMicrotest("ppu_sprite0_scx0_b.gb") }
 
     @Test
-    fun `ppu_sprite0_scx1_a`() =
-        runTest { testGbMicrotest("ppu_sprite0_scx1_a.gb") }
+    fun `ppu_sprite0_scx1_a`() = runTest { testGbMicrotest("ppu_sprite0_scx1_a.gb") }
 
     @Test
-    fun `ppu_sprite0_scx1_b`() =
-        runTest { testGbMicrotest("ppu_sprite0_scx1_b.gb") }
+    fun `ppu_sprite0_scx1_b`() = runTest { testGbMicrotest("ppu_sprite0_scx1_b.gb") }
 
     @Test
-    fun `ppu_sprite0_scx2_a`() =
-        runTest { testGbMicrotest("ppu_sprite0_scx2_a.gb") }
+    fun `ppu_sprite0_scx2_a`() = runTest { testGbMicrotest("ppu_sprite0_scx2_a.gb") }
 
     @Test
-    fun `ppu_sprite0_scx2_b`() =
-        runTest { testGbMicrotest("ppu_sprite0_scx2_b.gb") }
+    fun `ppu_sprite0_scx2_b`() = runTest { testGbMicrotest("ppu_sprite0_scx2_b.gb") }
 
     @Test
-    fun `ppu_sprite0_scx3_a`() =
-        runTest { testGbMicrotest("ppu_sprite0_scx3_a.gb") }
+    fun `ppu_sprite0_scx3_a`() = runTest { testGbMicrotest("ppu_sprite0_scx3_a.gb") }
 
     @Test
-    fun `ppu_sprite0_scx3_b`() =
-        runTest { testGbMicrotest("ppu_sprite0_scx3_b.gb") }
+    fun `ppu_sprite0_scx3_b`() = runTest { testGbMicrotest("ppu_sprite0_scx3_b.gb") }
 
     @Test
-    fun `ppu_sprite0_scx4_a`() =
-        runTest { testGbMicrotest("ppu_sprite0_scx4_a.gb") }
+    fun `ppu_sprite0_scx4_a`() = runTest { testGbMicrotest("ppu_sprite0_scx4_a.gb") }
 
     @Test
-    fun `ppu_sprite0_scx4_b`() =
-        runTest { testGbMicrotest("ppu_sprite0_scx4_b.gb") }
+    fun `ppu_sprite0_scx4_b`() = runTest { testGbMicrotest("ppu_sprite0_scx4_b.gb") }
 
     @Test
-    fun `ppu_sprite0_scx5_a`() =
-        runTest { testGbMicrotest("ppu_sprite0_scx5_a.gb") }
+    fun `ppu_sprite0_scx5_a`() = runTest { testGbMicrotest("ppu_sprite0_scx5_a.gb") }
 
     @Test
-    fun `ppu_sprite0_scx5_b`() =
-        runTest { testGbMicrotest("ppu_sprite0_scx5_b.gb") }
+    fun `ppu_sprite0_scx5_b`() = runTest { testGbMicrotest("ppu_sprite0_scx5_b.gb") }
 
     @Test
-    fun `ppu_sprite0_scx6_a`() =
-        runTest { testGbMicrotest("ppu_sprite0_scx6_a.gb") }
+    fun `ppu_sprite0_scx6_a`() = runTest { testGbMicrotest("ppu_sprite0_scx6_a.gb") }
 
     @Test
-    fun `ppu_sprite0_scx6_b`() =
-        runTest { testGbMicrotest("ppu_sprite0_scx6_b.gb") }
+    fun `ppu_sprite0_scx6_b`() = runTest { testGbMicrotest("ppu_sprite0_scx6_b.gb") }
 
     @Test
-    fun `ppu_sprite0_scx7_a`() =
-        runTest { testGbMicrotest("ppu_sprite0_scx7_a.gb") }
+    fun `ppu_sprite0_scx7_a`() = runTest { testGbMicrotest("ppu_sprite0_scx7_a.gb") }
 
     @Test
-    fun `ppu_sprite0_scx7_b`() =
-        runTest { testGbMicrotest("ppu_sprite0_scx7_b.gb") }
+    fun `ppu_sprite0_scx7_b`() = runTest { testGbMicrotest("ppu_sprite0_scx7_b.gb") }
 
     @Test
-    fun `ppu_sprite_testbench`() =
-        runTest { testGbMicrotest("ppu_sprite_testbench.gb") }
+    fun `ppu_sprite_testbench`() = runTest { testGbMicrotest("ppu_sprite_testbench.gb") }
 
     @Test
-    fun `ppu_spritex_vs_scx`() =
-        runTest { testGbMicrotest("ppu_spritex_vs_scx.gb") }
+    fun `ppu_spritex_vs_scx`() = runTest { testGbMicrotest("ppu_spritex_vs_scx.gb") }
 
     @Test
     fun `ppu_win_vs_wx`() = runTest { testGbMicrotest("ppu_win_vs_wx.gb") }
@@ -1401,111 +1171,85 @@ class GbCpuGbMicroTest {
     fun `sprite_1_b`() = runTest { testGbMicrotest("sprite_1_b.gb") }
 
     @Test
-    fun `stat_write_glitch_l0_a`() =
-        runTest { testGbMicrotest("stat_write_glitch_l0_a.gb") }
+    fun `stat_write_glitch_l0_a`() = runTest { testGbMicrotest("stat_write_glitch_l0_a.gb") }
 
     @Test
-    fun `stat_write_glitch_l0_b`() =
-        runTest { testGbMicrotest("stat_write_glitch_l0_b.gb") }
+    fun `stat_write_glitch_l0_b`() = runTest { testGbMicrotest("stat_write_glitch_l0_b.gb") }
 
     @Test
-    fun `stat_write_glitch_l0_c`() =
-        runTest { testGbMicrotest("stat_write_glitch_l0_c.gb") }
+    fun `stat_write_glitch_l0_c`() = runTest { testGbMicrotest("stat_write_glitch_l0_c.gb") }
 
     @Test
-    fun `stat_write_glitch_l1_a`() =
-        runTest { testGbMicrotest("stat_write_glitch_l1_a.gb") }
+    fun `stat_write_glitch_l1_a`() = runTest { testGbMicrotest("stat_write_glitch_l1_a.gb") }
 
     @Test
-    fun `stat_write_glitch_l1_b`() =
-        runTest { testGbMicrotest("stat_write_glitch_l1_b.gb") }
+    fun `stat_write_glitch_l1_b`() = runTest { testGbMicrotest("stat_write_glitch_l1_b.gb") }
 
     @Test
-    fun `stat_write_glitch_l1_c`() =
-        runTest { testGbMicrotest("stat_write_glitch_l1_c.gb") }
+    fun `stat_write_glitch_l1_c`() = runTest { testGbMicrotest("stat_write_glitch_l1_c.gb") }
 
     @Test
-    fun `stat_write_glitch_l1_d`() =
-        runTest { testGbMicrotest("stat_write_glitch_l1_d.gb") }
+    fun `stat_write_glitch_l1_d`() = runTest { testGbMicrotest("stat_write_glitch_l1_d.gb") }
 
     @Test
-    fun `stat_write_glitch_l143_a`() =
-        runTest { testGbMicrotest("stat_write_glitch_l143_a.gb") }
+    fun `stat_write_glitch_l143_a`() = runTest { testGbMicrotest("stat_write_glitch_l143_a.gb") }
 
     @Test
-    fun `stat_write_glitch_l143_b`() =
-        runTest { testGbMicrotest("stat_write_glitch_l143_b.gb") }
+    fun `stat_write_glitch_l143_b`() = runTest { testGbMicrotest("stat_write_glitch_l143_b.gb") }
 
     @Test
-    fun `stat_write_glitch_l143_c`() =
-        runTest { testGbMicrotest("stat_write_glitch_l143_c.gb") }
+    fun `stat_write_glitch_l143_c`() = runTest { testGbMicrotest("stat_write_glitch_l143_c.gb") }
 
     @Test
-    fun `stat_write_glitch_l143_d`() =
-        runTest { testGbMicrotest("stat_write_glitch_l143_d.gb") }
+    fun `stat_write_glitch_l143_d`() = runTest { testGbMicrotest("stat_write_glitch_l143_d.gb") }
 
     @Test
-    fun `stat_write_glitch_l154_a`() =
-        runTest { testGbMicrotest("stat_write_glitch_l154_a.gb") }
+    fun `stat_write_glitch_l154_a`() = runTest { testGbMicrotest("stat_write_glitch_l154_a.gb") }
 
     @Test
-    fun `stat_write_glitch_l154_b`() =
-        runTest { testGbMicrotest("stat_write_glitch_l154_b.gb") }
+    fun `stat_write_glitch_l154_b`() = runTest { testGbMicrotest("stat_write_glitch_l154_b.gb") }
 
     @Test
-    fun `stat_write_glitch_l154_c`() =
-        runTest { testGbMicrotest("stat_write_glitch_l154_c.gb") }
+    fun `stat_write_glitch_l154_c`() = runTest { testGbMicrotest("stat_write_glitch_l154_c.gb") }
 
     @Test
-    fun `stat_write_glitch_l154_d`() =
-        runTest { testGbMicrotest("stat_write_glitch_l154_d.gb") }
+    fun `stat_write_glitch_l154_d`() = runTest { testGbMicrotest("stat_write_glitch_l154_d.gb") }
 
     @Test
     fun `toggle_lcdc`() = runTest { testGbMicrotest("toggle_lcdc.gb") }
 
     @Test
-    fun `vblank2_int_halt_a`() =
-        runTest { testGbMicrotest("vblank2_int_halt_a.gb") }
+    fun `vblank2_int_halt_a`() = runTest { testGbMicrotest("vblank2_int_halt_a.gb") }
 
     @Test
-    fun `vblank2_int_halt_b`() =
-        runTest { testGbMicrotest("vblank2_int_halt_b.gb") }
+    fun `vblank2_int_halt_b`() = runTest { testGbMicrotest("vblank2_int_halt_b.gb") }
 
     @Test
-    fun `vblank2_int_if_a`() =
-        runTest { testGbMicrotest("vblank2_int_if_a.gb") }
+    fun `vblank2_int_if_a`() = runTest { testGbMicrotest("vblank2_int_if_a.gb") }
 
     @Test
-    fun `vblank2_int_if_b`() =
-        runTest { testGbMicrotest("vblank2_int_if_b.gb") }
+    fun `vblank2_int_if_b`() = runTest { testGbMicrotest("vblank2_int_if_b.gb") }
 
     @Test
-    fun `vblank2_int_if_c`() =
-        runTest { testGbMicrotest("vblank2_int_if_c.gb") }
+    fun `vblank2_int_if_c`() = runTest { testGbMicrotest("vblank2_int_if_c.gb") }
 
     @Test
-    fun `vblank2_int_if_d`() =
-        runTest { testGbMicrotest("vblank2_int_if_d.gb") }
+    fun `vblank2_int_if_d`() = runTest { testGbMicrotest("vblank2_int_if_d.gb") }
 
     @Test
-    fun `vblank2_int_inc_sled`() =
-        runTest { testGbMicrotest("vblank2_int_inc_sled.gb") }
+    fun `vblank2_int_inc_sled`() = runTest { testGbMicrotest("vblank2_int_inc_sled.gb") }
 
     @Test
-    fun `vblank2_int_nops_a`() =
-        runTest { testGbMicrotest("vblank2_int_nops_a.gb") }
+    fun `vblank2_int_nops_a`() = runTest { testGbMicrotest("vblank2_int_nops_a.gb") }
 
     @Test
-    fun `vblank2_int_nops_b`() =
-        runTest { testGbMicrotest("vblank2_int_nops_b.gb") }
+    fun `vblank2_int_nops_b`() = runTest { testGbMicrotest("vblank2_int_nops_b.gb") }
 
     @Test
-    fun `vblank_int_halt_a`() =
-        runTest { testGbMicrotest("vblank_int_halt_a.gb") }
+    fun `vblank_int_halt_a`() = runTest { testGbMicrotest("vblank_int_halt_a.gb") }
 
     @Test
-    fun `vblank_int_halt_b`() =
-        runTest { testGbMicrotest("vblank_int_halt_b.gb") }
+    fun `vblank_int_halt_b`() = runTest { testGbMicrotest("vblank_int_halt_b.gb") }
 
     @Test
     fun `vblank_int_if_a`() = runTest { testGbMicrotest("vblank_int_if_a.gb") }
@@ -1520,16 +1264,13 @@ class GbCpuGbMicroTest {
     fun `vblank_int_if_d`() = runTest { testGbMicrotest("vblank_int_if_d.gb") }
 
     @Test
-    fun `vblank_int_inc_sled`() =
-        runTest { testGbMicrotest("vblank_int_inc_sled.gb") }
+    fun `vblank_int_inc_sled`() = runTest { testGbMicrotest("vblank_int_inc_sled.gb") }
 
     @Test
-    fun `vblank_int_nops_a`() =
-        runTest { testGbMicrotest("vblank_int_nops_a.gb") }
+    fun `vblank_int_nops_a`() = runTest { testGbMicrotest("vblank_int_nops_a.gb") }
 
     @Test
-    fun `vblank_int_nops_b`() =
-        runTest { testGbMicrotest("vblank_int_nops_b.gb") }
+    fun `vblank_int_nops_b`() = runTest { testGbMicrotest("vblank_int_nops_b.gb") }
 
     @Test
     fun `vram_read_l0_a`() = runTest { testGbMicrotest("vram_read_l0_a.gb") }
@@ -1580,8 +1321,7 @@ class GbCpuGbMicroTest {
     fun `vram_write_l1_d`() = runTest { testGbMicrotest("vram_write_l1_d.gb") }
 
     @Test
-    fun `wave_write_to_0xC003`() =
-        runTest { testGbMicrotest("wave_write_to_0xC003.gb") }
+    fun `wave_write_to_0xC003`() = runTest { testGbMicrotest("wave_write_to_0xC003.gb") }
 
     @Test
     fun `win0_a`() = runTest { testGbMicrotest("win0_a.gb") }
@@ -1705,8 +1445,8 @@ class GbCpuGbMicroTest {
 
         val cartridge = GbCartridge(
             GbCartridgeData(
-                Resource("files/test-roms/gbmicrotest/$gbFileName").readBytes()
-            )
+                Resource("files/test-roms/gbmicrotest/$gbFileName").readBytes(),
+            ),
         )
         val memory = cartridge.memory()
         val bus = GbBus(
@@ -1720,7 +1460,7 @@ class GbCpuGbMicroTest {
             lcdControl,
             palette,
             background,
-            window
+            window,
         )
         val dmaTransfer = GbDmaTransfer(memory, dma)
 
@@ -1728,7 +1468,7 @@ class GbCpuGbMicroTest {
         val cpu = GbCpu(
             r = registers,
             mem = bus,
-            interrupts = interrupts
+            interrupts = interrupts,
         )
         val gb = SimpleGb(
             timer = timer,
@@ -1741,7 +1481,7 @@ class GbCpuGbMicroTest {
                 lcdControl,
                 palette,
                 background,
-                window
+                window,
             ),
             serial = serial,
         )

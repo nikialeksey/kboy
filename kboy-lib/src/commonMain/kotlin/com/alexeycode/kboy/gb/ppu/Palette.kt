@@ -10,7 +10,22 @@ interface Palette {
     fun getObp1(): Int
     fun updateObp1(value: Int)
 
-    fun drawBgpPixel(screen: Screen, x: Int, y: Int, paletteData: Int)
-    fun drawObp0Pixel(screen: Screen, x: Int, y: Int, paletteData: Int)
-    fun drawObp1Pixel(screen: Screen, x: Int, y: Int, paletteData: Int)
+    fun drawBgpPixel(
+        screen: Screen,
+        x: Int,
+        y: Int,
+        paletteData: Int,
+    )
+    fun drawObp0Pixel(
+        screen: Screen,
+        x: Int,
+        y: Int,
+        paletteData: Int,
+    )
+    fun drawObp1Pixel(
+        screen: Screen,
+        x: Int,
+        y: Int,
+        paletteData: Int,
+    )
 }

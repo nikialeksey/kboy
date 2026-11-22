@@ -121,8 +121,8 @@ class GbCpuGekkioTest {
     private suspend fun testGekkioCpuInstrsIndividual(gbFileName: String) {
         val cartridge = GbCartridge(
             GbCartridgeData(
-                Resource("files/test-roms/gekkio/acceptance/$gbFileName").readBytes()
-            )
+                Resource("files/test-roms/gekkio/acceptance/$gbFileName").readBytes(),
+            ),
         )
         val gb = TestsGb(cartridge)
         while (true) {

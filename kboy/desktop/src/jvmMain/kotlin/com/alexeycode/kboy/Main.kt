@@ -39,7 +39,7 @@ fun main() = application {
         onKeyEvent = extController::onKeyEvent,
         onCloseRequest = ::exitApplication,
         title = "KBoy",
-        icon = painterResource(Res.drawable.ic_launcher)
+        icon = painterResource(Res.drawable.ic_launcher),
     ) {
         // to change title bar color:
         // https://www.codespeedy.com/how-to-change-the-color-of-title-bar-in-jframe-in-java/
@@ -47,7 +47,7 @@ fun main() = application {
             host = host,
             roms = roms,
             time = time,
-            extController = extController
+            extController = extController,
         )
 
         if (isSelectRom) {
@@ -57,7 +57,7 @@ fun main() = application {
                 },
                 onCompleted = {
                     isSelectRom = false
-                }
+                },
             )
         }
     }

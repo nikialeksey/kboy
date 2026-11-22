@@ -12,7 +12,7 @@ import kotlin.coroutines.suspendCoroutine
 
 @Suppress("TooGenericExceptionCaught")
 class WebRomFile(
-    private val file: File
+    private val file: File,
 ) : RomFile {
     override suspend fun read(): ByteArray {
         return suspendCoroutine { continuation ->

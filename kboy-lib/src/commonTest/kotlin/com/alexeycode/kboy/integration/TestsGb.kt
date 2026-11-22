@@ -26,14 +26,14 @@ import com.alexeycode.kboy.gb.serial.Serial
 
 class TestsGb private constructor(
     private val origin: Gb,
-    private val outputWire: OutputWireBuffer
+    private val outputWire: OutputWireBuffer,
 ) : Gb {
 
     constructor(
         cartridge: Cartridge,
         interrupts: Interrupts = GbInterrupts(),
         outputWire: OutputWireBuffer = OutputWireBuffer(),
-        serial: GbSerial = GbSerial(interrupts, outputWire, InputWire.Dummy())
+        serial: GbSerial = GbSerial(interrupts, outputWire, InputWire.Dummy()),
     ) : this(buildGb(cartridge.memory(), interrupts, serial), outputWire)
 
     override fun run(cpuCycles: Int): Int {
@@ -45,7 +45,11 @@ class TestsGb private constructor(
     }
 }
 
-private fun buildGb(memory: Memory, interrupts: Interrupts, serial: Serial): Gb {
+private fun buildGb(
+    memory: Memory,
+    interrupts: Interrupts,
+    serial: Serial,
+): Gb {
     val timer = GbTimer(interrupts)
     val dma = GbDma()
     val joypad = GbJoypad(interrupts)
@@ -68,9 +72,9 @@ private fun buildGb(memory: Memory, interrupts: Interrupts, serial: Serial): Gb 
             lcdControl,
             palette,
             background,
-            window
+            window,
         ),
-        interrupts = interrupts
+        interrupts = interrupts,
     )
     val gb = SimpleGb(
         timer = timer,
@@ -83,9 +87,9 @@ private fun buildGb(memory: Memory, interrupts: Interrupts, serial: Serial): Gb 
             lcdControl,
             palette,
             background,
-            window
+            window,
         ),
-        serial = serial
+        serial = serial,
     )
     return gb
 }

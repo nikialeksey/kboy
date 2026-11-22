@@ -1,12 +1,9 @@
 package com.alexeycode.kboy.gb.cartridge
 
 class GbHeader(
-    private val data: IntArray
+    private val data: IntArray,
 ) : Header {
 
-    private val logo: Logo by lazy {
-        TODO() // GbLogo(data.sliceArray(0x04..0x33))
-    }
     private val name: String by lazy {
         data.slice(0x34 until 0x43)
             .dropLastWhile { it == 0x00 }
@@ -14,10 +11,6 @@ class GbHeader(
             .toByteArray()
             .decodeToString()
             .trim()
-    }
-
-    override fun logo(): Logo {
-        return logo
     }
 
     override fun name(): String {

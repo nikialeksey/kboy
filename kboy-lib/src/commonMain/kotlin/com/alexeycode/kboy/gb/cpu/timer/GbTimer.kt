@@ -12,7 +12,7 @@ class GbTimer(
     private var div: Int = 0x0018,
     private var tma: Int = 0x00,
     private var tac: Int = 0xF8,
-    private var tima: Int = 0x00
+    private var tima: Int = 0x00,
 ) : Timer {
 
     private var accumulatedCycles: Int = 0
@@ -70,7 +70,11 @@ class GbTimer(
         this.tac = tac.or(0xF8)
     }
 
-    private fun incrementTima(previousDiv: Int, div: Int, clockCycles: Int) {
+    private fun incrementTima(
+        previousDiv: Int,
+        div: Int,
+        clockCycles: Int,
+    ) {
         val enabled = (tac and 1.shl(2)) != 0
         if (enabled) {
             if (overflow) {

@@ -8,7 +8,9 @@ import androidx.compose.ui.input.key.type
 import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.MutableSharedFlow
 
-class DesktopController : Controller, KeyListener {
+class DesktopController :
+    Controller,
+    KeyListener {
 
     private val buttonRight = MutableSharedFlow<Boolean>(0, 1, BufferOverflow.DROP_OLDEST)
     private val buttonLeft = MutableSharedFlow<Boolean>(0, 1, BufferOverflow.DROP_OLDEST)

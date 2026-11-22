@@ -9,10 +9,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.composed
 
-fun Modifier.onPressRelease(
-    onPressed: () -> Unit,
-    onRelease: () -> Unit
-) = composed {
+fun Modifier.onPressRelease(onPressed: () -> Unit, onRelease: () -> Unit) = composed {
     val interactionSource = remember { MutableInteractionSource() }
     val localIndication = LocalIndication.current
 
@@ -26,7 +23,7 @@ fun Modifier.onPressRelease(
 
     Modifier.clickable(
         interactionSource = interactionSource,
-        indication = localIndication
+        indication = localIndication,
     ) {
         // on clicked
     }

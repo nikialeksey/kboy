@@ -9,13 +9,17 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.sync.Semaphore
 
 class SimpleClientSocket(
-    private val scope: CoroutineScope
+    private val scope: CoroutineScope,
 ) : ClientSocket {
 
     private var client: HttpClient? = null
     private var socketSession: SimpleSocketSession? = null
 
-    override suspend fun start(host: String, port: Int, path: String): HttpClient {
+    override suspend fun start(
+        host: String,
+        port: Int,
+        path: String,
+    ): HttpClient {
         client?.close()
         val client = HttpClient(platformClientEngineFactory()) {
             install(WebSockets)

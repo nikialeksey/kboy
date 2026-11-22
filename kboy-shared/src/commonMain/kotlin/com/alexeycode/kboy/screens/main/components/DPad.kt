@@ -34,26 +34,16 @@ fun DPad(
 ) {
     // d-pad
     val dPadPath = remember {
-        /**
-         *       (-1, 3)   (1, 3)
-         *              ***
-         *      (-1, 1) *** (1, 1)
-         *  (-3, 1) *********** (3, 1)
-         * (-3, -1) *********** (3, -1)
-         *     (-1, -1) *** (1, -1)
-         *              ***
-         *     (-1, -3)     (1, -3)
-         */
-        /**
-         *       (-1, 3)   (1, 3)
-         *              ***
-         *      (-1, 1) *** (1, 1)
-         *  (-3, 1) *********** (3, 1)
-         * (-3, -1) *********** (3, -1)
-         *     (-1, -1) *** (1, -1)
-         *              ***
-         *     (-1, -3)     (1, -3)
-         */
+        //
+        //       (-1, 3)   (1, 3)
+        //              ***
+        //      (-1, 1) *** (1, 1)
+        //  (-3, 1) *********** (3, 1)
+        // (-3, -1) *********** (3, -1)
+        //     (-1, -1) *** (1, -1)
+        //              ***
+        //     (-1, -3)     (1, -3)
+        //
         Path()
             .apply {
                 moveTo(1f / 3f, 3f / 3f)
@@ -80,18 +70,18 @@ fun DPad(
                         translate(size.width * 0.5f, size.height * 0.5f) {
                             drawPath(
                                 dPadPath,
-                                color = dPadColor
+                                color = dPadColor,
                             )
                         }
                     }
                 }
             }
-            .size(buttonSize * 3)
+            .size(buttonSize * 3),
     ) {
         Column {
             Row(
                 modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.Center
+                horizontalArrangement = Arrangement.Center,
             ) {
                 Box(
                     modifier = Modifier
@@ -102,7 +92,7 @@ fun DPad(
             }
             Row(
                 modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween
+                horizontalArrangement = Arrangement.SpaceBetween,
             ) {
                 Box(
                     modifier = Modifier
@@ -114,18 +104,18 @@ fun DPad(
                     modifier = Modifier
                         .width(buttonSize)
                         .height(buttonSize)
-                        .onPressRelease(onRightPressed, onRightReleased)
+                        .onPressRelease(onRightPressed, onRightReleased),
                 )
             }
             Row(
                 modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.Center
+                horizontalArrangement = Arrangement.Center,
             ) {
                 Box(
                     modifier = Modifier
                         .width(buttonSize)
                         .height(buttonSize)
-                        .onPressRelease(onDownPressed, onDownReleased)
+                        .onPressRelease(onDownPressed, onDownReleased),
                 )
             }
         }

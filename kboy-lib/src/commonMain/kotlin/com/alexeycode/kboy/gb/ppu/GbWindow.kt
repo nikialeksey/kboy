@@ -2,7 +2,7 @@ package com.alexeycode.kboy.gb.ppu
 
 class GbWindow(
     private var wx: Int = 0x00,
-    private var wy: Int = 0x00
+    private var wy: Int = 0x00,
 ) : Window {
 
     override fun wx(): Int {

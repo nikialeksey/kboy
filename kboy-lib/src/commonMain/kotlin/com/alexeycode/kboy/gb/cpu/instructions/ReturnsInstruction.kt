@@ -7,7 +7,7 @@ import com.alexeycode.kboy.gb.mem.Memory
 class ReturnsInstruction(
     private val r: Registers,
     private val mem: Memory,
-    private val interrupts: Interrupts
+    private val interrupts: Interrupts,
 ) : Instruction {
 
     override fun execute(opcode: Int): Int {

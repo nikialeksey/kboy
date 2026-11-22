@@ -80,8 +80,8 @@ class GbCpuGekkioPpuTest {
     private fun testGekkioCpuInstrsIndividual(gbFileName: String) {
         val cartridge = GbCartridge(
             GbCartridgeData(
-                Resource("files/test-roms/gekkio/acceptance/$gbFileName").readBytes()
-            )
+                Resource("files/test-roms/gekkio/acceptance/$gbFileName").readBytes(),
+            ),
         )
         val gb = TestsGb(cartridge)
         @Suppress("UnusedPrivateProperty")
@@ -94,7 +94,7 @@ class GbCpuGekkioPpuTest {
 
         assertTrue(
             isSuccess(gb.serialData()),
-            "Result: ${gb.serialData().asList()}"
+            "Result: ${gb.serialData().asList()}",
         )
     }
 

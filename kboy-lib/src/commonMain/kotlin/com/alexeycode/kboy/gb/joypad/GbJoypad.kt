@@ -12,7 +12,7 @@ class GbJoypad(
     private val a: Button = GbButton(interrupts, 0x20, 0x01),
     private val b: Button = GbButton(interrupts, 0x20, 0x02),
     private val select: Button = GbButton(interrupts, 0x20, 0x04),
-    private val start: Button = GbButton(interrupts, 0x20, 0x08)
+    private val start: Button = GbButton(interrupts, 0x20, 0x08),
 ) : Joypad {
 
     private val buttons = listOf(right, left, up, down, a, b, select, start)

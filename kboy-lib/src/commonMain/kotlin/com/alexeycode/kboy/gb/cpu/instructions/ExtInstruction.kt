@@ -289,7 +289,11 @@ class ExtInstruction(
         }
     }
 
-    private inline fun rlc(read: () -> Int, write: (Int) -> Unit, cycles: Int): Int {
+    private inline fun rlc(
+        read: () -> Int,
+        write: (Int) -> Unit,
+        cycles: Int,
+    ): Int {
         val n = read()
         val c = if (n.and(0b1000_0000) == 0) 0 else 1
         val result = (n.shl(1) + c).and(0xFF)
@@ -303,7 +307,11 @@ class ExtInstruction(
         return cycles
     }
 
-    private inline fun rrc(read: () -> Int, write: (Int) -> Unit, cycles: Int): Int {
+    private inline fun rrc(
+        read: () -> Int,
+        write: (Int) -> Unit,
+        cycles: Int,
+    ): Int {
         val n = read()
         val c = n.and(0b0000_0001)
         val result = (n.and(0xFF).shr(1) + c.shl(7)).and(0xFF)
@@ -317,7 +325,11 @@ class ExtInstruction(
         return cycles
     }
 
-    private inline fun rl(read: () -> Int, write: (Int) -> Unit, cycles: Int): Int {
+    private inline fun rl(
+        read: () -> Int,
+        write: (Int) -> Unit,
+        cycles: Int,
+    ): Int {
         val n = read()
         val c = if (n.and(0b1000_0000) == 0) 0 else 1
         val prevC = if (r.flag().c().isEnabled()) 1 else 0
@@ -332,7 +344,11 @@ class ExtInstruction(
         return cycles
     }
 
-    private inline fun rr(read: () -> Int, write: (Int) -> Unit, cycles: Int): Int {
+    private inline fun rr(
+        read: () -> Int,
+        write: (Int) -> Unit,
+        cycles: Int,
+    ): Int {
         val n = read()
         val c = n.and(0b0000_0001)
         val prevC = if (r.flag().c().isEnabled()) 1 else 0
@@ -347,7 +363,11 @@ class ExtInstruction(
         return cycles
     }
 
-    private inline fun sla(read: () -> Int, write: (Int) -> Unit, cycles: Int): Int {
+    private inline fun sla(
+        read: () -> Int,
+        write: (Int) -> Unit,
+        cycles: Int,
+    ): Int {
         val n = read()
         val c = if (n.and(0b1000_0000) == 0) 0 else 1
         val result = n.shl(1).and(0xFF)
@@ -361,7 +381,11 @@ class ExtInstruction(
         return cycles
     }
 
-    private inline fun sra(read: () -> Int, write: (Int) -> Unit, cycles: Int): Int {
+    private inline fun sra(
+        read: () -> Int,
+        write: (Int) -> Unit,
+        cycles: Int,
+    ): Int {
         val n = read()
         val c = n.and(0b0000_0001)
         val result = n.and(0xFF).shr(1) + n.and(0b1000_0000)
@@ -375,7 +399,11 @@ class ExtInstruction(
         return cycles
     }
 
-    private inline fun swap(read: () -> Int, write: (Int) -> Unit, cycles: Int): Int {
+    private inline fun swap(
+        read: () -> Int,
+        write: (Int) -> Unit,
+        cycles: Int,
+    ): Int {
         val n = read()
         val result = n.and(0x0F).shl(4) + n.and(0xF0).shr(4)
         write(result)
@@ -388,7 +416,11 @@ class ExtInstruction(
         return cycles
     }
 
-    private inline fun srl(read: () -> Int, write: (Int) -> Unit, cycles: Int): Int {
+    private inline fun srl(
+        read: () -> Int,
+        write: (Int) -> Unit,
+        cycles: Int,
+    ): Int {
         val n = read()
         val c = n.and(0b0000_0001)
         val result = n.and(0xFF).shr(1)
@@ -402,7 +434,11 @@ class ExtInstruction(
         return cycles
     }
 
-    private inline fun bit(n: Int, read: () -> Int, cycles: Int): Int {
+    private inline fun bit(
+        n: Int,
+        read: () -> Int,
+        cycles: Int,
+    ): Int {
         val a = read()
         val result = a.and(1.shl(n)) == 0
 
@@ -413,14 +449,24 @@ class ExtInstruction(
         return cycles
     }
 
-    private inline fun res(n: Int, read: () -> Int, write: (Int) -> Unit, cycles: Int): Int {
+    private inline fun res(
+        n: Int,
+        read: () -> Int,
+        write: (Int) -> Unit,
+        cycles: Int,
+    ): Int {
         val a = read()
         write(a.and(1.shl(n).inv().and(0xFF)))
 
         return cycles
     }
 
-    private inline fun set(n: Int, read: () -> Int, write: (Int) -> Unit, cycles: Int): Int {
+    private inline fun set(
+        n: Int,
+        read: () -> Int,
+        write: (Int) -> Unit,
+        cycles: Int,
+    ): Int {
         val a = read()
         write(a.or(1.shl(n)))
 

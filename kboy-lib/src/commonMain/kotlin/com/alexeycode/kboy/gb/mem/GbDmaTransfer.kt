@@ -2,7 +2,7 @@ package com.alexeycode.kboy.gb.mem
 
 class GbDmaTransfer(
     private val memory: Memory,
-    private val dma: Dma
+    private val dma: Dma,
 ) : DmaTransfer {
 
     private var isInProgress = false

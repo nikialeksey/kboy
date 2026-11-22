@@ -7,10 +7,7 @@ import java.awt.Frame
 import java.nio.file.Paths
 
 @Composable
-fun FileDialog(
-    onFilePicked: (path: String) -> Unit,
-    onCompleted: () -> Unit,
-) = AwtWindow(
+fun FileDialog(onFilePicked: (path: String) -> Unit, onCompleted: () -> Unit) = AwtWindow(
     create = {
         val parent: Frame? = null
         object : FileDialog(parent, "Choose a ROM", LOAD) {
@@ -23,5 +20,5 @@ fun FileDialog(
             }
         }
     },
-    dispose = FileDialog::dispose
+    dispose = FileDialog::dispose,
 )

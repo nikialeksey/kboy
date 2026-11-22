@@ -23,7 +23,7 @@ class MainViewModel(
     private val host: Host,
     private val vibrator: Vibrator,
     private val extController: Controller,
-    private val touchController: TouchController = TouchController(vibrator)
+    private val touchController: TouchController = TouchController(vibrator),
 ) : ViewModel() {
 
     private var runJob: Job? = null
@@ -58,8 +58,8 @@ class MainViewModel(
                 viewModelScope,
                 file,
                 GroupController(
-                    listOf(extController, touchController)
-                )
+                    listOf(extController, touchController),
+                ),
             )
 
             state.value = state.value.copy(isGameRunning = true)
@@ -73,5 +73,5 @@ class MainViewModel(
 
 data class MainState(
     val touchControllerEnabled: Boolean = false,
-    val isGameRunning: Boolean = false
+    val isGameRunning: Boolean = false,
 )

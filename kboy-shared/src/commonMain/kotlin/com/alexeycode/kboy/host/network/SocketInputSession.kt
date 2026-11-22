@@ -17,7 +17,6 @@ interface SocketInputSession {
             override fun message(): DataMessage {
                 throw IllegalArgumentException("Empty buffer does not contain a message.")
             }
-
         }
     }
 }

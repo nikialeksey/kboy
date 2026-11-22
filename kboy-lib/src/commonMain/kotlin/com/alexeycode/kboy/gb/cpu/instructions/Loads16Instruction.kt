@@ -25,7 +25,7 @@ class Loads16Instruction(
                     mem.write8(target, it.and(0xFF))
                     mem.write8(target + 1, it.shr(8))
                 },
-                20
+                20,
             )
             0xF8 -> {
                 val a = r.sp().get()
@@ -57,7 +57,11 @@ class Loads16Instruction(
         }
     }
 
-    private inline fun load(read: () -> Int, write: (Int) -> Unit, cycles: Int): Int {
+    private inline fun load(
+        read: () -> Int,
+        write: (Int) -> Unit,
+        cycles: Int,
+    ): Int {
         val result = read()
         write(result)
 

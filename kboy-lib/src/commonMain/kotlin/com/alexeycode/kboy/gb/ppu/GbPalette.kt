@@ -3,7 +3,7 @@ package com.alexeycode.kboy.gb.ppu
 class GbPalette(
     private var bgp: Int = 0xFC,
     private var obp0: Int = 0x00,
-    private var obp1: Int = 0x00
+    private var obp1: Int = 0x00,
 ) : Palette {
 
     override fun getBgp(): Int {
@@ -34,7 +34,7 @@ class GbPalette(
         screen: Screen,
         x: Int,
         y: Int,
-        paletteData: Int
+        paletteData: Int,
     ) {
         if (paletteData == 0) {
             draw(screen, x, y, bgp.and(0b0000_0011))
@@ -51,7 +51,7 @@ class GbPalette(
         screen: Screen,
         x: Int,
         y: Int,
-        paletteData: Int
+        paletteData: Int,
     ) {
         if (paletteData == 0) {
             // transparent
@@ -68,7 +68,7 @@ class GbPalette(
         screen: Screen,
         x: Int,
         y: Int,
-        paletteData: Int
+        paletteData: Int,
     ) {
         if (paletteData == 0) {
             // transparent
@@ -85,7 +85,7 @@ class GbPalette(
         screen: Screen,
         x: Int,
         y: Int,
-        pixelData: Int
+        pixelData: Int,
     ) {
         if (pixelData == 0) {
             screen.setPixel(
@@ -93,7 +93,7 @@ class GbPalette(
                 y,
                 0xFB.toByte(),
                 0xF9.toByte(),
-                0xFB.toByte()
+                0xFB.toByte(),
             )
         } else if (pixelData == 1) {
             screen.setPixel(
@@ -101,7 +101,7 @@ class GbPalette(
                 y,
                 0xEB.toByte(),
                 0x99.toByte(),
-                0x55.toByte()
+                0x55.toByte(),
             )
         } else if (pixelData == 2) {
             screen.setPixel(
@@ -109,7 +109,7 @@ class GbPalette(
                 y,
                 0x83.toByte(),
                 0x41.toByte(),
-                0x06.toByte()
+                0x06.toByte(),
             )
         } else if (pixelData == 3) {
             screen.setPixel(
@@ -117,7 +117,7 @@ class GbPalette(
                 y,
                 0x04.toByte(),
                 0x02.toByte(),
-                0x04.toByte()
+                0x04.toByte(),
             )
         }
     }

@@ -18,13 +18,7 @@ jobs:
       - name: 'Run static analysis'
         shell: bash
         run: |
-          ./gradlew --no-daemon \
-            :kboy-lib:staticAnalysis \
-            :kboy-benchmark:staticAnalysis \
-            :kboy-shared:staticAnalysis \
-            :kboy:android:staticAnalysis \
-            :kboy:desktop:staticAnalysis \
-            :kboy:web:staticAnalysis
+          ./gradlew --no-daemon staticAnalysis
 
       - name: 'Run tests'
         shell: bash

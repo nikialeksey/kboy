@@ -13,14 +13,14 @@ class SimpleFlagRegister : FlagRegister {
         z = SimpleFlag(f, 7),
         n = SimpleFlag(f, 6),
         h = SimpleFlag(f, 5),
-        c = SimpleFlag(f, 4)
+        c = SimpleFlag(f, 4),
     )
 
     constructor(
         z: Flag,
         n: Flag,
         h: Flag,
-        c: Flag
+        c: Flag,
     ) {
         this.z = z
         this.n = n

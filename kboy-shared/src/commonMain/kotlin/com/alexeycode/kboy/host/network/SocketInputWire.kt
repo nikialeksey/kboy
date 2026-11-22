@@ -3,7 +3,7 @@ package com.alexeycode.kboy.host.network
 import com.alexeycode.kboy.gb.serial.InputWire
 
 class SocketInputWire(
-    private val session: SocketInputSession
+    private val session: SocketInputSession,
 ) : InputWire {
 
     private var dataBuffer = mutableListOf<Int>()

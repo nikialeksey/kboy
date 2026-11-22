@@ -13,7 +13,7 @@ class SimpleInstruction : Instruction {
     constructor(
         registers: Registers,
         memory: Memory,
-        interrupts: Interrupts
+        interrupts: Interrupts,
     ) : this(
         listOf(
             MiscInstruction(registers, memory, interrupts),
@@ -25,7 +25,7 @@ class SimpleInstruction : Instruction {
             Loads16Instruction(registers, memory),
             Alu8Instruction(registers, memory),
             Alu16Instruction(registers, memory),
-            SimpleRotateInstruction(registers)
+            SimpleRotateInstruction(registers),
         ),
         registers,
     )
@@ -47,7 +47,7 @@ class SimpleInstruction : Instruction {
             }
         }
         throw IllegalArgumentException(
-            "Unknown instruction! Instruction opcode: ${opcode.toHexByte()}"
+            "Unknown instruction! Instruction opcode: ${opcode.toHexByte()}",
         )
     }
 }

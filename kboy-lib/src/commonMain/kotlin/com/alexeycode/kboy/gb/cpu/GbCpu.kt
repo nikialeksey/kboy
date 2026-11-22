@@ -13,7 +13,7 @@ class GbCpu(
     private val mem: Memory,
     private val interrupts: Interrupts,
     private val instruction: Instruction = SimpleInstruction(r, mem, interrupts),
-    private val extInstruction: Instruction = ExtInstruction(r, mem)
+    private val extInstruction: Instruction = ExtInstruction(r, mem),
 ) : Cpu {
 
     private var haltMode = false

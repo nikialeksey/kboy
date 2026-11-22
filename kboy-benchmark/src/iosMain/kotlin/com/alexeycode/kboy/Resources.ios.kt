@@ -14,7 +14,7 @@ actual fun readBytes(fileName: String): ByteArray {
 
     val path = NSBundle.mainBundle.pathForResource(
         name = name.substringBeforeLast("."),
-        ofType = name.substringAfterLast(".", "")
+        ofType = name.substringAfterLast(".", ""),
     ) ?: error("Resource not found: $name")
 
     val data = NSData.dataWithContentsOfFile(path)
@@ -25,7 +25,7 @@ actual fun readBytes(fileName: String): ByteArray {
             memcpy(
                 pinned.addressOf(0),
                 data.bytes,
-                data.length
+                data.length,
             )
         }
     }

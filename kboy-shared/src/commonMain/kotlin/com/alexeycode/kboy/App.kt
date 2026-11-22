@@ -21,17 +21,17 @@ fun App(
     vibrator: Vibrator = Vibrator.Dummy(),
     time: Time = Time.Dummy(),
     extController: Controller = Controller.Dummy(),
-    colorScheme: ColorScheme = DarkColors
+    colorScheme: ColorScheme = DarkColors,
 ) {
     MaterialTheme(
-        colorScheme = colorScheme
+        colorScheme = colorScheme,
     ) {
         Main(
             host,
             roms,
             vibrator,
             time,
-            extController
+            extController,
         )
     }
 }

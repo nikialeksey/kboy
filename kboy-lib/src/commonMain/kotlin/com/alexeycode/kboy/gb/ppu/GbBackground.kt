@@ -2,7 +2,7 @@ package com.alexeycode.kboy.gb.ppu
 
 class GbBackground(
     private var scx: Int = 0x00,
-    private var scy: Int = 0x00
+    private var scy: Int = 0x00,
 ) : Background {
 
     override fun scx(): Int {

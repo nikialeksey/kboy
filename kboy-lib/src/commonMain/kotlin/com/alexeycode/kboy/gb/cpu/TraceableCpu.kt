@@ -8,7 +8,7 @@ class TraceableCpu(
     private val origin: Cpu,
     private val registers: Registers,
     private val memory: Memory,
-    private val traceSize: Int = 50
+    private val traceSize: Int = 50,
 ) : Cpu {
 
     private val traces = Array(traceSize) { "" }

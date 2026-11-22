@@ -14,10 +14,7 @@ class LoadRomContract : ActivityResultContract<Unit, Uri?>() {
             .setType("*/*")
     }
 
-    override fun getSynchronousResult(
-        context: Context,
-        input: Unit
-    ): SynchronousResult<Uri?>? = null
+    override fun getSynchronousResult(context: Context, input: Unit): SynchronousResult<Uri?>? = null
 
     override fun parseResult(resultCode: Int, intent: Intent?): Uri? {
         return intent.takeIf { resultCode == Activity.RESULT_OK }?.data

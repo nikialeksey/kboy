@@ -41,7 +41,7 @@ class MainInteractor(
     suspend fun prepareGb(
         scope: CoroutineScope,
         file: RomFile,
-        controller: Controller
+        controller: Controller,
     ): Flow<Screen> {
         val interrupts = GbInterrupts()
         val timer = GbTimer(interrupts)
@@ -67,7 +67,7 @@ class MainInteractor(
             lcdControl,
             palette,
             background,
-            window
+            window,
         )
         val dmaTransfer = GbDmaTransfer(memory, dma)
 

@@ -1,7 +1,7 @@
 package com.alexeycode.kboy.gb.ppu
 
 class GbLcdControl(
-    private var value: Int = 0x91
+    private var value: Int = 0x91,
 ) : LcdControl {
 
     override fun update(value: Int) {

@@ -21,7 +21,7 @@ class GbBus(
     private val lcdControl: LcdControl,
     private val palette: Palette,
     private val background: Background,
-    private val window: Window
+    private val window: Window,
 ) : Memory {
 
     override fun read8(address: Int): Int {

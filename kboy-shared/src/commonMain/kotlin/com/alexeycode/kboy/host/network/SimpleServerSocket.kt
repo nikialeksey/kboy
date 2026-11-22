@@ -10,13 +10,15 @@ import io.ktor.server.websocket.webSocket
 import kotlinx.coroutines.CoroutineScope
 
 class SimpleServerSocket(
-    private val scope: CoroutineScope
+    private val scope: CoroutineScope,
 ) : ServerSocket {
 
     private var server: EmbeddedServer<out ApplicationEngine, out ApplicationEngine.Configuration>? = null
     private var socketSession: SimpleSocketSession? = null
 
-    override suspend fun start(path: String): EmbeddedServer<out ApplicationEngine, out ApplicationEngine.Configuration> {
+    override suspend fun start(
+        path: String,
+    ): EmbeddedServer<out ApplicationEngine, out ApplicationEngine.Configuration> {
         this.server?.stopSuspend()
         val server = embeddedServer(platformServerEngineFactory(), port = 0) {
             install(WebSockets)

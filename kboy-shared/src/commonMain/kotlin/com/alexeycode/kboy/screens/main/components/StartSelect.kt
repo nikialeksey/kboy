@@ -19,21 +19,29 @@ fun StartSelect(
     onStartPressed: () -> Unit,
     onStartReleased: () -> Unit,
     onSelectPressed: () -> Unit,
-    onSelectReleased: () -> Unit
+    onSelectReleased: () -> Unit,
 ) {
     val startInteractionSource = remember { MutableInteractionSource() }
     val isStartPressed by startInteractionSource.collectIsPressedAsState()
-    if (isStartPressed) { onStartPressed() } else { onStartReleased() }
+    if (isStartPressed) {
+        onStartPressed()
+    } else {
+        onStartReleased()
+    }
 
     val selectInteractionSource = remember { MutableInteractionSource() }
     val isSelectPressed by selectInteractionSource.collectIsPressedAsState()
-    if (isSelectPressed) { onSelectPressed() } else { onSelectReleased() }
+    if (isSelectPressed) {
+        onSelectPressed()
+    } else {
+        onSelectReleased()
+    }
 
     Row(
         modifier = Modifier
             .padding(8.dp)
             .fillMaxWidth(),
-        horizontalArrangement = Arrangement.SpaceEvenly
+        horizontalArrangement = Arrangement.SpaceEvenly,
     ) {
         OutlinedButton(
             interactionSource = selectInteractionSource,

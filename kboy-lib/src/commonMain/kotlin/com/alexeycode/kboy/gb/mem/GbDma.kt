@@ -1,7 +1,7 @@
 package com.alexeycode.kboy.gb.mem
 
 class GbDma(
-    private var value: Int = 0xFF
+    private var value: Int = 0xFF,
 ) : Dma {
 
     private var isInProgress = false

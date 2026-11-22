@@ -9,7 +9,9 @@ class SocketOutputWire(
     private var wasTransferred = false
     private var pkt: Int = 0
     private val ackListener = { ackPkt: Int ->
-        if (ackPkt == pkt) { wasTransferred = true }
+        if (ackPkt == pkt) {
+            wasTransferred = true
+        }
     }
 
     override fun send(data: Int) {

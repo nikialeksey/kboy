@@ -1,7 +1,7 @@
 package com.alexeycode.kboy.gb.mem
 
 class SimpleMemory(
-    private val data: Array<Int>
+    private val data: Array<Int>,
 ) : Memory {
 
     override fun write8(address: Int, value: Int) {

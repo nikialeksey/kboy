@@ -1,7 +1,7 @@
 package com.alexeycode.kboy.gb.cpu.registers
 
 class Register8Hi(
-    private val origin: Register
+    private val origin: Register,
 ) : Register {
 
     override fun set(v: Int) {

@@ -6,7 +6,7 @@ import com.alexeycode.kboy.gb.mem.SimpleMemory
 
 class GbCartridge(
     private val data: Rom,
-    private val meta: CartridgeMeta
+    private val meta: CartridgeMeta,
 ) : Cartridge {
 
     private val bytes by lazy {

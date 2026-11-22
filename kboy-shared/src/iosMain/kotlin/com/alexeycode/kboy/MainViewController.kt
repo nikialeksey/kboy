@@ -24,7 +24,7 @@ fun mainViewController() = ComposeUIViewController {
 
     App(
         roms = roms,
-        time = time
+        time = time,
     )
     if (isSelectRom) {
         FileDialog(
@@ -33,7 +33,7 @@ fun mainViewController() = ComposeUIViewController {
             },
             onCompleted = {
                 isSelectRom = false
-            }
+            },
         )
     }
 }

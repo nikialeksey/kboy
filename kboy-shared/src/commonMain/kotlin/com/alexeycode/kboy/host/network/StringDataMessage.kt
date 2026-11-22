@@ -1,7 +1,7 @@
 package com.alexeycode.kboy.host.network
 
 class StringDataMessage(
-    private val raw: String
+    private val raw: String,
 ) : DataMessage {
 
     override fun data(): Int {

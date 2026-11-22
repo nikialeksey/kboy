@@ -9,10 +9,7 @@ import org.w3c.dom.asList
 import org.w3c.files.File
 
 @Composable
-fun FileDialog(
-    onFilePicked: (File) -> Unit,
-    onCompleted: () -> Unit
-) {
+fun FileDialog(onFilePicked: (File) -> Unit, onCompleted: () -> Unit) {
     val input = remember {
         document.createElement("input") as HTMLInputElement
     }

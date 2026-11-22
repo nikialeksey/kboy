@@ -3,7 +3,7 @@ package com.alexeycode.kboy.gb.cpu.instructions.address
 import com.alexeycode.kboy.gb.mem.toHexWord
 
 class SimpleAddress(
-    private val address: Int
+    private val address: Int,
 ) : Address {
 
     private val hex by lazy(mode = LazyThreadSafetyMode.NONE) {

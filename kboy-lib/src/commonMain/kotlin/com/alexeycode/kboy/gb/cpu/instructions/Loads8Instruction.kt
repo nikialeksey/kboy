@@ -7,7 +7,7 @@ import com.alexeycode.kboy.gb.mem.readNext8
 
 class Loads8Instruction(
     private val r: Registers,
-    private val mem: Memory
+    private val mem: Memory,
 ) : Instruction {
 
     override fun execute(opcode: Int): Int {
@@ -115,7 +115,7 @@ class Loads8Instruction(
                     result
                 },
                 { r.a().set(it) },
-                8
+                8,
             )
             0x3A -> load(
                 {
@@ -124,7 +124,7 @@ class Loads8Instruction(
                     result
                 },
                 { r.a().set(it) },
-                8
+                8,
             )
             else -> {
                 0
@@ -132,7 +132,11 @@ class Loads8Instruction(
         }
     }
 
-    private inline fun load(read: () -> Int, write: (Int) -> Unit, cycles: Int): Int {
+    private inline fun load(
+        read: () -> Int,
+        write: (Int) -> Unit,
+        cycles: Int,
+    ): Int {
         val result = read()
         write(result.and(0xFF))
 

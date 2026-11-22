@@ -9,7 +9,7 @@ import platform.Foundation.dataWithContentsOfURL
 import platform.posix.memcpy
 
 class IosRomFile(
-    private val url: NSURL
+    private val url: NSURL,
 ) : RomFile {
     @OptIn(ExperimentalForeignApi::class)
     override suspend fun read(): ByteArray {

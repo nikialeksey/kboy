@@ -1,6 +1,6 @@
 import com.alexeycode.kboy.libs
-import io.gitlab.arturbosch.detekt.Detekt
-import io.gitlab.arturbosch.detekt.extensions.DetektExtension
+import dev.detekt.gradle.Detekt
+import dev.detekt.gradle.extensions.DetektExtension
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.apply
@@ -8,10 +8,11 @@ import org.gradle.kotlin.dsl.withType
 
 class StaticAnalysisPlugin : Plugin<Project> {
     override fun apply(target: Project) {
-        target.apply(plugin = "io.gitlab.arturbosch.detekt")
+        target.apply(plugin = "dev.detekt")
 
         target.extensions.getByType(DetektExtension::class.java).apply {
-            autoCorrect = true
+            autoCorrect.set(true)
+            buildUponDefaultConfig.set(true)
             config.setFrom(
                 target.file("${target.rootProject.projectDir}/buildLogic/config/detekt/detekt.yml")
             )

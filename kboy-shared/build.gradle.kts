@@ -78,7 +78,6 @@ kotlin {
             dependencies {
                 implementation(compose.desktop.currentOs)
                 implementation(libs.kotlinx.coroutines.swing)
-                implementation(libs.ansi.color)
                 implementation(libs.jmdns)
                 implementation(libs.ktor.client.okhttp)
                 implementation(libs.ktor.server.netty)

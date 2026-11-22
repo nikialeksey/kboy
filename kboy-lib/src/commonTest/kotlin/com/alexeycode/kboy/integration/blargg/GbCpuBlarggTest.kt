@@ -95,8 +95,8 @@ class GbCpuBlarggTest {
     private fun testBlarggCpuInstrsIndividual(gbFileName: String) {
         val cartridge = GbCartridge(
             GbCartridgeData(
-                Resource("files/test-roms/blargg/$gbFileName").readBytes()
-            )
+                Resource("files/test-roms/blargg/$gbFileName").readBytes(),
+            ),
         )
         val gb = TestsGb(cartridge)
         while (true) {
@@ -111,7 +111,7 @@ class GbCpuBlarggTest {
         assertContains(
             outputMessage,
             "Passed",
-            message = "Actual output message: $outputMessage"
+            message = "Actual output message: $outputMessage",
         )
     }
 }

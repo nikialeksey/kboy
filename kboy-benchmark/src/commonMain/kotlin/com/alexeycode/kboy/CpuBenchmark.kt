@@ -64,9 +64,9 @@ open class CpuBenchmark {
                 lcdControl,
                 palette,
                 background,
-                window
+                window,
             ),
-            interrupts = interrupts
+            interrupts = interrupts,
         )
         gb = SimpleGb(
             timer = timer,
@@ -79,7 +79,7 @@ open class CpuBenchmark {
                 lcdControl,
                 palette,
                 background,
-                window
+                window,
             ),
             serial = serial,
         )

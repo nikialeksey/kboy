@@ -5,7 +5,6 @@ import com.alexeycode.kboy.gb.mem.Memory
 import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
-import kotlinx.coroutines.flow.asSharedFlow
 
 const val SCREEN_WIDTH = 160
 const val SCREEN_HEIGHT = 144
@@ -22,15 +21,14 @@ class GbPpu(
     private val lcdControl: LcdControl,
     private val palette: Palette,
     private val background: Background,
-    private val window: Window
+    private val window: Window,
 ) : Ppu {
 
-    private val _screen = MutableSharedFlow<Screen>(
+    private val screen = MutableSharedFlow<Screen>(
         replay = 0,
         extraBufferCapacity = 1,
-        onBufferOverflow = BufferOverflow.DROP_OLDEST
+        onBufferOverflow = BufferOverflow.DROP_OLDEST,
     )
-    private val screen = _screen.asSharedFlow()
     private val gbScreen = GbScreen()
     private var cycles = 0
     private var disabledStateEntered = false
@@ -96,7 +94,7 @@ class GbPpu(
             if (!disabledStateEntered) {
                 disabledStateEntered = true
                 gbScreen.fill(0xFF.toByte(), 0xFF.toByte(), 0xFF.toByte())
-                _screen.tryEmit(gbScreen)
+                screen.tryEmit(gbScreen)
             }
         }
     }
@@ -134,7 +132,7 @@ class GbPpu(
 
     private fun vBlankFinishedWork() {
         requestLcdInterrupt(5)
-        _screen.tryEmit(gbScreen)
+        screen.tryEmit(gbScreen)
     }
 
     private fun renderBackground() {
@@ -256,7 +254,11 @@ class GbPpu(
         return readPixel(a, b, pixelX)
     }
 
-    private fun readPixel(a: Int, b: Int, pixelX: Int): Int {
+    private fun readPixel(
+        a: Int,
+        b: Int,
+        pixelX: Int,
+    ): Int {
         val bit = (8 - pixelX - 1)
         val pixelLow = if (a.and(1.shl(bit)) != 0) 1 else 0
         val pixelHigh = if (b.and(1.shl(bit)) != 0) 1 else 0

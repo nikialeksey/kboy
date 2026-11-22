@@ -9,8 +9,6 @@ import io.ktor.server.netty.Netty
 import io.ktor.server.routing.routing
 import io.ktor.server.websocket.WebSockets
 import io.ktor.server.websocket.webSocket
-import io.ktor.websocket.Frame
-import io.ktor.websocket.readText
 import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -35,7 +33,6 @@ class DesktopMultiplayerNetwork : MultiplayerNetwork {
 
             routing {
                 webSocket("/") {
-
                 }
             }
         }.start()

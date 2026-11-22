@@ -40,7 +40,7 @@ fun main() {
             host = host,
             roms = roms,
             time = time,
-            extController = controller
+            extController = controller,
         )
 
         if (isSelectRom) {
@@ -50,7 +50,7 @@ fun main() {
                 },
                 onCompleted = {
                     isSelectRom = false
-                }
+                },
             )
         }
     }

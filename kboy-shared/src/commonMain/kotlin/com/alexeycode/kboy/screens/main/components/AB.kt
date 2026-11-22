@@ -21,30 +21,38 @@ fun AB(
 ) {
     val aInteractionSource = remember { MutableInteractionSource() }
     val isAPressed by aInteractionSource.collectIsPressedAsState()
-    if (isAPressed) { onAPressed() } else { onAReleased() }
+    if (isAPressed) {
+        onAPressed()
+    } else {
+        onAReleased()
+    }
 
     val bInteractionSource = remember { MutableInteractionSource() }
     val isBPressed by bInteractionSource.collectIsPressedAsState()
-    if (isBPressed) { onBPressed() } else { onBReleased() }
+    if (isBPressed) {
+        onBPressed()
+    } else {
+        onBReleased()
+    }
 
     Row(
         modifier = Modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.End // TODO RTL
+        horizontalArrangement = Arrangement.End, // TODO RTL
     ) {
         Button(
             interactionSource = aInteractionSource,
-            onClick = { }
+            onClick = { },
         ) {
             Text("A")
         }
     }
     Row(
         modifier = Modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.Start // TODO RTL
+        horizontalArrangement = Arrangement.Start, // TODO RTL
     ) {
         Button(
             interactionSource = bInteractionSource,
-            onClick = { }
+            onClick = { },
         ) {
             Text("B")
         }

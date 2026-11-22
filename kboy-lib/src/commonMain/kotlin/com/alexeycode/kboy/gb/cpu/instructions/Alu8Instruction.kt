@@ -129,7 +129,7 @@ class Alu8Instruction(
     private inline fun increment(
         read: () -> Int,
         write: (Int) -> Unit,
-        cycles: Int
+        cycles: Int,
     ): Int {
         val value = read()
         val result = (value + 1).and(0xFF)
@@ -145,7 +145,7 @@ class Alu8Instruction(
     private inline fun decrement(
         read: () -> Int,
         write: (Int) -> Unit,
-        cycles: Int
+        cycles: Int,
     ): Int {
         val value = read()
         val result = (value - 1).and(0xFF)
@@ -158,7 +158,11 @@ class Alu8Instruction(
         return cycles
     }
 
-    private inline fun add(read1: () -> Int, read2: () -> Int, cycles: Int): Int {
+    private inline fun add(
+        read1: () -> Int,
+        read2: () -> Int,
+        cycles: Int,
+    ): Int {
         val a = read1()
         val n = read2()
         val result = (a + n).and(0xFF)
@@ -172,7 +176,11 @@ class Alu8Instruction(
         return cycles
     }
 
-    private inline fun adc(read1: () -> Int, read2: () -> Int, cycles: Int): Int {
+    private inline fun adc(
+        read1: () -> Int,
+        read2: () -> Int,
+        cycles: Int,
+    ): Int {
         val a = read1()
         val n = read2()
         val c = if (r.flag().c().isEnabled()) 1 else 0
@@ -187,7 +195,11 @@ class Alu8Instruction(
         return cycles
     }
 
-    private inline fun sub(read1: () -> Int, read2: () -> Int, cycles: Int): Int {
+    private inline fun sub(
+        read1: () -> Int,
+        read2: () -> Int,
+        cycles: Int,
+    ): Int {
         val a = read1()
         val n = read2()
         val result = (a - n).and(0xFF)
@@ -201,7 +213,11 @@ class Alu8Instruction(
         return cycles
     }
 
-    private inline fun sbc(read1: () -> Int, read2: () -> Int, cycles: Int): Int {
+    private inline fun sbc(
+        read1: () -> Int,
+        read2: () -> Int,
+        cycles: Int,
+    ): Int {
         val a = read1()
         val n = read2()
         val c = if (r.flag().c().isEnabled()) 1 else 0

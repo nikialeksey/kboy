@@ -12,7 +12,13 @@ class GbScreen(
     @Volatile
     private var hash = 0
 
-    override fun setPixel(x: Int, y: Int, r: Byte, g: Byte, b: Byte) {
+    override fun setPixel(
+        x: Int,
+        y: Int,
+        r: Byte,
+        g: Byte,
+        b: Byte,
+    ) {
         screenPixels[y * width * 4 + x * 4] = r
         screenPixels[y * width * 4 + x * 4 + 1] = g
         screenPixels[y * width * 4 + x * 4 + 2] = b
@@ -20,7 +26,11 @@ class GbScreen(
         hash++
     }
 
-    override fun fill(r: Byte, g: Byte, b: Byte) {
+    override fun fill(
+        r: Byte,
+        g: Byte,
+        b: Byte,
+    ) {
         for (y in 0 until SCREEN_HEIGHT) {
             for (x in 0 until SCREEN_WIDTH) {
                 setPixel(x, y, r, g, b)

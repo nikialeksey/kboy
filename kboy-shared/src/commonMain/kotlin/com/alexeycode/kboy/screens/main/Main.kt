@@ -55,9 +55,9 @@ fun Main(
             roms = roms,
             host = host,
             vibrator = vibrator,
-            extController = extController
+            extController = extController,
         )
-    }
+    },
 ) {
     val state by viewModel.state
     val isTouchEnabled = remember(state) { state.touchControllerEnabled }
@@ -75,7 +75,7 @@ fun Main(
         isGameRunning,
         screen,
         onSelectRomClicked,
-        touchListener
+        touchListener,
     )
 }
 
@@ -85,12 +85,12 @@ fun MainScreen(
     isGameRunning: Boolean,
     screen: Flow<Screen>,
     onSelectRomClicked: () -> Unit,
-    touchListener: TouchControllerListener
+    touchListener: TouchControllerListener,
 ) {
     Box(
         modifier = Modifier.fillMaxSize()
             .background(MaterialTheme.colorScheme.background),
-        contentAlignment = Alignment.Center
+        contentAlignment = Alignment.Center,
     ) {
         if (isTouchEnabled) {
             GbScreenWithController(
@@ -98,7 +98,7 @@ fun MainScreen(
                 isGameRunning = isGameRunning,
                 screen = screen,
                 onSelectRomClicked = onSelectRomClicked,
-                touchControllerListener = touchListener
+                touchControllerListener = touchListener,
             )
         } else {
             GbScreen(
@@ -106,7 +106,7 @@ fun MainScreen(
                     .aspectRatio(SCREEN_WIDTH.toFloat() / SCREEN_HEIGHT.toFloat()),
                 isGameRunning = isGameRunning,
                 screen = screen,
-                onSelectRomClicked = onSelectRomClicked
+                onSelectRomClicked = onSelectRomClicked,
             )
         }
     }
@@ -119,19 +119,19 @@ fun GbScreenWithController(
     isGameRunning: Boolean,
     screen: Flow<Screen>,
     touchControllerListener: TouchControllerListener,
-    onSelectRomClicked: () -> Unit
+    onSelectRomClicked: () -> Unit,
 ) {
     val buttonSize = 48.dp
     val padding = 24.dp
     Row(
-        modifier = modifier
+        modifier = modifier,
     ) {
         Column(
             modifier = Modifier
                 .width(buttonSize * 3 + padding * 2) // 40 + 40 + 40 + 32*2
                 .padding(padding)
                 .fillMaxHeight(),
-            verticalArrangement = Arrangement.Center
+            verticalArrangement = Arrangement.Center,
         ) {
             DPad(
                 buttonSize = buttonSize,
@@ -146,7 +146,7 @@ fun GbScreenWithController(
             )
         }
         Column(
-            modifier = Modifier.weight(1f)
+            modifier = Modifier.weight(1f),
         ) {
             // screen + select/start
             Column(
@@ -154,14 +154,14 @@ fun GbScreenWithController(
                     .weight(1f)
                     .fillMaxWidth(),
                 verticalArrangement = Arrangement.Center,
-                horizontalAlignment = Alignment.CenterHorizontally
+                horizontalAlignment = Alignment.CenterHorizontally,
             ) {
                 GbScreen(
                     modifier = Modifier
                         .aspectRatio(SCREEN_WIDTH.toFloat() / SCREEN_HEIGHT.toFloat()),
                     isGameRunning = isGameRunning,
                     screen = screen,
-                    onSelectRomClicked = onSelectRomClicked
+                    onSelectRomClicked = onSelectRomClicked,
                 )
             }
             Box {
@@ -176,7 +176,7 @@ fun GbScreenWithController(
         Column(
             modifier = Modifier
                 .width(buttonSize * 3 + padding * 2)
-                .padding(padding)
+                .padding(padding),
         ) {
             // a/b
             AB(
@@ -194,11 +194,11 @@ private fun GbScreen(
     modifier: Modifier = Modifier,
     isGameRunning: Boolean,
     screen: Flow<Screen>,
-    onSelectRomClicked: () -> Unit
+    onSelectRomClicked: () -> Unit,
 ) {
     Box(
         modifier = modifier
-            .background(MaterialTheme.colorScheme.surface)
+            .background(MaterialTheme.colorScheme.surface),
     ) {
         if (isGameRunning) {
             val screenSnapshot by screen.collectAsState(GbScreen())
@@ -209,13 +209,13 @@ private fun GbScreen(
                     .fillMaxSize()
                     .clickable { onSelectRomClicked() }
                     .padding(16.dp),
-                contentAlignment = Alignment.Center
+                contentAlignment = Alignment.Center,
             ) {
                 Text(
                     "Click here to select ROM...",
                     textAlign = TextAlign.Center,
                     color = MaterialTheme.colorScheme.onSurface,
-                    style = MaterialTheme.typography.displayMedium
+                    style = MaterialTheme.typography.displayMedium,
                 )
             }
         }

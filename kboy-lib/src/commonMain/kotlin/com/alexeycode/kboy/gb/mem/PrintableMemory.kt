@@ -1,7 +1,7 @@
 package com.alexeycode.kboy.gb.mem
 
 class PrintableMemory(
-    private val origin: Memory
+    private val origin: Memory,
 ) : Memory {
 
     override fun write8(address: Int, value: Int) {

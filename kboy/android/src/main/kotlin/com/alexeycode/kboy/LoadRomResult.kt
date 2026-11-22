@@ -8,13 +8,13 @@ import com.alexeycode.kboy.host.SimpleRoms
 
 class LoadRomResult(
     private val applicationContextProvider: () -> Context,
-    private val roms: SimpleRoms
+    private val roms: SimpleRoms,
 ) : ActivityResultCallback<Uri?> {
 
     override fun onActivityResult(result: Uri?) {
         if (result != null) {
             roms.selectedRom(
-                AndroidRomFile(applicationContextProvider().contentResolver, result)
+                AndroidRomFile(applicationContextProvider().contentResolver, result),
             )
         }
     }

@@ -193,7 +193,7 @@ class DaaInstructionTest {
             lcdControl,
             palette,
             background,
-            window
+            window,
         )
         val registers = GbRegisters()
         return Triple(interrupts, memory, registers)

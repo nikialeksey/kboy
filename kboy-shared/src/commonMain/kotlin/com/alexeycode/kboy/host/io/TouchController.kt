@@ -6,8 +6,9 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 
 @Suppress("TooManyFunctions")
 class TouchController(
-    private val vibrator: Vibrator
-) : Controller, TouchControllerListener {
+    private val vibrator: Vibrator,
+) : Controller,
+    TouchControllerListener {
     private val buttonRight = MutableSharedFlow<Boolean>(0, 1, BufferOverflow.DROP_OLDEST)
     private val buttonLeft = MutableSharedFlow<Boolean>(0, 1, BufferOverflow.DROP_OLDEST)
     private val buttonUp = MutableSharedFlow<Boolean>(0, 1, BufferOverflow.DROP_OLDEST)

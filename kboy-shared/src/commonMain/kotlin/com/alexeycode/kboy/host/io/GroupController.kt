@@ -4,7 +4,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.merge
 
 class GroupController(
-    private val controllers: List<Controller>
+    private val controllers: List<Controller>,
 ) : Controller {
 
     override fun right(): Flow<Boolean> {

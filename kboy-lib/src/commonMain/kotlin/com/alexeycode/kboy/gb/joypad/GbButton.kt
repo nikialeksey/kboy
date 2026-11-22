@@ -5,7 +5,7 @@ import com.alexeycode.kboy.gb.cpu.interrupts.Interrupts
 class GbButton(
     private val interrupts: Interrupts,
     private val line: Int,
-    private val mask: Int
+    private val mask: Int,
 ) : Button {
 
     private var maskState: Int = 0
